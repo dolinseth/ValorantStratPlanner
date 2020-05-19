@@ -52,6 +52,7 @@ public class ValorantStratPlanner extends Application {
         //set the initial scene
         stage.setScene(stratEditorScene);
         stratEditor.setMapImage(StratEditor.Map.BIND);
+        stratEditor.setup();
 
         //must be final call in the function, tells JavaFX to start the app
         stage.show();

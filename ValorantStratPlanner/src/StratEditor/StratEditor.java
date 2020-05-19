@@ -1,14 +1,18 @@
 package StratEditor;
 
+import StratElements.TwoPointElementBuilder;
+import StratElements.Line;
+import StratElements.StratElement;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+
 import Main.AppController;
+import javafx.scene.paint.Color;
 
 public class StratEditor {
     //FXML defined buttons and panes
@@ -17,21 +21,27 @@ public class StratEditor {
     @FXML
     private Pane mapViewer;
     @FXML
-    GridPane menuButtons;
+    private Canvas canvas;
     @FXML
-    Button saveButton;
+    private GridPane menuButtons;
     @FXML
-    Button clearButton;
+    private Button saveButton;
     @FXML
-    Button loadButton;
+    private Button clearButton;
     @FXML
-    BorderPane rootPane;
+    private Button loadButton;
+    @FXML
+    private Button undoButton;
 
     //non-FXML fields
     private AppController appController;
-
     public enum Map {BIND, SPLIT, HAVEN};
     private Map curMap;
+    private ArrayList<StratElement> elements = new ArrayList<StratElement>();
+
+    public void setup(){
+        createToolSelectorButtons();
+    }
 
     public void setMapImage(Map map){
         this.curMap = map;
@@ -46,6 +56,38 @@ public class StratEditor {
                 setMapViewerImage("Haven.PNG");
                 break;
         }
+    }
+
+    public void createToolSelectorButtons(){
+        ArrayList<Button> toolButtons = new ArrayList<Button>();
+        Button line = new Button("Line");
+        line.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+        line.setPrefSize(1000, 1000);
+        line.setOnAction(e -> lineButtonHandler());
+        toolSelector.add(line, 0, 0);
+        toolButtons.add(new Button("Line"));
+    }
+
+    private void lineButtonHandler(){
+        TwoPointElementBuilder<Line> eb = new TwoPointElementBuilder<Line>();
+        Line l = new Line(0,0,0,0, Color.YELLOW);
+        canvas.setOnMousePressed(e -> {
+            eb.startClick(e);
+            canvas.setOnMousePressed(e2 ->{
+                eb.endClick(e2);
+                eb.formatElement(l);
+                elements.add(l);
+                updateCanvas();
+                lineButtonHandler();
+            });
+        });
+    }
+
+    public void updateCanvas(){
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        elements.stream().forEach(e ->{
+            e.draw(canvas.getGraphicsContext2D());
+        });
     }
 
     private void setMapViewerImage(String imageFileName){
@@ -67,7 +109,16 @@ public class StratEditor {
 
     @FXML
     private void clearStrat(){
+        elements.clear();
+        updateCanvas();
+    }
 
+    @FXML
+    private void undo(){
+        if(elements.size() != 0) {
+            elements.remove(elements.size() - 1);
+            updateCanvas();
+        }
     }
 
     /*
