@@ -1,7 +1,7 @@
 package StratElements;
 
 public abstract class OnePointStratElement extends StratElement{
-    double x, y;
+    protected double x, y;
 
     public OnePointStratElement(){}
 
