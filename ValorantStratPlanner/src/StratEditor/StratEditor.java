@@ -41,12 +41,19 @@ public class StratEditor {
     private ArrayList<StratElement> elements = new ArrayList<StratElement>();
     private DrawingController drawingController;
 
+    /**
+     * To be called when this scene is initialized to setup scene objects at runtime
+     */
     public void setup(){
         createToolSelectorButtons();
         drawingController = DrawingController.getInstance();
         drawingController.
     }
 
+    /**
+     * Sets the map image that is displayed on the canvas beneath the strats
+     * @param map - a StratEditor.Map typed object describing the map to use
+     */
     public void setMapImage(Map map){
         this.curMap = map;
         switch (map){
@@ -62,6 +69,9 @@ public class StratEditor {
         }
     }
 
+    /**
+     * Initializes all the tool selector buttons and sets up their handlers
+     */
     public void createToolSelectorButtons(){
         //create list to store the buttons in
         ArrayList<Button> toolButtons = new ArrayList<Button>();
@@ -107,6 +117,7 @@ public class StratEditor {
             toolButtons.add(b);
         });
 
+        //add all buttons to the tool selector panel
         int numColumns = toolSelector.getColumnCount();
         for(int i = 0; i < toolButtons.size(); i++){
             toolSelector.add(toolButtons.get(i), i % numColumns, i / numColumns);
@@ -117,23 +128,42 @@ public class StratEditor {
     TOOL BUTTON HANDLERS
      */
 
+    /**
+     * Handler for strat elements that just consist of an image representing the ability
+     * that is placed on the map
+     * @param abilityName - string containing the name of the ability
+     */
     private void abilityImageButtonHandler(String abilityName){
         AbilityImageStratElement el = new AbilityImageStratElement(abilityName, appController.getData());
         onePointElementHandler(el);
     }
 
+    /**
+     * Handler for the indicator to watch a certain locatian
+     */
     private void watchHereButtonHandler(){
         drawingController.setCurrentElement(WatchHere.class);
     }
 
+    /**
+     * handler for the generic smoke indicator
+     * soon to be deprecated
+     */
     private void brimSmokeButtonHandler(){
         drawingController.setCurrentElement(BrimstoneSmoke.class);
     }
 
+    /**
+     * Handler for the line drawing tool
+     */
     private void lineButtonHandler(){
         drawingController.setCurrentElement(Line.class);
     }
 
+    /**
+     * generic handler for an element that consists of two points
+     * @param el - the two point element to place on the canvas
+     */
     private void twoPointElementHandler(TwoPointStratElement el){
         TwoPointElementBuilder<TwoPointStratElement> eb = new TwoPointElementBuilder<>();
         System.out.println("elements: " + elements.size());
@@ -149,6 +179,10 @@ public class StratEditor {
         });
     }
 
+    /**
+     * generic handler for an element consisting of one point
+     * @param el - the one point element to place on the canvas
+     */
     private void onePointElementHandler(OnePointStratElement el){
         OnePointElementBuilder<OnePointStratElement> eb = new OnePointElementBuilder<>();
         canvas.setOnMousePressed(e -> {
@@ -160,11 +194,19 @@ public class StratEditor {
         });
     }
 
+    /**
+     * helper method that formats all the tool buttons to be identical
+     * @param b - the button to format
+     */
     private void formatToolButton(Button b){
         b.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
         b.setPrefSize(1000, 1000);
     }
 
+    /**
+     * helper method for drawing, called when the canvas needs to be redrawn
+     * i.e. in the event of a new element being added/removed
+     */
     public void updateCanvas(){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         elements.stream().forEach(e ->{
@@ -172,6 +214,10 @@ public class StratEditor {
         });
     }
 
+    /**
+     * helper method for setMapImage that takes in the actual filepath instead of the enumerated map type
+     * @param imageFileName
+     */
     private void setMapViewerImage(String imageFileName){
         String absoluteURL = getClass().getResource("/" + imageFileName).toString();
         BackgroundImage mapImage = new BackgroundImage(new Image(absoluteURL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
@@ -212,6 +258,7 @@ public class StratEditor {
     /*
     GETTERS AND SETTERS
      */
+
     public AppController getAppController() {
         return appController;
     }

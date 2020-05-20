@@ -15,6 +15,10 @@ public class AbilityImageStore {
         this.imageFolderPath = imageFolderPath;
     }
 
+    /**
+     * Load the images for all the character abilities this function fetches the data
+     * and must be called before the images can be accessed
+     */
     public void loadImages(){
         ArrayList<String> abilities = new ArrayList<String>(Arrays.asList(
                 "Sky_Smoke", "Orbital_Strike", "Stim_Beacon", "Incendiary",
@@ -38,14 +42,23 @@ public class AbilityImageStore {
         });
     }
 
+    /**
+     * returns an Image containing the icon for the ability with the given name,
+     * or null if no image is found associated with that ability name
+     * @param ability - the name of the ability to get the icon for
+     * @return Image
+     */
+    public Image getAbilityImage(String ability){
+        return images.getOrDefault(ability.toLowerCase(), null);
+    }
+
+    /*
+    GETTERS AND SETTERS
+     */
     public HashMap<String, Image> getImages(){
         if(images.size() == 0){
             loadImages();
         }
         return images;
-    }
-
-    public Image getAbilityImage(String ability){
-        return images.getOrDefault(ability.toLowerCase(), null);
     }
 }

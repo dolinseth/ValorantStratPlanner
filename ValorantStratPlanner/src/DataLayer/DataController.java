@@ -17,15 +17,28 @@ public class DataController {
         RECON_BOLT, HUNTERS_FURY, OWL_DRONE, SHOCK_BOLT
     };
 
+    //Default constructor, initializes lists
     public DataController(){
         abilityImages = new AbilityImageStore("AbilityImages");
         abilityImages.loadImages();
     }
 
+    /**
+     * returns an Image containing the icon for the ability with the given name,
+     * or null if no image is found associated with that ability name
+     * @param ability - A DataController.Ability typed object describing the ability to fetch the icon for
+     * @return Image
+     */
     public Image getAbilityImage(Ability ability){
         return abilityImages.getAbilityImage(ability.toString());
     }
 
+    /**
+     * returns an Image containing the icon for the ability with the given name,
+     * or null if no image is found associated with that ability name
+     * @param ability - string containing the name of the ability to get the icon for
+     * @return Image
+     */
     public Image getAbilityImage(String ability){
         return abilityImages.getAbilityImage(ability);
     }

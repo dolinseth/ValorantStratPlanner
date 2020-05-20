@@ -24,13 +24,14 @@ public class ValorantStratPlanner extends Application {
         //initialize Main.AppController object and set it's stage
         appController = AppController.getInstance();
 
-        //load FXML for the strat editor window
+        //load FXML
         Parent stratEditorRoot = null;
         Parent menuScreenRoot = null;
         FXMLLoader stratEditorLoader = new FXMLLoader(this.getClass().getResource("fxml/StratEditor.fxml"));
         FXMLLoader menuScreenLoader = new FXMLLoader(this.getClass().getResource("fxml/MenuScreen.fxml"));
         StratEditor stratEditor = null;
         MenuScreen menuScreen = null;
+
         try{
             stratEditorRoot = stratEditorLoader.load();
             stratEditor = stratEditorLoader.getController();
@@ -64,7 +65,7 @@ public class ValorantStratPlanner extends Application {
         DataController data = new DataController();
         appController.setData(data);
 
-        //set the initial scene
+        //set the initial scene to the menu
         stage.setScene(menuScreenScene);
 
         //setup screen objects
