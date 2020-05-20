@@ -1,5 +1,6 @@
 package Main;
 
+import MenuScreen.MenuScreen;
 import StratEditor.StratEditor;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -9,6 +10,8 @@ public class AppController {
     private Stage stage;
     private StratEditor stratEditor;
     private Scene stratEditorScene;
+    private MenuScreen menuScreen;
+    private Scene menuScreenScene;
 
     private AppController(){}
 
@@ -45,5 +48,21 @@ public class AppController {
 
     public StratEditor getStratEditor() {
         return stratEditor;
+    }
+
+    public MenuScreen getMenuScreen() {
+        return menuScreen;
+    }
+
+    public void setMenuScreen(MenuScreen menuScreen) {
+        this.menuScreen = menuScreen;
+    }
+
+    public Scene getMenuScreenScene() {
+        return menuScreenScene;
+    }
+
+    public void setMenuScreenScene(Scene menuScreenScene) {
+        this.menuScreenScene = menuScreenScene;
     }
 }

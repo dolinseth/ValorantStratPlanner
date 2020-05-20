@@ -4,9 +4,24 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuScreen.MenuScreen">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuScreen.MenuScreen">
    <children>
-      <Label layoutX="272.0" layoutY="152.0" prefHeight="101.0" prefWidth="201.0" text="Butts" />
+      <GridPane hgap="5.0" layoutX="494.0" layoutY="328.0" prefHeight="46.0" prefWidth="235.0" vgap="5.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="bindButton" mnemonicParsing="false" onAction="#setMapToBind" prefHeight="95.0" prefWidth="325.0" text="Bind" />
+            <Button fx:id="splitButton" mnemonicParsing="false" onAction="#setMapToSplit" prefHeight="108.0" prefWidth="272.0" text="Split" GridPane.columnIndex="1" />
+            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quit" prefHeight="104.0" prefWidth="260.0" text="Quit" GridPane.columnIndex="3" />
+            <Button fx:id="havenButton" mnemonicParsing="false" onAction="#setMapToHaven" prefHeight="66.0" prefWidth="81.0" text="Haven" GridPane.columnIndex="2" />
+         </children>
+      </GridPane>
    </children>
 </Pane>

@@ -7,15 +7,9 @@ import javafx.scene.paint.Color;
 
 public class Line extends TwoPointStratElement{
     private double x1, y1, x2, y2;
-    private Color color;
+    private Color color = Color.YELLOW;
 
-    public Line(double x1, double y1, double x2, double y2, Color color) {
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-        this.color = color;
-    }
+    public Line(){}
 
     public void draw(GraphicsContext gc){
         gc.setStroke(color);
@@ -63,13 +57,5 @@ public class Line extends TwoPointStratElement{
 
     public void setY2(double y2) {
         this.y2 = y2;
-    }
-
-    public void setColor(Color color){
-        this.color = color;
-    }
-
-    public Color getColor() {
-        return color;
     }
 }

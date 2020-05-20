@@ -1,4 +1,5 @@
 import Main.AppController;
+import MenuScreen.MenuScreen;
 import StratEditor.StratEditor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,34 +25,44 @@ public class ValorantStratPlanner extends Application {
 
         //load FXML for the strat editor window
         Parent stratEditorRoot = null;
+        Parent menuScreenRoot = null;
         FXMLLoader stratEditorLoader = new FXMLLoader(this.getClass().getResource("fxml/StratEditor.fxml"));
+        FXMLLoader menuScreenLoader = new FXMLLoader(this.getClass().getResource("fxml/MenuScreen.fxml"));
         StratEditor stratEditor = null;
+        MenuScreen menuScreen = null;
         try{
             stratEditorRoot = stratEditorLoader.load();
             stratEditor = stratEditorLoader.getController();
+            menuScreenRoot = menuScreenLoader.load();
+            menuScreen = menuScreenLoader.getController();
         } catch (IOException e){
             System.out.println(e.getMessage());
             System.out.println("Failed to load fxml");
             System.exit(1);
         }
 
-        //create scene for StratEditor.StratEditor
+        //create scenes
         Scene stratEditorScene = new Scene(stratEditorRoot);
+        Scene menuScreenScene = new Scene(menuScreenRoot);
 
         //set the window title
         stage.setTitle("Valorant Strat Planner v0.1");
 
-        //give stratEditor object a reference to the app controller
+        //give screen controllers a reference to the app controller
         stratEditor.setAppController(appController);
+        menuScreen.setAppController(appController);
 
         //give appController references to scenes and such
         appController.setStratEditor(stratEditor);
         appController.setStratEditorScene(stratEditorScene);
         appController.setStage(stage);
+        appController.setMenuScreen(menuScreen);
+        appController.setMenuScreenScene(menuScreenScene);
 
         //set the initial scene
-        stage.setScene(stratEditorScene);
-        stratEditor.setMapImage(StratEditor.Map.BIND);
+        stage.setScene(menuScreenScene);
+
+        //setup screen objects
         stratEditor.setup();
 
         //must be final call in the function, tells JavaFX to start the app
