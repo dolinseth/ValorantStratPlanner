@@ -1,5 +1,7 @@
 package StratEditor;
 
+import CharacterAbilities.CharacterAbility;
+import Records.Point;
 import StratElements.*;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -47,7 +49,6 @@ public class StratEditor {
     public void setup(){
         createToolSelectorButtons();
         drawingController = DrawingController.getInstance();
-        drawingController.
     }
 
     /**
@@ -79,7 +80,7 @@ public class StratEditor {
         //create line drawing button
         Button line = new Button("Line");
         formatToolButton(line);
-        line.setOnAction(e -> lineButtonHandler());
+//        line.setOnAction(e -> lineButtonHandler());
         toolButtons.add(line);
 
 //        //create generic smoke button
@@ -91,8 +92,9 @@ public class StratEditor {
         //create watch here indicator
         Button watchHere = new Button("Watch");
         formatToolButton(watchHere);
-        watchHere.setOnAction(e -> watchHereButtonHandler());
+//        watchHere.setOnAction(e -> watchHereButtonHandler());
         toolButtons.add(watchHere);
+
 
         /*
         ABILITY BUTTON HANDLER INITIALIZATION
@@ -113,7 +115,7 @@ public class StratEditor {
         abilityNames.forEach(ability -> {
             Button b = new Button(ability.replace("_", " "));
             formatToolButton(b);
-            b.setOnAction(e -> abilityImageButtonHandler(ability));
+            b.setOnAction(e -> DrawingController.getInstance().setCurrentTool(new CharacterAbility(Color.YELLOW, 10, ability)));
             toolButtons.add(b);
         });
 
@@ -122,6 +124,21 @@ public class StratEditor {
         for(int i = 0; i < toolButtons.size(); i++){
             toolSelector.add(toolButtons.get(i), i % numColumns, i / numColumns);
         }
+
+        //set canvas handlers for interacting with DrawingController
+        canvas.setOnMouseClicked(e -> {
+            if(e.isPrimaryButtonDown()){
+                DrawingController.getInstance().handleLeftClick(new Point(e.getX(), e.getY()));
+            }
+            if(e.isSecondaryButtonDown()){
+                DrawingController.getInstance().handleRightClick(new Point(e.getX(), e.getY()));
+            }
+            updateCanvas();
+        });
+        canvas.setOnMouseMoved(e -> {
+            DrawingController.getInstance().handleHover(new Point(e.getX(), e.getY()));
+            updateCanvas();
+        });
     }
 
     /*
@@ -141,23 +158,23 @@ public class StratEditor {
     /**
      * Handler for the indicator to watch a certain locatian
      */
-    private void watchHereButtonHandler(){
-        drawingController.setCurrentElement(WatchHere.class);
-    }
+//    private void watchHereButtonHandler(){
+//        drawingController.setCurrentElement(WatchHere.class);
+//    }
 
     /**
      * handler for the generic smoke indicator
      * soon to be deprecated
      */
-    private void brimSmokeButtonHandler(){
-        drawingController.setCurrentElement(BrimstoneSmoke.class);
-    }
+//    private void brimSmokeButtonHandler(){
+//        drawingController.setCurrentElement(BrimstoneSmoke.class);
+//    }
 
     /**
      * Handler for the line drawing tool
      */
     private void lineButtonHandler(){
-        drawingController.setCurrentElement(Line.class);
+        twoPointElementHandler(new Line());
     }
 
     /**
@@ -174,7 +191,7 @@ public class StratEditor {
                 eb.formatElement(el);
                 elements.add(el);
                 updateCanvas();
-                twoPointElementHandler(el);
+                twoPointElementHandler((TwoPointStratElement)el.clone());
             });
         });
     }
@@ -209,6 +226,9 @@ public class StratEditor {
      */
     public void updateCanvas(){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        DrawingController.getInstance().getElements().stream().forEach(e ->{
+            e.draw(canvas.getGraphicsContext2D());
+        });
         elements.stream().forEach(e ->{
             e.draw(canvas.getGraphicsContext2D());
         });

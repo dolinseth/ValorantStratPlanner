@@ -1,5 +1,7 @@
 package StratElements;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public abstract class TwoPointStratElement extends StratElement{
     protected double x1, y1, x2, y2;
 

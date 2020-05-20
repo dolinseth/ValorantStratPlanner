@@ -1,5 +1,7 @@
 package StratEditor;
 
+import CharacterAbilities.CharacterAbility;
+import DataLayer.DataController;
 import Records.Point;
 import StratElements.OnePointStratElement;
 import StratElements.StratElement;
@@ -11,40 +13,14 @@ import java.util.ArrayList;
 
 public class DrawingController {
     private static DrawingController drawingController;
-    private enum State {PRE_ONE_POINT, PRE_TWO_POINT, IN_TWO_POINT}
+    private enum State {IDLE, IN_PLACEMENT}
     private State curState;
-    private OnePointStratElement curOnePoint;
-    private TwoPointStratElement curTwoPoint;
-    private ArrayList<StratElement> elements = new ArrayList<StratElement>();
+    private CharacterAbility currentTool;
+    private ArrayList<CharacterAbility> elements = new ArrayList<CharacterAbility>();
     private GraphicsContext gc;
     private Canvas canvas;
-    private Class curElement;
 
     private DrawingController(){}
-
-    private void resetCurrentElement(){
-        if(curElement.getSuperclass() == OnePointStratElement.class){
-            curState = State.PRE_ONE_POINT;
-            try {
-                curOnePoint = (OnePointStratElement)curElement.newInstance();
-            } catch(Exception e){
-                System.out.println("Error initializing OnePointStratElement");
-            }
-        }
-        else if(curElement.getSuperclass() == TwoPointStratElement.class){
-            curState = State.PRE_TWO_POINT;
-            try{
-                curTwoPoint = (TwoPointStratElement)curElement.newInstance();
-            } catch(Exception e){
-                System.out.println("Error initializing TwoPointStratElement");
-            }
-        }
-    }
-
-    public void setCurrentElement(Class c){
-        this.curElement = c;
-        resetCurrentElement();
-    }
 
     public static DrawingController getInstance(){
         if(drawingController == null){
@@ -54,26 +30,25 @@ public class DrawingController {
     }
 
     public void handleHover(Point p){
-        if(curState == State.IN_TWO_POINT){
-            curTwoPoint.setEnd(p.x, p.y);
+        if(curState == State.IN_PLACEMENT){
+            CharacterAbility cur = elements.get(elements.size() - 1);
+            cur.setLastPoint(p);
         }
     }
 
-    public void handleClick(Point p){
-        if(curState == State.IN_TWO_POINT){
-            curState = State.PRE_TWO_POINT;
-            elements.add(curTwoPoint);
-            curTwoPoint = null;
+    public void handleLeftClick(Point p){
+        if(curState == State.IDLE){
+            CharacterAbility cur = currentTool.clone();
+            cur.addPoint(p);
+            elements.add(cur);
         }
-        else if(curState == State.PRE_TWO_POINT){
-            curState = State.IN_TWO_POINT;
-            curTwoPoint.setStart(p.x, p.y);
+        else if(curState == State.IN_PLACEMENT){
+            elements.get(elements.size() - 1).addPoint(p);
         }
-        else if(curState == State.PRE_ONE_POINT){
-            curOnePoint.setCoords(p.x, p.y);
-            elements.add(curOnePoint);
-            curOnePoint = null;
-        }
+    }
+
+    public void handleRightClick(Point p){
+
     }
 
     public void drawElements(){
@@ -100,11 +75,12 @@ public class DrawingController {
         return gc;
     }
 
-    public void setCurOnePoint(OnePointStratElement el){
-        this.curOnePoint = el;
+    public void setCurrentTool(CharacterAbility el){
+        this.currentTool = el;
+        System.out.println("set current tool");
     }
 
-    public void setCurTwoPoint(TwoPointStratElement el){
-        this.curTwoPoint = el;
+    public ArrayList<CharacterAbility> getElements(){
+        return elements;
     }
 }
