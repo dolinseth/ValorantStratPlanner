@@ -39,9 +39,12 @@ public class StratEditor {
     public enum Map {BIND, SPLIT, HAVEN};
     private Map curMap;
     private ArrayList<StratElement> elements = new ArrayList<StratElement>();
+    private DrawingController drawingController;
 
     public void setup(){
         createToolSelectorButtons();
+        drawingController = DrawingController.getInstance();
+        drawingController.
     }
 
     public void setMapImage(Map map){
@@ -120,18 +123,15 @@ public class StratEditor {
     }
 
     private void watchHereButtonHandler(){
-        WatchHere wh = new WatchHere();
-        twoPointElementHandler(wh);
+        drawingController.setCurrentElement(WatchHere.class);
     }
 
     private void brimSmokeButtonHandler(){
-        BrimstoneSmoke smoke = new BrimstoneSmoke();
-        onePointElementHandler(smoke);
+        drawingController.setCurrentElement(BrimstoneSmoke.class);
     }
 
     private void lineButtonHandler(){
-        Line l = new Line();
-        twoPointElementHandler(l);
+        drawingController.setCurrentElement(Line.class);
     }
 
     private void twoPointElementHandler(TwoPointStratElement el){
