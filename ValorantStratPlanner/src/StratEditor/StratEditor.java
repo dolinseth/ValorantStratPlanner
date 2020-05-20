@@ -80,19 +80,13 @@ public class StratEditor {
         //create line drawing button
         Button line = new Button("Line");
         formatToolButton(line);
-//        line.setOnAction(e -> lineButtonHandler());
+        line.setOnAction(e -> lineButtonHandler());
         toolButtons.add(line);
-
-//        //create generic smoke button
-//        Button smoke = new Button("Smoke");
-//        formatToolButton(smoke);
-//        smoke.setOnAction(e -> brimSmokeButtonHandler());
-//        toolButtons.add(smoke);
 
         //create watch here indicator
         Button watchHere = new Button("Watch");
         formatToolButton(watchHere);
-//        watchHere.setOnAction(e -> watchHereButtonHandler());
+        watchHere.setOnAction(e -> watchHereButtonHandler());
         toolButtons.add(watchHere);
 
 
@@ -150,38 +144,30 @@ public class StratEditor {
      * that is placed on the map
      * @param abilityName - string containing the name of the ability
      */
-    private void abilityImageButtonHandler(String abilityName){
-        AbilityImageStratElement el = new AbilityImageStratElement(abilityName, appController.getData());
-        onePointElementHandler(el);
-    }
+//    private void abilityImageButtonHandler(String abilityName){
+//        AbilityImageStratElement el = new AbilityImageStratElement(abilityName, appController.getData());
+//        onePointElementHandler(el);
+//    }
 
     /**
      * Handler for the indicator to watch a certain locatian
      */
-//    private void watchHereButtonHandler(){
-//        drawingController.setCurrentElement(WatchHere.class);
-//    }
-
-    /**
-     * handler for the generic smoke indicator
-     * soon to be deprecated
-     */
-//    private void brimSmokeButtonHandler(){
-//        drawingController.setCurrentElement(BrimstoneSmoke.class);
-//    }
+    private void watchHereButtonHandler(){
+        twoPointElementHandler(new WatchHere(), this::watchHereButtonHandler);
+    }
 
     /**
      * Handler for the line drawing tool
      */
     private void lineButtonHandler(){
-        twoPointElementHandler(new Line());
+        twoPointElementHandler(new Line(), this::lineButtonHandler);
     }
 
     /**
      * generic handler for an element that consists of two points
      * @param el - the two point element to place on the canvas
      */
-    private void twoPointElementHandler(TwoPointStratElement el){
+    private void twoPointElementHandler(TwoPointStratElement el, ButtonHandler handler){
         TwoPointElementBuilder<TwoPointStratElement> eb = new TwoPointElementBuilder<>();
         System.out.println("elements: " + elements.size());
         canvas.setOnMousePressed(e ->{
@@ -191,7 +177,7 @@ public class StratEditor {
                 eb.formatElement(el);
                 elements.add(el);
                 updateCanvas();
-                twoPointElementHandler((TwoPointStratElement)el.clone());
+                twoPointElementHandler(el, handler);
             });
         });
     }
@@ -200,14 +186,14 @@ public class StratEditor {
      * generic handler for an element consisting of one point
      * @param el - the one point element to place on the canvas
      */
-    private void onePointElementHandler(OnePointStratElement el){
+    private void onePointElementHandler(OnePointStratElement el, ButtonHandler handler){
         OnePointElementBuilder<OnePointStratElement> eb = new OnePointElementBuilder<>();
         canvas.setOnMousePressed(e -> {
             eb.click(e);
             eb.formatElement(el);
             elements.add(el);
             updateCanvas();
-            onePointElementHandler(el);
+            onePointElementHandler(el, handler);
         });
     }
 
