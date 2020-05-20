@@ -16,8 +16,13 @@ public class AppController {
     private Scene menuScreenScene;
     private DataController data;
 
+    //default constructor
     private AppController(){}
 
+    /**
+     * Gets a reference to the single AppController object shared by all classes in the project
+     * @return An AppController that is shared between all classes
+     */
     public static AppController getInstance(){
         if(appController == null){
             appController = new AppController();
