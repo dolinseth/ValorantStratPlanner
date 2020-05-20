@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Main.AppController;
 import javafx.scene.paint.Color;
@@ -47,13 +48,13 @@ public class StratEditor {
         this.curMap = map;
         switch (map){
             case BIND:
-                setMapViewerImage("Bind.PNG");
+                setMapViewerImage("MapImages/Bind.PNG");
                 break;
             case SPLIT:
-                setMapViewerImage("Split.PNG");
+                setMapViewerImage("MapImages/Split.PNG");
                 break;
             case HAVEN:
-                setMapViewerImage("Haven.PNG");
+                setMapViewerImage("MapImages/Haven.PNG");
                 break;
         }
     }
@@ -68,17 +69,40 @@ public class StratEditor {
         line.setOnAction(e -> lineButtonHandler());
         toolButtons.add(line);
 
-        //create generic smoke button
-        Button smoke = new Button("Smoke");
-        formatToolButton(smoke);
-        smoke.setOnAction(e -> brimSmokeButtonHandler());
-        toolButtons.add(smoke);
+//        //create generic smoke button
+//        Button smoke = new Button("Smoke");
+//        formatToolButton(smoke);
+//        smoke.setOnAction(e -> brimSmokeButtonHandler());
+//        toolButtons.add(smoke);
 
         //create watch here indicator
-        Button watchHere = new Button("Watch angle");
+        Button watchHere = new Button("Watch");
         formatToolButton(watchHere);
         watchHere.setOnAction(e -> watchHereButtonHandler());
         toolButtons.add(watchHere);
+
+        /*
+        ABILITY BUTTON HANDLER INITIALIZATION
+         */
+
+        ArrayList<String> abilityNames = new ArrayList<String>(Arrays.asList(
+                "Sky_Smoke", "Orbital_Strike", "Stim_Beacon", "Incendiary",
+                "Paint_Shells", "Showstopper", "Boom_Bot", "Blast_Pack",
+                "Spycam", "Neural_Theft", "Tripwire", "Cyber_Cage",
+                "Tailwind", "Bladestorm", "Cloudburst", "Updraft",
+                "Dark_Cover", "From_the_Shadows", "Shrouded_Step", "Paranoia",
+                "Fault_Line", "Rolling_Thunder", "Aftershock", "Flashpoint",
+                "Toxic_Screen", "Vipers_Pit", "Snake_Bite", "Poison_Cloud",
+                "Hot_Hands", "Run_it_Back", "Blaze", "Curveball",
+                "Healing_Orb", "Resurrection", "Barrier_Orb", "Slow_Orb",
+                "Recon_Bolt", "Hunters_Fury", "Owl_Drone", "Shock_Bolt"
+        ));
+        abilityNames.forEach(ability -> {
+            Button b = new Button(ability.replace("_", " "));
+            formatToolButton(b);
+            b.setOnAction(e -> abilityImageButtonHandler(ability));
+            toolButtons.add(b);
+        });
 
         int numColumns = toolSelector.getColumnCount();
         for(int i = 0; i < toolButtons.size(); i++){
@@ -90,45 +114,49 @@ public class StratEditor {
     TOOL BUTTON HANDLERS
      */
 
+    private void abilityImageButtonHandler(String abilityName){
+        AbilityImageStratElement el = new AbilityImageStratElement(abilityName, appController.getData());
+        onePointElementHandler(el);
+    }
+
     private void watchHereButtonHandler(){
-        TwoPointElementBuilder<WatchHere> eb = new TwoPointElementBuilder<WatchHere>();
         WatchHere wh = new WatchHere();
-        canvas.setOnMousePressed(e -> {
-            eb.startClick(e);
-            canvas.setOnMousePressed(e2 ->{
-                eb.endClick(e2);
-                eb.formatElement(wh);
-                elements.add(wh);
-                updateCanvas();
-                watchHereButtonHandler();
-            });
-        });
+        twoPointElementHandler(wh);
     }
 
     private void brimSmokeButtonHandler(){
-        OnePointElementBuilder<BrimstoneSmoke> eb = new OnePointElementBuilder<BrimstoneSmoke>();
         BrimstoneSmoke smoke = new BrimstoneSmoke();
-        canvas.setOnMousePressed(e -> {
-            eb.click(e);
-            eb.formatElement(smoke);
-            elements.add(smoke);
-            updateCanvas();
-            brimSmokeButtonHandler();
-        });
+        onePointElementHandler(smoke);
     }
 
     private void lineButtonHandler(){
-        TwoPointElementBuilder<Line> eb = new TwoPointElementBuilder<Line>();
         Line l = new Line();
-        canvas.setOnMousePressed(e -> {
+        twoPointElementHandler(l);
+    }
+
+    private void twoPointElementHandler(TwoPointStratElement el){
+        TwoPointElementBuilder<TwoPointStratElement> eb = new TwoPointElementBuilder<>();
+        System.out.println("elements: " + elements.size());
+        canvas.setOnMousePressed(e ->{
             eb.startClick(e);
             canvas.setOnMousePressed(e2 ->{
                 eb.endClick(e2);
-                eb.formatElement(l);
-                elements.add(l);
+                eb.formatElement(el);
+                elements.add(el);
                 updateCanvas();
-                lineButtonHandler();
+                twoPointElementHandler(el);
             });
+        });
+    }
+
+    private void onePointElementHandler(OnePointStratElement el){
+        OnePointElementBuilder<OnePointStratElement> eb = new OnePointElementBuilder<>();
+        canvas.setOnMousePressed(e -> {
+            eb.click(e);
+            eb.formatElement(el);
+            elements.add(el);
+            updateCanvas();
+            onePointElementHandler(el);
         });
     }
 

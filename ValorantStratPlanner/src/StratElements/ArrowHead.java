@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 public class ArrowHead extends StratElement{
     private double x1, y1, x2, y2;
     private Color color;
-    private final double LineLength = 5;
+    private final double LineLength = 10;
 
     public ArrowHead(double x1, double y1, double x2, double y2, Color color) {
         this.x1 = x1;

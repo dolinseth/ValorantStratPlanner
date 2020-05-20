@@ -1,5 +1,7 @@
 package Main;
 
+import DataLayer.AbilityImageStore;
+import DataLayer.DataController;
 import MenuScreen.MenuScreen;
 import StratEditor.StratEditor;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ public class AppController {
     private Scene stratEditorScene;
     private MenuScreen menuScreen;
     private Scene menuScreenScene;
+    private DataController data;
 
     private AppController(){}
 
@@ -60,6 +63,14 @@ public class AppController {
 
     public Scene getMenuScreenScene() {
         return menuScreenScene;
+    }
+
+    public DataController getData() {
+        return data;
+    }
+
+    public void setData(DataController data) {
+        this.data = data;
     }
 
     public void setMenuScreenScene(Scene menuScreenScene) {

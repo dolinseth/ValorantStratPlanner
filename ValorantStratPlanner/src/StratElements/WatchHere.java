@@ -6,8 +6,7 @@ import javafx.scene.paint.Color;
 public class WatchHere extends TwoPointStratElement {
     private double x1, y1, x2, y2;
     private Color color = Color.YELLOW;
-    private final double radius = 30;
-    private final double arrowHeadLength = 5;
+    private final double radius = 20;
 
     public WatchHere(){}
 

@@ -30,7 +30,7 @@
       </GridPane>
    </bottom>
    <left>
-      <GridPane fx:id="toolSelector" hgap="5.0" prefHeight="507.0" prefWidth="195.0" vgap="5.0" BorderPane.alignment="CENTER">
+      <GridPane fx:id="toolSelector" hgap="5.0" prefHeight="767.0" prefWidth="332.0" vgap="5.0" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -48,18 +48,21 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </left>
    <center>
-      <StackPane prefHeight="901.0" prefWidth="1087.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="750.0" prefWidth="950.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="mapViewer" prefHeight="741.0" prefWidth="1069.0">
+            <Pane fx:id="mapViewer" prefHeight="750.0" prefWidth="950.0">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor>
             </Pane>
-            <Canvas fx:id="canvas" height="741.0" width="1069.0">
+            <Canvas fx:id="canvas" height="750.0" width="950.0">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor>

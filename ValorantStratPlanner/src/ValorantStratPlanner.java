@@ -1,3 +1,4 @@
+import DataLayer.DataController;
 import Main.AppController;
 import MenuScreen.MenuScreen;
 import StratEditor.StratEditor;
@@ -58,6 +59,10 @@ public class ValorantStratPlanner extends Application {
         appController.setStage(stage);
         appController.setMenuScreen(menuScreen);
         appController.setMenuScreenScene(menuScreenScene);
+
+        //initialize data controller
+        DataController data = new DataController();
+        appController.setData(data);
 
         //set the initial scene
         stage.setScene(menuScreenScene);
