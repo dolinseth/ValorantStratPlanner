@@ -6,7 +6,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class Line extends TwoPointStratElement{
-    private double x1, y1, x2, y2;
     private Color color = Color.YELLOW;
 
     public Line(){}

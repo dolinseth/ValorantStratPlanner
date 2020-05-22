@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StratEditor.StratEditor">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StratEditor.StratEditor">
    <bottom>
       <GridPane fx:id="menuButtons" hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="478.0" BorderPane.alignment="CENTER">
          <children>
@@ -55,14 +55,14 @@
       </GridPane>
    </left>
    <center>
-      <StackPane prefHeight="750.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="950.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="mapViewer" prefHeight="750.0" prefWidth="950.0">
+            <Pane fx:id="mapViewer" prefHeight="950.0" prefWidth="950.0">
                <cursor>
-                  <Cursor fx:constant="CROSSHAIR" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Pane>
-            <Canvas fx:id="canvas" height="750.0" width="950.0">
+            <Canvas fx:id="canvas" height="950.0" width="950.0">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor>
