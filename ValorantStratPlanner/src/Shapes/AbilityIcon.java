@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 public class AbilityIcon extends Shape{
     private double x, y;
     private String ability;
-    private final double size = 20;
+    private final double size = 30;
 
     public AbilityIcon(String ability) {
         this.ability = ability;

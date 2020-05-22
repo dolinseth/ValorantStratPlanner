@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,8 +18,8 @@ import java.util.ArrayList;
 import Main.AppController;
 import javafx.scene.paint.Color;
 
-import static StratEditor.CharacterAbility.areaDenialRadius;
-import static StratEditor.CharacterAbility.visionBlockRadius;
+import static StratElements.CharacterAbility.areaDenialRadius;
+import static StratElements.CharacterAbility.visionBlockRadius;
 
 public class StratEditor {
     //FXML defined buttons and panes
@@ -48,7 +47,6 @@ public class StratEditor {
     public enum Map {BIND, SPLIT, HAVEN};
     private Map curMap;
     private ArrayList<StratElement> elements = new ArrayList<StratElement>();
-//    private DrawingController drawingController;
     private TwoPointStratElement curElement;
     private ArrayList<Button> toolButtons;
 
@@ -207,7 +205,7 @@ public class StratEditor {
 
     private void orbitalStrikeButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.ORBITAL_STRIKE);
-        ab.addAdditionalShape(new Circle(50, Color.RED, 0.3));
+        ab.addAdditionalShape(new Circle(100, Color.RED, 0.3));
         twoPointDraggableElementHandler(ab, this::orbitalStrikeButtonHandler);
     }
 
@@ -393,7 +391,7 @@ public class StratEditor {
 
     private void slowOrbButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SLOW_ORB);
-        ab.addAdditionalShape(new Circle(50, Color.LIGHTBLUE, 0.3));
+        ab.addAdditionalShape(new Circle(62, Color.CYAN, 0.3));
         twoPointDraggableElementHandler(ab, this::slowOrbButtonHandler);
     }
 

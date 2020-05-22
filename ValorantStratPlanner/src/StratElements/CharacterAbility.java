@@ -1,4 +1,4 @@
-package StratEditor;
+package StratElements;
 
 import DataLayer.DataController;
 import Main.AppController;
@@ -20,8 +20,8 @@ public class CharacterAbility extends TwoPointStratElement{
     private Color color = Color.YELLOW;
     private String ability;
     private ArrayList<Shape> additionalShapes;
-    public static final double visionBlockRadius = 20;
-    public static final double areaDenialRadius = 15;
+    public static final double visionBlockRadius = 47;
+    public static final double areaDenialRadius = 47;
 
     /**
      * NOTE TO SELF
@@ -67,5 +67,9 @@ public class CharacterAbility extends TwoPointStratElement{
         icon.draw(gc);
         Shapes.Line.draw(gc, x1, y1, x2, y2, color);
         additionalShapes.stream().forEach(s -> s.draw(gc));
+    }
+
+    public String getAbility() {
+        return ability;
     }
 }
