@@ -49,6 +49,7 @@ public class Strategy {
 
     public ArrayList<StratElement> deSerialize(){
         //TODO implement this method
+        return null;
     }
 
     public void importJSON(String filepath){

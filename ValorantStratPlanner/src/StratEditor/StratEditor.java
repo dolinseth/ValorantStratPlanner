@@ -306,7 +306,7 @@ public class StratEditor {
 
     private void faultLineButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.FAULT_LINE);
-        ab.addAdditionalShape(new Rectangle(15, Color.LIGHTBLUE, 0.5));
+        ab.addAdditionalShape(new Rectangle(15, Color.BLUE, 0.3));
         twoPointDraggableElementHandler(ab, this::faultLineButtonHandler);
     }
 
@@ -319,7 +319,7 @@ public class StratEditor {
     private void afterShockButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.AFTERSHOCK);
         //arc class could be good here too, but for now just a red rectangle
-        ab.addAdditionalShape(new Rectangle(10, Color.RED, 0.5));
+        ab.addAdditionalShape(new Rectangle(10, Color.RED, 0.3));
         twoPointDraggableElementHandler(ab, this::afterShockButtonHandler);
     }
 

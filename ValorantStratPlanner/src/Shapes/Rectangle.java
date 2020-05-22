@@ -15,14 +15,10 @@ public class Rectangle extends Shape{
     }
 
     public void draw(GraphicsContext gc){
-        double rectX1, rectY1, rectX2, rectY2;
-        double theta = Math.atan2(y2 - y1, x2 - x1);
-        theta += Math.PI / 4.0;
-        rectY1 = Math.sin(theta)*width;
-        rectY2 = -Math.sin(theta)*width;
-        rectX1 = Math.cos(theta)*width;
-        rectX2 = -Math.cos(theta)*width;
-        gc.setFill(color);
-        gc.fillRect(rectX1, rectX2, rectY1, rectY2);
+        double oldWidth = gc.getLineWidth();
+        gc.setLineWidth(width);
+        gc.setStroke(color);
+        gc.strokeLine(x1, y1, x2, y2);
+        gc.setLineWidth(oldWidth);
     }
 }
