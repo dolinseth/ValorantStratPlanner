@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -85,19 +86,6 @@ public class StratEditor {
         //create list to store the buttons in
         toolButtons = new ArrayList<Button>();
 
-        //create line drawing button
-        Button line = new Button("Line");
-        formatToolButton(line);
-        line.setOnAction(e -> lineButtonHandler());
-        toolButtons.add(line);
-
-        //create watch here indicator
-        Button watchHere = new Button("Watch");
-        formatToolButton(watchHere);
-        watchHere.setOnAction(e -> watchHereButtonHandler());
-        toolButtons.add(watchHere);
-
-
         /*
         ABILITY BUTTON HANDLER INITIALIZATION
          */
@@ -125,43 +113,49 @@ public class StratEditor {
         makeAbilityButton(DataController.Ability.ROLLING_THUNDER, e -> rollingThunderButtonHandler());
         makeAbilityButton(DataController.Ability.AFTERSHOCK, e -> afterShockButtonHandler());
         makeAbilityButton(DataController.Ability.FLASHPOINT, e -> flashpointButtonHandler());
-//        makeAbilityButton(DataController.Ability.SKY_SMOKE, e -> skySmokeButtonHandler());
-//        makeAbilityButton(DataController.Ability.SKY_SMOKE, e -> skySmokeButtonHandler());
-//        makeAbilityButton(DataController.Ability.SKY_SMOKE, e -> skySmokeButtonHandler());
-//        makeAbilityButton(DataController.Ability.SKY_SMOKE, e -> skySmokeButtonHandler());
+        makeAbilityButton(DataController.Ability.TOXIC_SCREEN, e -> toxicScreenButtonHandler());
+        makeAbilityButton(DataController.Ability.VIPERS_PIT, e -> vipersPitButtonHandler());
+        makeAbilityButton(DataController.Ability.SNAKE_BITE, e -> snakeBiteButtonHandler());
+        makeAbilityButton(DataController.Ability.POISON_CLOUD, e -> poisonCloudButtonHandler());
+        makeAbilityButton(DataController.Ability.HOT_HANDS, e -> hotHandsButtonHandler());
+        makeAbilityButton(DataController.Ability.RUN_IT_BACK, e -> runItBackButtonHandler());
+        makeAbilityButton(DataController.Ability.BLAZE, e -> blazeButtonHandler());
+        makeAbilityButton(DataController.Ability.CURVEBALL, e -> curveballButtonHandler());
+        makeAbilityButton(DataController.Ability.HEALING_ORB, e -> healingOrbButtonHandler());
+        makeAbilityButton(DataController.Ability.RESURRECTION, e -> resurrectionButtonHandler());
+        makeAbilityButton(DataController.Ability.BARRIER_ORB, e -> barrierOrbButtonHandler());
+        makeAbilityButton(DataController.Ability.SLOW_ORB, e -> slowOrbButtonHandler());
+        makeAbilityButton(DataController.Ability.RECON_BOLT, e -> reconBoltButtonHandler());
+        makeAbilityButton(DataController.Ability.HUNTERS_FURY, e -> huntersFuryButtonHandler());
+        makeAbilityButton(DataController.Ability.OWL_DRONE, e -> owlDroneButtonHandler());
+        makeAbilityButton(DataController.Ability.SHOCK_BOLT, e -> shockBoltButtonHandler());
 
 
-//        ArrayList<String> simpleAbilities = new ArrayList<String>(Arrays.asList(
-//                "Sky_Smoke", "Orbital_Strike", "Stim_Beacon", "Incendiary",
-//                "Paint_Shells", "Showstopper", "Boom_Bot", "Blast_Pack",
-//                "Spycam", "Neural_Theft", "Tripwire", "Cyber_Cage",
-//                "Tailwind", "Bladestorm", "Cloudburst", "Updraft",
-//                "Dark_Cover", "From_the_Shadows", "Shrouded_Step", "Paranoia",
-//                "Fault_Line", "Rolling_Thunder", "Aftershock", "Flashpoint",
-//                "Toxic_Screen", "Vipers_Pit", "Snake_Bite", "Poison_Cloud",
-//                "Hot_Hands", "Run_it_Back", "Blaze", "Curveball",
-//                "Healing_Orb", "Resurrection", "Barrier_Orb", "Slow_Orb",
-//                "Recon_Bolt", "Hunters_Fury", "Owl_Drone", "Shock_Bolt"
-//        ));
-//        simpleAbilities.stream().limit(1).forEach(ability -> {
-//            Button b = new Button(ability.replace("_", " "));
-//            formatToolButton(b);
-//            b.setOnAction(e -> {
-//
-//            });
-//            toolButtons.add(b);
-//        });
+        //create line drawing button
+        Button line = new Button("Line");
+        formatToolButton(line);
+        line.setOnAction(e -> lineButtonHandler());
+        toolButtons.add(line);
 
+        //create watch here indicator
+        Button watchHere = new Button("Watch");
+        formatToolButton(watchHere);
+        watchHere.setOnAction(e -> watchHereButtonHandler());
+        toolButtons.add(watchHere);
 
         //add all buttons to the tool selector panel
         int numColumns = toolSelector.getColumnCount();
         for(int i = 0; i < toolButtons.size(); i++){
-            toolSelector.add(toolButtons.get(i), i % numColumns, i / numColumns);
+            toolSelector.add(toolButtons.get(i), i % (numColumns - 1) + 1, i / (numColumns - 1));
         }
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setStroke(Color.YELLOW);
-        gc.strokeLine(0,0,100,100);
+        String[] characterNames = {"Brimstone", "Raze", "Cypher", "Jett", "Omen", "Breach", "Viper", "Phoenix", "Sage", "Sova"};
+        for(int i = 0; i < characterNames.length; i++){
+            ImageView iconHolder = new ImageView(appController.getData().getCharacterIcon(characterNames[i]));
+            toolSelector.getChildren().add(iconHolder);
+            GridPane.setColumnIndex(iconHolder, 0);
+            GridPane.setRowIndex(iconHolder, i);
+        }
     }
 
     private void makeAbilityButton(DataController.Ability ability, EventHandler<ActionEvent> eventHandler){
@@ -198,6 +192,12 @@ public class StratEditor {
     private void lineButtonHandler(){
         twoPointDraggableElementHandler(new Line(), this::lineButtonHandler);
     }
+
+
+    /**
+     *  button handlers for character abilities
+     *
+     */
 
     private void skySmokeButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SKY_SMOKE);
@@ -308,7 +308,7 @@ public class StratEditor {
 
     private void faultLineButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.FAULT_LINE);
-        ab.addAdditionalShape(new Rectangle(10, Color.LIGHTBLUE, 0.5));
+        ab.addAdditionalShape(new Rectangle(15, Color.LIGHTBLUE, 0.5));
         twoPointDraggableElementHandler(ab, this::faultLineButtonHandler);
     }
 
@@ -328,6 +328,96 @@ public class StratEditor {
     private void flashpointButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.FLASHPOINT);
         twoPointDraggableElementHandler(ab, this::flashpointButtonHandler);
+    }
+
+    private void toxicScreenButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.TOXIC_SCREEN);
+        ab.addAdditionalShape(new Rectangle(10, Color.GREEN, 0.5));
+        twoPointDraggableElementHandler(ab, this::toxicScreenButtonHandler);
+    }
+
+    private void vipersPitButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.VIPERS_PIT);
+        twoPointDraggableElementHandler(ab, this::vipersPitButtonHandler);
+    }
+
+    private void snakeBiteButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.SNAKE_BITE);
+        ab.addAdditionalShape(new Circle(areaDenialRadius, Color.GREEN, 0.3));
+        twoPointDraggableElementHandler(ab, this::snakeBiteButtonHandler);
+    }
+
+    private void poisonCloudButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.POISON_CLOUD);
+        ab.addAdditionalShape(new Circle(visionBlockRadius, Color.GREEN, 0.3));
+        twoPointDraggableElementHandler(ab, this::poisonCloudButtonHandler);
+    }
+
+    private void hotHandsButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.HOT_HANDS);
+        ab.addAdditionalShape(new Circle(areaDenialRadius, Color.ORANGERED, 0.3));
+        twoPointDraggableElementHandler(ab, this::hotHandsButtonHandler);
+    }
+
+    private void runItBackButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.RUN_IT_BACK);
+        twoPointDraggableElementHandler(ab, this::runItBackButtonHandler);
+    }
+
+    private void blazeButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.BLAZE);
+        ab.addAdditionalShape(new Rectangle(10, Color.ORANGERED, 0.3));
+        twoPointDraggableElementHandler(ab, this::blazeButtonHandler);
+    }
+
+    private void curveballButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.CURVEBALL);
+        //add a drawable arc class to represent the path of the curveball
+        twoPointDraggableElementHandler(ab, this::curveballButtonHandler);
+    }
+
+    private void healingOrbButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.HEALING_ORB);
+        twoPointDraggableElementHandler(ab, this::healingOrbButtonHandler);
+    }
+
+    private void resurrectionButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.RESURRECTION);
+        twoPointDraggableElementHandler(ab, this::resurrectionButtonHandler);
+    }
+
+    private void barrierOrbButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.BARRIER_ORB);
+        twoPointDraggableElementHandler(ab, this::barrierOrbButtonHandler);
+    }
+
+    private void slowOrbButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.SLOW_ORB);
+        //add a rounded rectangle or something to show the area of effect
+        twoPointDraggableElementHandler(ab, this::slowOrbButtonHandler);
+    }
+
+    private void reconBoltButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.RECON_BOLT);
+        //add a dashed circle or stroke circle to show scan area
+        twoPointDraggableElementHandler(ab, this::reconBoltButtonHandler);
+    }
+
+    private void huntersFuryButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.HUNTERS_FURY);
+        //add decorator rectangles to show where it gets shot once those have been implemented
+        twoPointDraggableElementHandler(ab, this::huntersFuryButtonHandler);
+    }
+
+    private void owlDroneButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.OWL_DRONE);
+        twoPointDraggableElementHandler(ab, this::owlDroneButtonHandler);
+    }
+
+    private void shockBoltButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.SHOCK_BOLT);
+        ab.addAdditionalShape(new Circle(20, Color.BLUE, 0.3));
+        twoPointDraggableElementHandler(ab, this::shockBoltButtonHandler);
     }
 
     private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
@@ -393,7 +483,7 @@ public class StratEditor {
      * @param b - the button to format
      */
     private void formatToolButton(Button b){
-        b.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+//        b.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
         b.setPrefSize(1000, 1000);
     }
 

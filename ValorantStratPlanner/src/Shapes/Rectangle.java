@@ -16,7 +16,7 @@ public class Rectangle extends Shape{
 
     public void draw(GraphicsContext gc){
         double rectX1, rectY1, rectX2, rectY2;
-        double theta = Math.atan2(y2 -y1, x2 - x1);
+        double theta = Math.atan2(y2 - y1, x2 - x1);
         theta += Math.PI / 4.0;
         rectY1 = Math.sin(theta)*width;
         rectY2 = -Math.sin(theta)*width;

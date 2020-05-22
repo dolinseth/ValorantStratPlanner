@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class AbilityImageStore {
-    private HashMap<String, Image> images = new HashMap<String, Image>();
-    private String imageFolderPath;
+public class AbilityImageStore extends ImageStore{
 
     public AbilityImageStore(String imageFolderPath){
         this.imageFolderPath = imageFolderPath;
@@ -33,13 +31,7 @@ public class AbilityImageStore {
                 "Recon_Bolt", "Hunters_Fury", "Owl_Drone", "Shock_Bolt"
 
         ));
-        abilities.forEach(ability -> {
-            String path = (imageFolderPath.startsWith("/") ? "" : "/") + imageFolderPath + (imageFolderPath.endsWith("/") ? "" : "/") + ability + ".png";
-            URL url = getClass().getResource(path);
-            String urlStr = url.toString();
-            Image i = new Image(urlStr, 32, 32, true, false);
-            images.put(ability.toLowerCase(), i);
-        });
+        loadImageSet(abilities, ".png");
     }
 
     /**

@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 
 public class DataController {
     private AbilityImageStore abilityImages;
+    private CharacterImageStore characterImages;
+
     public enum Ability {
         SKY_SMOKE, ORBITAL_STRIKE, STIM_BEACON, INCENDIARY,
         PAINT_SHELLS, SHOWSTOPPER, BOOM_BOT, BLAST_PACK,
@@ -17,10 +19,16 @@ public class DataController {
         RECON_BOLT, HUNTERS_FURY, OWL_DRONE, SHOCK_BOLT
     };
 
+    public enum Character {
+        BRIMSTONE, RAZE, CYPHER, JETT, OMEN, BREACH, VIPER, PHOENIX, SAGE, SOVA
+    };
+
     //Default constructor, initializes lists
     public DataController(){
         abilityImages = new AbilityImageStore("AbilityImages");
         abilityImages.loadImages();
+        characterImages = new CharacterImageStore("CharacterIcons");
+        characterImages.loadImages();
     }
 
     /**
@@ -31,6 +39,14 @@ public class DataController {
      */
     public Image getAbilityImage(Ability ability){
         return abilityImages.getAbilityImage(ability.toString());
+    }
+
+    public Image getCharacterIcon(Character character){
+        return characterImages.getCharacterIcon(character);
+    }
+
+    public Image getCharacterIcon(String charName){
+        return characterImages.getCharacterIcon(charName);
     }
 
     /**
