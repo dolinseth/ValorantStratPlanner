@@ -159,7 +159,7 @@ public class StratEditor {
     }
 
     private void makeAbilityButton(DataController.Ability ability, EventHandler<ActionEvent> eventHandler){
-        Button ret = new Button(ability.toString());
+        Button ret = new Button(appController.getData().getAbilityName(ability));
         formatToolButton(ret);
         ret.setOnAction(eventHandler);
         toolButtons.add(ret);
@@ -393,7 +393,7 @@ public class StratEditor {
 
     private void slowOrbButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SLOW_ORB);
-        //add a rounded rectangle or something to show the area of effect
+        ab.addAdditionalShape(new Circle(50, Color.LIGHTBLUE, 0.3));
         twoPointDraggableElementHandler(ab, this::slowOrbButtonHandler);
     }
 
