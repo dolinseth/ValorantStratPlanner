@@ -252,7 +252,7 @@ public class StratEditor {
     }
 
     private void tripWireButtonHandler(){
-        CharacterAbility ab = new CharacterAbility(DataController.Ability.NEURAL_THEFT);
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.TRIPWIRE);
         twoPointDraggableElementHandler(ab, this::tripWireButtonHandler);
     }
 
