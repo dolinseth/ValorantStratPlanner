@@ -1,16 +1,17 @@
 package Shapes;
 
+import StratElements.TwoPointStratElement;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Circle extends Shape{
+public class Circle extends ElementDecorator {
     private double radius;
-    private Color color;
 
-    public Circle(double radius, Color color, double alpha) {
+    public Circle(double radius, Color color, double alpha, Type type) {
         this.radius = radius;
         this.color = color;
         this.alpha = alpha;
+        this.type = type;
     }
 
     public void draw(GraphicsContext gc){

@@ -2,6 +2,7 @@ package StratEditor;
 
 import DataLayer.DataController;
 import Shapes.Circle;
+import Shapes.ElementDecorator;
 import Shapes.Rectangle;
 import StratElements.*;
 import javafx.event.ActionEvent;
@@ -199,13 +200,13 @@ public class StratEditor {
 
     private void skySmokeButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SKY_SMOKE);
-        ab.addAdditionalShape(new Circle(visionBlockRadius, Color.DARKGRAY, 0.3));
+        ab.addDecorator(new Circle(visionBlockRadius, Color.DARKGRAY, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::skySmokeButtonHandler);
     }
 
     private void orbitalStrikeButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.ORBITAL_STRIKE);
-        ab.addAdditionalShape(new Circle(100, Color.RED, 0.3));
+        ab.addDecorator(new Circle(100, Color.RED, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::orbitalStrikeButtonHandler);
     }
 
@@ -216,7 +217,7 @@ public class StratEditor {
 
     private void incendiaryButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.INCENDIARY);
-        ab.addAdditionalShape(new Circle(areaDenialRadius, Color.RED, 0.3));
+        ab.addDecorator(new Circle(areaDenialRadius, Color.RED, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::incendiaryButtonHandler);
     }
 
@@ -232,7 +233,7 @@ public class StratEditor {
 
     private void boomBotButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.BOOM_BOT);
-        ab.addAdditionalShape(new Rectangle(5, Color.LIGHTGRAY, 0.3));
+        ab.addDecorator(new Rectangle(5, Color.LIGHTGRAY, 0.3, ElementDecorator.Type.START_TO_END));
         twoPointDraggableElementHandler(ab, this::boomBotButtonHandler);
     }
 
@@ -258,7 +259,7 @@ public class StratEditor {
 
     private void cyberCageButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.CYBER_CAGE);
-        ab.addAdditionalShape(new Circle(visionBlockRadius, Color.WHITE, 0.3));
+        ab.addDecorator(new Circle(visionBlockRadius, Color.WHITE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::cyberCageButtonHandler);
     }
 
@@ -274,7 +275,7 @@ public class StratEditor {
 
     private void cloudBurstButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.CLOUDBURST);
-        ab.addAdditionalShape(new Circle(visionBlockRadius, Color.LIGHTGRAY, 0.3));
+        ab.addDecorator(new Circle(visionBlockRadius, Color.LIGHTGRAY, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::cloudBurstButtonHandler);
     }
 
@@ -285,7 +286,7 @@ public class StratEditor {
 
     private void darkCoverButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.DARK_COVER);
-        ab.addAdditionalShape(new Circle(visionBlockRadius, Color.PURPLE, 0.3));
+        ab.addDecorator(new Circle(visionBlockRadius, Color.PURPLE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::darkCoverButtonHandler);
     }
 
@@ -306,7 +307,7 @@ public class StratEditor {
 
     private void faultLineButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.FAULT_LINE);
-        ab.addAdditionalShape(new Rectangle(15, Color.BLUE, 0.3));
+        ab.addDecorator(new Rectangle(15, Color.BLUE, 0.3, ElementDecorator.Type.START_TO_END));
         twoPointDraggableElementHandler(ab, this::faultLineButtonHandler);
     }
 
@@ -319,7 +320,7 @@ public class StratEditor {
     private void afterShockButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.AFTERSHOCK);
         //arc class could be good here too, but for now just a red rectangle
-        ab.addAdditionalShape(new Rectangle(10, Color.RED, 0.3));
+        ab.addDecorator(new Rectangle(10, Color.RED, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::afterShockButtonHandler);
     }
 
@@ -330,7 +331,7 @@ public class StratEditor {
 
     private void toxicScreenButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.TOXIC_SCREEN);
-        ab.addAdditionalShape(new Rectangle(10, Color.GREEN, 0.5));
+        ab.addDecorator(new Rectangle(10, Color.GREEN, 0.5, ElementDecorator.Type.START_TO_END));
         twoPointDraggableElementHandler(ab, this::toxicScreenButtonHandler);
     }
 
@@ -341,19 +342,19 @@ public class StratEditor {
 
     private void snakeBiteButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SNAKE_BITE);
-        ab.addAdditionalShape(new Circle(areaDenialRadius, Color.GREEN, 0.3));
+        ab.addDecorator(new Circle(areaDenialRadius, Color.GREEN, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::snakeBiteButtonHandler);
     }
 
     private void poisonCloudButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.POISON_CLOUD);
-        ab.addAdditionalShape(new Circle(visionBlockRadius, Color.GREEN, 0.3));
+        ab.addDecorator(new Circle(visionBlockRadius, Color.GREEN, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::poisonCloudButtonHandler);
     }
 
     private void hotHandsButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.HOT_HANDS);
-        ab.addAdditionalShape(new Circle(areaDenialRadius, Color.ORANGERED, 0.3));
+        ab.addDecorator(new Circle(areaDenialRadius, Color.ORANGERED, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::hotHandsButtonHandler);
     }
 
@@ -364,7 +365,7 @@ public class StratEditor {
 
     private void blazeButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.BLAZE);
-        ab.addAdditionalShape(new Rectangle(10, Color.ORANGERED, 0.3));
+        ab.addDecorator(new Rectangle(10, Color.ORANGERED, 0.3, ElementDecorator.Type.START_TO_END));
         twoPointDraggableElementHandler(ab, this::blazeButtonHandler);
     }
 
@@ -391,7 +392,7 @@ public class StratEditor {
 
     private void slowOrbButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SLOW_ORB);
-        ab.addAdditionalShape(new Circle(62, Color.CYAN, 0.3));
+        ab.addDecorator(new Circle(62, Color.CYAN, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::slowOrbButtonHandler);
     }
 
@@ -414,7 +415,7 @@ public class StratEditor {
 
     private void shockBoltButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SHOCK_BOLT);
-        ab.addAdditionalShape(new Circle(20, Color.BLUE, 0.3));
+        ab.addDecorator(new Circle(20, Color.BLUE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::shockBoltButtonHandler);
     }
 

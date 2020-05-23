@@ -1,16 +1,9 @@
 package StratElements;
 
 import DataLayer.DataController;
-import Main.AppController;
-import Records.Point;
 import Shapes.AbilityIcon;
-import Shapes.Circle;
-import Shapes.Line;
-import Shapes.Shape;
-import StratElements.StratElement;
-import StratElements.TwoPointStratElement;
+import Shapes.ElementDecorator;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -19,7 +12,7 @@ public class CharacterAbility extends TwoPointStratElement{
     private AbilityIcon icon;
     private Color color = Color.YELLOW;
     private String ability;
-    private ArrayList<Shape> additionalShapes;
+    private ArrayList<ElementDecorator> decorators;
     public static final double visionBlockRadius = 47;
     public static final double areaDenialRadius = 47;
 
@@ -42,9 +35,10 @@ public class CharacterAbility extends TwoPointStratElement{
 
 
     public CharacterAbility(Color color, String ability){
-        icon = new AbilityIcon(ability);
+        icon = new AbilityIcon(ability, ElementDecorator.Type.START_POINT);
+        icon.setParent(this);
         this.color = color;
-        additionalShapes = new ArrayList<>();
+        decorators = new ArrayList<>();
     }
 
     public CharacterAbility(String ability){
@@ -55,18 +49,20 @@ public class CharacterAbility extends TwoPointStratElement{
         this(Color.YELLOW, ability.toString());
     }
 
-    public void addAdditionalShape(Shape shape){
-        additionalShapes.add(shape);
+    public void addDecorator(ElementDecorator elementDecorator){
+        elementDecorator.setParent(this);
+        decorators.add(elementDecorator);
     }
 
     public void draw(GraphicsContext gc){
-        additionalShapes.stream().forEach(s -> {
-            s.setCoords(x1, y1, x2, y2);
+        decorators.stream().forEach(s -> {
+            s.setCoordsFromParent();
         });
         icon.setCoords(x1, y1);
         icon.draw(gc);
-        Shapes.Line.draw(gc, x1, y1, x2, y2, color);
-        additionalShapes.stream().forEach(s -> s.draw(gc));
+        gc.setStroke(color);
+        gc.strokeLine(x1, y1, x2, y2);
+        decorators.stream().forEach(s -> s.draw(gc));
     }
 
     public String getAbility() {
