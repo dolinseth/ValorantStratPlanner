@@ -1,0 +1,11 @@
+.././metadata/*
+../.recommenders/*
+../EclipseStuff/*
+../FromMeToYou/*
+../LetterDistribution/*
+../MineSweeper/*
+../RoboticsArm/*
+.idea/*
+ValorantStratPlanner.iml
+lib/*
+out/*
