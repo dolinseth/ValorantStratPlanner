@@ -59,4 +59,8 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     public void setParent(TwoPointStratElement parent){
         this.parent = parent;
     }
+
+    public TwoPointStratElement getParent(){
+        return parent;
+    }
 }

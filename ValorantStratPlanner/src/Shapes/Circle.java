@@ -15,11 +15,11 @@ public class Circle extends ElementDecorator {
     }
 
     public void draw(GraphicsContext gc){
-        if(x2 != 0 || y2 != 0) {
+        if(x1 != 0 || y1 != 0) {
             double oldAlpha = gc.getGlobalAlpha();
             gc.setGlobalAlpha(alpha);
             gc.setFill(color);
-            gc.fillOval(x2 - radius / 2, y2 - radius / 2, radius, radius);
+            gc.fillOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
             gc.setGlobalAlpha(oldAlpha);
         }
     }
