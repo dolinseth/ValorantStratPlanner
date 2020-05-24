@@ -541,7 +541,7 @@ public class StratEditor {
     @FXML
     private void goToMainMenu(){
         clearStrat();
-        appController.getStage().setScene(appController.getMenuScreenScene());
+        appController.setSceneToMenu();
     }
 
     /*

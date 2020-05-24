@@ -4,7 +4,9 @@ import DataLayer.AbilityImageStore;
 import DataLayer.DataController;
 import MenuScreen.MenuScreen;
 import StratEditor.StratEditor;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class AppController {
@@ -28,6 +30,28 @@ public class AppController {
             appController = new AppController();
         }
         return appController;
+    }
+
+    private void maximizeWindow(){
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        Stage stage = AppController.getInstance().getStage();
+
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
+    }
+
+    public void setSceneToMenu(){
+        stage.setWidth(600);
+        stage.setHeight(310);
+        stage.setScene(menuScreenScene);
+    }
+
+    public void setSceneToStratEditor(){
+        maximizeWindow();
+        stage.setScene(stratEditorScene);
     }
 
     /**
