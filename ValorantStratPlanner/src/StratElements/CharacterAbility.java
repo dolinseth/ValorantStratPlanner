@@ -17,23 +17,10 @@ public class CharacterAbility extends TwoPointStratElement{
     public static final double areaDenialRadius = 47;
 
     /**
-     * NOTE TO SELF
-     * Try to implement a system for adding shapes with additional points
-     * would allow things like setting the direction that a cypher cam is looking/shooting
-     * could work by having a list of objects that contain [a point, a shape/list of shapes to draw, and a maximum distance]
-     * could probably actually be an extension of the CharacterAbility class so we get color and shit
-     * and then add additional shapes and give it no icon,
-     *
-     *
-     * also give the option for the arrow to have a max distance that can be be set so that the line
-     * only extends that far, like for demonstrating how far you can get with tailwind, or stun with breach
-     *
+     * default constructor
+     * @param color - the color of the circle/arrow associated with this ability
+     * @param ability - the name of the ability
      */
-
-
-
-
-
     public CharacterAbility(Color color, String ability){
         icon = new AbilityIcon(ability, ElementDecorator.Type.START_POINT);
         icon.setParent(this);
@@ -41,19 +28,37 @@ public class CharacterAbility extends TwoPointStratElement{
         decorators = new ArrayList<>();
     }
 
+    /**
+     * alternate constructor that uses a default color
+     * @param ability - the name of the ability
+     */
     public CharacterAbility(String ability){
         this(Color.YELLOW, ability);
     }
 
+    /**
+     * alternate constructor that uses the enumerated Ability type instead of a string
+     * as well as a default color
+     * @param ability - the name of the ability
+     */
     public CharacterAbility(DataController.Ability ability){
         this(Color.YELLOW, ability.toString());
     }
 
+    /**
+     * adds a new decorator to this ability
+     * @param elementDecorator - the decorator to add
+     */
     public void addDecorator(ElementDecorator elementDecorator){
         elementDecorator.setParent(this);
         decorators.add(elementDecorator);
     }
 
+    /**
+     * implementation of the draw method defined in the abstract class TwoPointStratElement
+     * draws the character ability in the given GraphicsContext
+     * @param gc - the GraphicsContext in which to draw the character ability
+     */
     public void draw(GraphicsContext gc){
         decorators.stream().forEach(ElementDecorator::setCoordsFromParent);
         icon.setCoords(x1, y1);
@@ -62,6 +67,10 @@ public class CharacterAbility extends TwoPointStratElement{
         gc.strokeLine(x1, y1, x2, y2);
         decorators.stream().forEach(s -> s.draw(gc));
     }
+
+    /*
+    GETTERS AND SETTERS
+     */
 
     public String getAbility() {
         return ability;

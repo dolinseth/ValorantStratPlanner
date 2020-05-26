@@ -7,8 +7,11 @@ public class WatchHere extends TwoPointStratElement {
     private Color color = Color.YELLOW;
     private final double radius = 20;
 
-    public WatchHere(){}
-
+    /**
+     * implementation of the draw method defined in the abstract class TwoPointStratElement
+     * draws the WatchHere in the given GraphicsContext
+     * @param gc - the GraphicsContext in which to draw the WatchHere
+     */
     public void draw(GraphicsContext gc){
         gc.setStroke(color);
         gc.strokeOval(x1 - radius / 2, y1 - radius / 2, radius, radius);

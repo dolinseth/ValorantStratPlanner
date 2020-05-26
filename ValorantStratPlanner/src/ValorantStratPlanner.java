@@ -21,6 +21,10 @@ public class ValorantStratPlanner extends Application {
         launch(args);
     }
 
+    /**
+     * called by JavaFX API when the program starts
+     * @param stage - the Stage passed by the JavaFX API
+     */
     public void start(Stage stage){
         //initialize Main.AppController object and set it's stage
         appController = AppController.getInstance();
