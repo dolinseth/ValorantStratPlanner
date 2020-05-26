@@ -18,7 +18,9 @@ public class AppController {
     private Scene menuScreenScene;
     private DataController data;
 
-    //default constructor
+    /**
+     * default constructor, does nothing
+     */
     private AppController(){}
 
     /**
@@ -32,6 +34,9 @@ public class AppController {
         return appController;
     }
 
+    /**
+     * helper method to maximize the window size by setting the stage bounds to the screen bounds
+     */
     private void maximizeWindow(){
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -43,12 +48,18 @@ public class AppController {
         stage.setHeight(bounds.getHeight());
     }
 
+    /**
+     * helper method to set the scene to the menu
+     */
     public void setSceneToMenu(){
         stage.setWidth(600);
         stage.setHeight(310);
         stage.setScene(menuScreenScene);
     }
 
+    /**
+     * helper method to set the scene to the strat editor
+     */
     public void setSceneToStratEditor(){
         maximizeWindow();
         stage.setScene(stratEditorScene);
