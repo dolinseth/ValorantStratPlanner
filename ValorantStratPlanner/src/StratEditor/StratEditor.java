@@ -164,6 +164,7 @@ public class StratEditor {
             toolSelector.add(toolButtons.get(i), i % (numColumns - 1) + 1, i / (numColumns - 1));
         }
 
+        //add the character icons to the tool selector
         String[] characterNames = {"Brimstone", "Raze", "Cypher", "Jett", "Omen", "Breach", "Viper", "Phoenix", "Sage", "Sova"};
         for(int i = 0; i < characterNames.length; i++){
             ImageView iconHolder = new ImageView(appController.getData().getCharacterIcon(characterNames[i]));
@@ -172,7 +173,7 @@ public class StratEditor {
             GridPane.setRowIndex(iconHolder, i);
         }
 
-        //Debug slider handlers
+        //set up the debug sliders and their handlers
         formatDebugSlider(debugSlider1);
         formatDebugSlider(debugSlider2);
         formatDebugSlider(debugSlider3);
@@ -183,11 +184,20 @@ public class StratEditor {
 //        });
     }
 
+    /**
+     * helper method for formatting debug sliders
+     * @param s - the slider to format
+     */
     private void formatDebugSlider(Slider s){
         s.setMin(0);
         s.setMax(1000);
     }
 
+    /**
+     * helper method for creating a button that draws the given ability
+     * @param ability - the ability that the button should draw
+     * @param eventHandler - the handler method to call when this button is pressed
+     */
     private void makeAbilityButton(DataController.Ability ability, EventHandler<ActionEvent> eventHandler){
         Button ret = new Button(appController.getData().getAbilityName(ability));
         formatToolButton(ret);
@@ -198,16 +208,6 @@ public class StratEditor {
     /*
     TOOL BUTTON HANDLERS
      */
-
-    /**
-     * Handler for strat elements that just consist of an image representing the ability
-     * that is placed on the map
-     * @param abilityName - string containing the name of the ability
-     */
-//    private void abilityImageButtonHandler(String abilityName){
-//        AbilityImageStratElement el = new AbilityImageStratElement(abilityName, appController.getData());
-//        onePointElementHandler(el);
-//    }
 
     /**
      * Handler for the indicator to watch a certain locatian
@@ -225,8 +225,7 @@ public class StratEditor {
 
 
     /**
-     *  button handlers for character abilities
-     *
+     * button handlers for character abilities
      */
 
     private void skySmokeButtonHandler(){
@@ -450,6 +449,11 @@ public class StratEditor {
         twoPointDraggableElementHandler(ab, this::shockBoltButtonHandler);
     }
 
+    /**
+     * generic handler for a strat element that consists of two points and updates as the mouse is dragged
+     * @param el - the element to draw/update
+     * @param handler - the handler to call to initialize the element
+     */
     private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
         TwoPointElementBuilder<TwoPointStratElement> eb = new TwoPointElementBuilder<>();
         canvas.setOnMousePressed(e -> {
@@ -474,46 +478,10 @@ public class StratEditor {
     }
 
     /**
-     * generic handler for an element that consists of two points
-     * @param el - the two point element to place on the canvas
-     */
-    private void twoPointElementHandler(TwoPointStratElement el, ButtonHandler handler){
-        TwoPointElementBuilder<TwoPointStratElement> eb = new TwoPointElementBuilder<>();
-        System.out.println("elements: " + elements.size());
-        canvas.setOnMousePressed(e ->{
-            eb.startClick(e);
-            canvas.setOnMousePressed(e2 ->{
-                eb.endClick(e2);
-                eb.formatElement(el);
-                elements.add(el);
-                updateCanvas();
-                handler.handle();
-//                twoPointElementHandler(el, handler);
-            });
-        });
-    }
-
-    /**
-     * generic handler for an element consisting of one point
-     * @param el - the one point element to place on the canvas
-     */
-    private void onePointElementHandler(OnePointStratElement el, ButtonHandler handler){
-        OnePointElementBuilder<OnePointStratElement> eb = new OnePointElementBuilder<>();
-        canvas.setOnMousePressed(e -> {
-            eb.click(e);
-            eb.formatElement(el);
-            elements.add(el);
-            updateCanvas();
-            onePointElementHandler(el, handler);
-        });
-    }
-
-    /**
      * helper method that formats all the tool buttons to be identical
      * @param b - the button to format
      */
     private void formatToolButton(Button b){
-//        b.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
         b.setPrefSize(1000, 1000);
         b.wrapTextProperty().setValue(true);
         b.setTextAlignment(TextAlignment.CENTER);
@@ -534,17 +502,6 @@ public class StratEditor {
             e.draw(gc);
         });
     }
-
-    //DEPRECATED
-//    /**
-//     * helper method for setMapImage that takes in the actual filepath instead of the enumerated map type
-//     * @param imageFileName
-//     */
-//    private void setMapViewerImage(String imageFileName){
-//        String absoluteURL = getClass().getResource("/" + imageFileName).toString();
-//        BackgroundImage mapImage = new BackgroundImage(new Image(absoluteURL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
-//        mapViewer.setBackground(new Background(mapImage));
-//    }
 
     //FXML defined button handlers
     @FXML
