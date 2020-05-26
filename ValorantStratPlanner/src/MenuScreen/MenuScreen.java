@@ -1,5 +1,6 @@
 package MenuScreen;
 
+import DataLayer.DataController;
 import Main.AppController;
 import StratEditor.StratEditor;
 import javafx.fxml.FXML;
@@ -25,19 +26,19 @@ public class MenuScreen {
     //FXML defined button handlers
     @FXML
     private void setMapToBind(){
-        appController.getStratEditor().setMapImage(StratEditor.Map.BIND);
+        appController.getStratEditor().setMapImage(DataController.Map.BIND);
         appController.setSceneToStratEditor();
     }
 
     @FXML
     private void setMapToSplit(){
-        appController.getStratEditor().setMapImage(StratEditor.Map.SPLIT);
+        appController.getStratEditor().setMapImage(DataController.Map.SPLIT);
         appController.setSceneToStratEditor();
     }
 
     @FXML
     private void setMapToHaven(){
-        appController.getStratEditor().setMapImage(StratEditor.Map.HAVEN);
+        appController.getStratEditor().setMapImage(DataController.Map.HAVEN);
         appController.setSceneToStratEditor();
     }
 

@@ -52,6 +52,7 @@ public class AppController {
     public void setSceneToStratEditor(){
         maximizeWindow();
         stage.setScene(stratEditorScene);
+        stratEditor.updateCanvas();
     }
 
     /**

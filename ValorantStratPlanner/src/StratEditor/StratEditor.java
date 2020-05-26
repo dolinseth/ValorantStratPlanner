@@ -9,7 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 
 import Main.AppController;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 import static StratElements.CharacterAbility.areaDenialRadius;
 import static StratElements.CharacterAbility.visionBlockRadius;
@@ -42,38 +45,51 @@ public class StratEditor {
     private Button undoButton;
     @FXML
     private Button mainMenuButton;
+    @FXML
+    private Slider debugSlider1;
+    @FXML
+    private Slider debugSlider2;
+    @FXML
+    private Slider debugSlider3;
 
     //non-FXML fields
     private AppController appController;
-    public enum Map {BIND, SPLIT, HAVEN};
-    private Map curMap;
+    private DataController.Map curMap;
+    private Image mapImage;
     private ArrayList<StratElement> elements = new ArrayList<StratElement>();
     private TwoPointStratElement curElement;
     private ArrayList<Button> toolButtons;
+    private double mapImageSize;
 
     /**
      * To be called when this scene is initialized to setup scene objects at runtime
      */
     public void setup(){
         createToolSelectorButtons();
-//        drawingController = DrawingController.getInstance();
+        updateCanvas();
+
+        //comment these lines to get the debug sliders back
+        debugSlider1.setVisible(false);
+        debugSlider2.setVisible(false);
+        debugSlider3.setVisible(false);
     }
 
     /**
      * Sets the map image that is displayed on the canvas beneath the strats
      * @param map - a StratEditor.Map typed object describing the map to use
      */
-    public void setMapImage(Map map){
+    public void setMapImage(DataController.Map map){
         this.curMap = map;
+        mapImage = appController.getData().getMapImage(map);
         switch (map){
             case BIND:
-                setMapViewerImage("MapImages/Bind.PNG");
+                mapImageSize = 900;
                 break;
             case SPLIT:
-                setMapViewerImage("MapImages/Split.PNG");
+                mapImageSize = 770;
                 break;
             case HAVEN:
-                setMapViewerImage("MapImages/Haven.PNG");
+                mapImageSize = 830;
                 break;
         }
     }
@@ -155,6 +171,21 @@ public class StratEditor {
             GridPane.setColumnIndex(iconHolder, 0);
             GridPane.setRowIndex(iconHolder, i);
         }
+
+        //Debug slider handlers
+        formatDebugSlider(debugSlider1);
+        formatDebugSlider(debugSlider2);
+        formatDebugSlider(debugSlider3);
+//        debugSlider1.valueProperty().addListener((observable, newVal, oldVal) -> {
+//            mapImageSize = newVal.doubleValue();
+//            System.out.println("New map image size = " + mapImageSize);
+//            updateCanvas();
+//        });
+    }
+
+    private void formatDebugSlider(Slider s){
+        s.setMin(0);
+        s.setMax(1000);
     }
 
     private void makeAbilityButton(DataController.Ability ability, EventHandler<ActionEvent> eventHandler){
@@ -484,6 +515,8 @@ public class StratEditor {
     private void formatToolButton(Button b){
 //        b.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
         b.setPrefSize(1000, 1000);
+        b.wrapTextProperty().setValue(true);
+        b.setTextAlignment(TextAlignment.CENTER);
     }
 
     /**
@@ -491,27 +524,27 @@ public class StratEditor {
      * i.e. in the event of a new element being added/removed
      */
     public void updateCanvas(){
-        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.drawImage(mapImage, 0, 0, mapImageSize, mapImageSize);
         if(curElement != null){
-            curElement.draw(canvas.getGraphicsContext2D());
+            curElement.draw(gc);
         }
-//        DrawingController.getInstance().getElements().stream().forEach(e ->{
-//            e.draw(canvas.getGraphicsContext2D());
-//        });
         elements.stream().forEach(e ->{
-            e.draw(canvas.getGraphicsContext2D());
+            e.draw(gc);
         });
     }
 
-    /**
-     * helper method for setMapImage that takes in the actual filepath instead of the enumerated map type
-     * @param imageFileName
-     */
-    private void setMapViewerImage(String imageFileName){
-        String absoluteURL = getClass().getResource("/" + imageFileName).toString();
-        BackgroundImage mapImage = new BackgroundImage(new Image(absoluteURL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
-        mapViewer.setBackground(new Background(mapImage));
-    }
+    //DEPRECATED
+//    /**
+//     * helper method for setMapImage that takes in the actual filepath instead of the enumerated map type
+//     * @param imageFileName
+//     */
+//    private void setMapViewerImage(String imageFileName){
+//        String absoluteURL = getClass().getResource("/" + imageFileName).toString();
+//        BackgroundImage mapImage = new BackgroundImage(new Image(absoluteURL), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
+//        mapViewer.setBackground(new Background(mapImage));
+//    }
 
     //FXML defined button handlers
     @FXML

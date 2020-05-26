@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 public class DataController {
     private AbilityImageStore abilityImages;
     private CharacterImageStore characterImages;
+    private MapImageStore mapImages;
 
     public enum Ability {
         SKY_SMOKE, ORBITAL_STRIKE, STIM_BEACON, INCENDIARY,
@@ -23,12 +24,18 @@ public class DataController {
         BRIMSTONE, RAZE, CYPHER, JETT, OMEN, BREACH, VIPER, PHOENIX, SAGE, SOVA
     };
 
+    public enum Map {
+        BIND, SPLIT, HAVEN
+    };
+
     //Default constructor, initializes lists
     public DataController(){
         abilityImages = new AbilityImageStore("AbilityImages");
         abilityImages.loadImages();
         characterImages = new CharacterImageStore("CharacterIcons");
         characterImages.loadImages();
+        mapImages = new MapImageStore("MapImages");
+        mapImages.loadImages();
     }
 
     /**
@@ -177,6 +184,13 @@ public class DataController {
         return label;
     }
 
+    public Image getMapImage(Map map){
+        return mapImages.getMapImage(map);
+    }
+
+    public Image getMapImage(String mapName){
+        return mapImages.getMapImage(mapName);
+    }
     /**
      * returns an Image containing the icon for the ability with the given name,
      * or null if no image is found associated with that ability name

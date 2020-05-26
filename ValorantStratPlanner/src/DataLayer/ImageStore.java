@@ -9,6 +9,8 @@ import java.util.HashMap;
 public abstract class ImageStore {
     protected HashMap<String, Image> images = new HashMap<>();
     protected String imageFolderPath;
+    protected double prefWidth = 32;
+    protected double prefHeight = 32;
 
     public abstract void loadImages();
 
@@ -22,11 +24,11 @@ public abstract class ImageStore {
             URL url = getClass().getResource(path);
             if(url != null) {
                 String urlStr = url.toString();
-                Image i = new Image(urlStr, 32, 32, true, false);
+                Image i = new Image(urlStr, prefWidth, prefHeight, true, false);
                 images.put(n.toLowerCase(), i);
             }
             else{
-                System.out.println("ERROR: failed to load character icon for " + n);
+                System.out.println("ERROR: failed to load image " + imageFolderPath + "/" + n + fileExtension);
             }
         });
     }

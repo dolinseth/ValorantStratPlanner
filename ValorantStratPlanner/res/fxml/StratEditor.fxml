@@ -30,7 +30,7 @@
       </GridPane>
    </bottom>
    <left>
-      <GridPane fx:id="toolSelector" hgap="5.0" prefHeight="767.0" prefWidth="332.0" vgap="5.0" BorderPane.alignment="CENTER">
+      <GridPane fx:id="toolSelector" hgap="5.0" prefHeight="869.0" prefWidth="453.0" vgap="5.0" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
@@ -71,4 +71,13 @@
          </children>
       </StackPane>
    </center>
+   <right>
+      <FlowPane prefHeight="869.0" prefWidth="249.0" BorderPane.alignment="CENTER">
+         <children>
+            <Slider fx:id="debugSlider1" prefHeight="45.0" prefWidth="184.0" />
+            <Slider fx:id="debugSlider2" prefHeight="45.0" prefWidth="184.0" />
+            <Slider fx:id="debugSlider3" prefHeight="45.0" prefWidth="184.0" />
+         </children>
+      </FlowPane>
+   </right>
 </BorderPane>

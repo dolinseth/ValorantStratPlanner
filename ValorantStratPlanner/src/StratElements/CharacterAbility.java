@@ -55,12 +55,6 @@ public class CharacterAbility extends TwoPointStratElement{
     }
 
     public void draw(GraphicsContext gc){
-        decorators.stream().forEach(eld -> {
-            if(eld.getParent() == null){
-                System.out.println("Parent not properly set on a decorator");
-            }
-            System.out.println("Drawing decorator @" + eld.getX1() + ", " + eld.getY1());
-        });
         decorators.stream().forEach(ElementDecorator::setCoordsFromParent);
         icon.setCoords(x1, y1);
         icon.draw(gc);

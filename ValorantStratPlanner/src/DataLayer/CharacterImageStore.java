@@ -12,16 +12,20 @@ public class CharacterImageStore extends ImageStore{
         this.imageFolderPath = imageFolderPath;
     }
 
-    public void loadImages(){
-        ArrayList<String> charNames = new ArrayList<>(Arrays.asList("Brimstone", "Raze", "Cypher", "Jett", "Omen", "Breach", "Viper", "Phoenix", "Sage", "Sova"));
-        loadImageSet(charNames, ".png");
+    public void loadImages() {
+        if(images.size() == 0) {
+            ArrayList<String> charNames = new ArrayList<>(Arrays.asList("Brimstone", "Raze", "Cypher", "Jett", "Omen", "Breach", "Viper", "Phoenix", "Sage", "Sova"));
+            loadImageSet(charNames, ".png");
+        }
     }
 
     public Image getCharacterIcon(String characterName){
+        loadImages();
         return images.getOrDefault(characterName.toLowerCase(), null);
     }
 
     public Image getCharacterIcon(DataController.Character character){
+        loadImages();
         return images.getOrDefault(character.toString().toLowerCase(), null);
     }
 }
