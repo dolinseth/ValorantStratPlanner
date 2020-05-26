@@ -8,14 +8,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class AbilityImageStore extends ImageStore{
-
+    /**
+     * default constructor
+     * @param imageFolderPath - the path to the folder that contains the character images
+     */
     public AbilityImageStore(String imageFolderPath){
         this.imageFolderPath = imageFolderPath;
     }
 
     /**
-     * Load the images for all the character abilities this function fetches the data
-     * and must be called before the images can be accessed
+     * implementation of loadImages, defined in the abstract class ImageStore
+     * fetches the images so that they don't have to be gotten from disk every time
      */
     public void loadImages(){
         if(images.size() == 0) {
@@ -37,21 +40,12 @@ public class AbilityImageStore extends ImageStore{
     }
 
     /**
-     * returns an Image containing the icon for the ability with the given name,
-     * or null if no image is found associated with that ability name
+     * gets the image for the ability with the given name
      * @param ability - the name of the ability to get the icon for
      * @return Image
      */
     public Image getAbilityImage(String ability){
         loadImages();
         return images.getOrDefault(ability.toLowerCase(), null);
-    }
-
-    /*
-    GETTERS AND SETTERS
-     */
-    public HashMap<String, Image> getImages(){
-        loadImages();
-        return images;
     }
 }

@@ -7,6 +7,7 @@ public class DataController {
     private CharacterImageStore characterImages;
     private MapImageStore mapImages;
 
+    //enumerated type containing every possible character ability
     public enum Ability {
         SKY_SMOKE, ORBITAL_STRIKE, STIM_BEACON, INCENDIARY,
         PAINT_SHELLS, SHOWSTOPPER, BOOM_BOT, BLAST_PACK,
@@ -20,15 +21,19 @@ public class DataController {
         RECON_BOLT, HUNTERS_FURY, OWL_DRONE, SHOCK_BOLT
     };
 
+    //enumerated type containing every possible character
     public enum Character {
         BRIMSTONE, RAZE, CYPHER, JETT, OMEN, BREACH, VIPER, PHOENIX, SAGE, SOVA
     };
 
+    //enumerated type containing every possible map
     public enum Map {
         BIND, SPLIT, HAVEN
     };
 
-    //Default constructor, initializes lists
+    /**
+     * default constructor
+     */
     public DataController(){
         abilityImages = new AbilityImageStore("AbilityImages");
         abilityImages.loadImages();
@@ -48,14 +53,39 @@ public class DataController {
         return abilityImages.getAbilityImage(ability.toString());
     }
 
+    /**
+     * returns an Image containing the icon for the ability with the given name,
+     * or null if no image is found associated with that ability name
+     * @param ability - the name of the ability
+     * @return - an image containing the icon for the given ability
+     */
+    public Image getAbilityImage(String ability){
+        return abilityImages.getAbilityImage(ability);
+    }
+
+    /**
+     * returns an image containing the icon for the character with the given name
+     * @param character - the name of the character
+     * @return - an image containing the icon for the given character
+     */
     public Image getCharacterIcon(Character character){
         return characterImages.getCharacterIcon(character);
     }
 
+    /**
+     * returns an image containing the icon for the character with the given name
+     * @param charName - the name of the character
+     * @return - an image containing the icon for the given character
+     */
     public Image getCharacterIcon(String charName){
         return characterImages.getCharacterIcon(charName);
     }
 
+    /**
+     * translates the enumerated ability type into a string representing the name of the ability
+     * @param ability - the name of the ability
+     * @return - the canonical name of the ability
+     */
     public String getAbilityName(Ability ability){
         String label = "ABILITY NOT FOUND";
         switch(ability){
@@ -184,20 +214,21 @@ public class DataController {
         return label;
     }
 
+    /**
+     * returns an image containing the map with the given name
+     * @param map - the name of the map
+     * @return - an image containing the given map
+     */
     public Image getMapImage(Map map){
         return mapImages.getMapImage(map);
     }
 
+    /**
+     * returns an image containing the map with the given name
+     * @param mapName - the name of the map
+     * @return - an image containing the given map
+     */
     public Image getMapImage(String mapName){
         return mapImages.getMapImage(mapName);
-    }
-    /**
-     * returns an Image containing the icon for the ability with the given name,
-     * or null if no image is found associated with that ability name
-     * @param ability - string containing the name of the ability to get the icon for
-     * @return Image
-     */
-    public Image getAbilityImage(String ability){
-        return abilityImages.getAbilityImage(ability);
     }
 }
