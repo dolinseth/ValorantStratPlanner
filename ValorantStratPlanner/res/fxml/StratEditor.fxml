@@ -55,22 +55,6 @@
          </rowConstraints>
       </GridPane>
    </left>
-   <center>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="950.0" BorderPane.alignment="CENTER">
-         <children>
-            <Pane fx:id="mapViewer" prefHeight="900.0" prefWidth="950.0">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </Pane>
-            <Canvas fx:id="canvas" height="900.0" width="950.0">
-               <cursor>
-                  <Cursor fx:constant="CROSSHAIR" />
-               </cursor>
-            </Canvas>
-         </children>
-      </StackPane>
-   </center>
    <right>
       <FlowPane prefHeight="869.0" prefWidth="249.0" BorderPane.alignment="CENTER">
          <children>
@@ -80,4 +64,11 @@
          </children>
       </FlowPane>
    </right>
+   <center>
+      <Canvas fx:id="canvas" height="900.0" width="950.0" BorderPane.alignment="CENTER">
+         <cursor>
+            <Cursor fx:constant="CROSSHAIR" />
+         </cursor>
+      </Canvas>
+   </center>
 </BorderPane>
