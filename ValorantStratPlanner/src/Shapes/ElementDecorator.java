@@ -10,6 +10,12 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     protected double alpha;
     protected Color color;
 
+    /**
+     * sets the element decorators coordinates, one end is set to the given (x,y) pair
+     * other end is set based on the parent's coordinates and the type
+     * @param x - the x coordinate to set
+     * @param y - the y coordinate to set
+     */
     public void setCoords(double x, double y){
         if(type == Type.END_POINT){
             x1 = parent.getX2();
@@ -39,6 +45,9 @@ public abstract class ElementDecorator extends TwoPointStratElement {
         }
     }
 
+    /**
+     * sets the coordinates based on the parent object and the type
+     */
     public void setCoordsFromParent(){
         if(type == Type.END_POINT || type == Type.END_EXTENDER){
             x1 = parent.getX2();
@@ -55,6 +64,10 @@ public abstract class ElementDecorator extends TwoPointStratElement {
             y2 = parent.getY2();
         }
     }
+
+    /*
+    GETTERS AND SETTERS
+     */
 
     public void setParent(TwoPointStratElement parent){
         this.parent = parent;
