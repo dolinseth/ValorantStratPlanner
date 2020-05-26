@@ -51,10 +51,6 @@ public class MenuScreen {
     GETTERS AND SETTERS
      */
 
-    public AppController getAppController() {
-        return appController;
-    }
-
     public void setAppController(AppController appController) {
         this.appController = appController;
     }
