@@ -1,7 +1,8 @@
-package Shapes;
+package ElementDecorators;
 
 import StratElements.TwoPointStratElement;
 import javafx.scene.paint.Color;
+import org.json.JSONObject;
 
 public abstract class ElementDecorator extends TwoPointStratElement {
     public enum Type {END_POINT, START_POINT, END_EXTENDER, START_EXTENDER, START_TO_END};
@@ -9,6 +10,55 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     TwoPointStratElement parent;
     protected double alpha;
     protected Color color;
+
+    /**
+     * helper method for deserialization, sets the ElementDecorator.Type property based on JSONObject
+     * @param root - the JSONObject that describes the ElementDecorator.Type of this object
+     */
+    public void setPropertiesFromJSON(JSONObject root){
+        String typeStr = root.getString("eldtype");
+        switch(typeStr){
+            case "end_point":
+                type = Type.END_POINT;
+                break;
+            case "start_point":
+                type = Type.START_POINT;
+                break;
+            case "start_extender":
+                type = Type.START_EXTENDER;
+                break;
+            case "end_extender":
+                type = Type.END_EXTENDER;
+                break;
+            case "start_to_end":
+                type = Type.START_TO_END;
+                break;
+        }
+        alpha = root.getDouble("alpha");
+        setCoordsFromJSON(root);
+    }
+
+    public void insertProperties(JSONObject root){
+        insertCoords(root);
+        root.put("alpha", alpha);
+        switch(type){
+            case END_POINT:
+                root.put("type", "end_point");
+                break;
+            case START_POINT:
+                root.put("type", "start_point");
+                break;
+            case START_EXTENDER:
+                root.put("type", "start_extender");
+                break;
+            case END_EXTENDER:
+                root.put("type", "end_extender");
+                break;
+            case START_TO_END:
+                root.put("type", "start_to_end");
+                break;
+        }
+    }
 
     /**
      * sets the element decorators coordinates, one end is set to the given (x,y) pair

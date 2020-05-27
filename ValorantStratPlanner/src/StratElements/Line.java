@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import org.json.JSONObject;
 
 public class Line extends TwoPointStratElement{
     private Color color = Color.YELLOW;
@@ -30,6 +31,14 @@ public class Line extends TwoPointStratElement{
     }
 
     /**
+     * alternate constructor that builds the object from a JSONObject
+     * @param root - the JSONObject to get properties from
+     */
+    public Line(JSONObject root){
+        setPropertiesFromJSON(root);
+    }
+
+    /**
      * implementation of the draw method defined in the abstract class TwoPointStratElement
      * draws the line in the given GraphicsContext
      * @param gc - the GraphicsContext in which to draw the line
@@ -37,6 +46,28 @@ public class Line extends TwoPointStratElement{
     public void draw(GraphicsContext gc){
         gc.setStroke(color);
         gc.strokeLine(x1, y1, x2, y2);
+    }
+
+    /**
+     * converts this object to a JSON string
+     * implementation of method defined in StratElement
+     * @return - the JSONObject representing the object
+     */
+    public JSONObject toJSON(){
+        JSONObject root = new JSONObject();
+        root.put("type", "Line");
+        root.put("color", color.toString());
+        insertProperties(root);
+        return root;
+    }
+
+    /**
+     * imports the properties of this object from a JSON string
+     * implementation of method defined in StratElement
+     * @param root - the JSONObject representing the object
+     */
+    public void importFromJSON(JSONObject root){
+        setPropertiesFromJSON(root);
     }
 
     /*

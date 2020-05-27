@@ -1,9 +1,9 @@
 package StratEditor;
 
 import DataLayer.DataController;
-import Shapes.Circle;
-import Shapes.ElementDecorator;
-import Shapes.Rectangle;
+import ElementDecorators.Circle;
+import ElementDecorators.ElementDecorator;
+import ElementDecorators.Rectangle;
 import StratElements.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

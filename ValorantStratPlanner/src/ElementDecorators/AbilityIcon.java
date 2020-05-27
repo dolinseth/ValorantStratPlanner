@@ -1,9 +1,9 @@
-package Shapes;
+package ElementDecorators;
 
-import DataLayer.DataController;
 import Main.AppController;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.json.JSONObject;
 
 public class AbilityIcon extends ElementDecorator {
     private String ability;
@@ -18,6 +18,37 @@ public class AbilityIcon extends ElementDecorator {
         this.ability = ability;
         this.type = type;
         color = Color.YELLOW;
+        alpha = 1.0;
+    }
+
+    /**
+     * alternate constructor that builds the object from a JSONObject
+     * @param root - the JSONObject to get properties from
+     */
+    public AbilityIcon(JSONObject root){
+        importFromJSON(root);
+    }
+
+    /**
+     * converts this object to a JSON string
+     * implementation of method defined in StratElement
+     * @return - the JSONObject representing the object
+     */
+    public JSONObject toJSON(){
+        JSONObject root = new JSONObject();
+        insertProperties(root);
+        root.put("ability", ability);
+        return root;
+    }
+
+    /**
+     * imports the properties of this object from a JSON string
+     * implementation of method defined in StratElement
+     * @param root - the JSONObject representing the object
+     */
+    public void importFromJSON(JSONObject root){
+        setPropertiesFromJSON(root);
+        ability = root.getString("ability");
     }
 
     /**

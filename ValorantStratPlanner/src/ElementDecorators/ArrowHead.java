@@ -1,9 +1,10 @@
-package StratElements;
+package ElementDecorators;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.json.JSONObject;
 
-public class ArrowHead extends StratElement{
+public class ArrowHead extends ElementDecorator {
     private double x1, y1, x2, y2;
     private Color color;
     private final double lineLength = 10;
@@ -22,6 +23,36 @@ public class ArrowHead extends StratElement{
         this.x2 = x2;
         this.y2 = y2;
         this.color = color;
+        type = Type.START_TO_END;
+    }
+
+    /**
+     * alternate constructor that builds the object from a JSONObject
+     * @param root - the JSONObject to get properties from
+     */
+    public ArrowHead(JSONObject root){
+        importFromJSON(root);
+    }
+
+    /**
+     * converts this object to a JSON string
+     * implementation of method defined in StratElement
+     * @return - the JSONObject representing the object
+     */
+    public JSONObject toJSON(){
+        JSONObject root = new JSONObject();
+        root.put("type", "ArrowHead");
+        insertProperties(root);
+        return root;
+    }
+
+    /**
+     * imports the properties of this object from a JSON string
+     * implementation of method defined in StratElement
+     * @param root - the JSONObject representing the object
+     */
+    public void importFromJSON(JSONObject root){
+        setPropertiesFromJSON(root);
     }
 
     /**

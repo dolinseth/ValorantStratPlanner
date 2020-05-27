@@ -1,8 +1,8 @@
-package Shapes;
+package ElementDecorators;
 
-import StratElements.TwoPointStratElement;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.json.JSONObject;
 
 public class Circle extends ElementDecorator {
     private double radius;
@@ -19,6 +19,36 @@ public class Circle extends ElementDecorator {
         this.color = color;
         this.alpha = alpha;
         this.type = type;
+    }
+
+    /**
+     * alternate constructor that builds the object from a JSONObject
+     * @param root - the JSONObject to get properties from
+     */
+    public Circle(JSONObject root){
+        importFromJSON(root);
+    }
+
+    /**
+     * converts this object to a JSON string
+     * implementation of method defined in StratElement
+     * @return - the JSONObject representing the object
+     */
+    public JSONObject toJSON(){
+        JSONObject root = new JSONObject();
+        insertProperties(root);
+        root.put("radius", radius);
+        return root;
+    }
+
+    /**
+     * imports the properties of this object from a JSON string
+     * implementation of method defined in StratElement
+     * @param root - the JSONObject representing the object
+     */
+    public void importFromJSON(JSONObject root){
+        setPropertiesFromJSON(root);
+        radius = root.getDouble("radius");
     }
 
     /**

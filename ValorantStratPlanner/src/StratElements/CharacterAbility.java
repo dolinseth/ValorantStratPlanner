@@ -1,18 +1,18 @@
 package StratElements;
 
 import DataLayer.DataController;
-import Shapes.AbilityIcon;
-import Shapes.ElementDecorator;
+import ElementDecorators.AbilityIcon;
+import ElementDecorators.ElementDecorator;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class CharacterAbility extends TwoPointStratElement{
     private AbilityIcon icon;
-    private Color color = Color.YELLOW;
+    private Color color;
     private String ability;
-    private ArrayList<ElementDecorator> decorators;
     public static final double visionBlockRadius = 47;
     public static final double areaDenialRadius = 47;
 
@@ -26,6 +26,14 @@ public class CharacterAbility extends TwoPointStratElement{
         icon.setParent(this);
         this.color = color;
         decorators = new ArrayList<>();
+    }
+
+    /**
+     * alternate constructor that builds the object from a JSONObject
+     * @param root - the JSONObject to get properties from
+     */
+    public CharacterAbility(JSONObject root){
+        setPropertiesFromJSON(root);
     }
 
     /**
@@ -46,15 +54,6 @@ public class CharacterAbility extends TwoPointStratElement{
     }
 
     /**
-     * adds a new decorator to this ability
-     * @param elementDecorator - the decorator to add
-     */
-    public void addDecorator(ElementDecorator elementDecorator){
-        elementDecorator.setParent(this);
-        decorators.add(elementDecorator);
-    }
-
-    /**
      * implementation of the draw method defined in the abstract class TwoPointStratElement
      * draws the character ability in the given GraphicsContext
      * @param gc - the GraphicsContext in which to draw the character ability
@@ -66,6 +65,29 @@ public class CharacterAbility extends TwoPointStratElement{
         gc.setStroke(color);
         gc.strokeLine(x1, y1, x2, y2);
         decorators.stream().forEach(s -> s.draw(gc));
+    }
+
+    /**
+     * converts this object to a JSON string
+     * implementation of method defined in StratElement
+     * @return - the JSONObject representing the object
+     */
+    public JSONObject toJSON(){
+        JSONObject root = new JSONObject();
+        root.put("type", "CharacterAbility");
+        root.put("color", color.toString());
+        root.put("ability", ability);
+        insertProperties(root);
+        return root;
+    }
+
+    /**
+     * imports the properties of this object from a JSON string
+     * implementation of method defined in StratElement
+     * @param root - the JSONObject representing the object
+     */
+    public void importFromJSON(JSONObject root){
+        setPropertiesFromJSON(root);
     }
 
     /*

@@ -7,55 +7,72 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Strategy {
-    private ArrayList<StratElement> elements;
-    private String jsonString;
+    private ArrayList<StratElement> elements = new ArrayList<StratElement>();
+    private JSONObject root;
 
+    /**
+     * default constructor, does nothing
+     */
+    public Strategy(){}
+
+    /**
+     * alternate constructor that builds this object from a JSONObject
+     * @param root - the JSONObject that describes this object
+     */
+    public Strategy(JSONObject root){
+        this.root = root;
+        deserialize(root);
+    }
+
+    /**
+     * adds an element to the internal element list
+     * @param el - the element to add
+     */
     public void addElement(StratElement el){
         elements.add(el);
     }
 
+    /**
+     * adds a list of elements to the internal element list
+     * @param els - the list of elements to add
+     */
     public void addElements(List<StratElement> els){
         els.stream().forEach(el -> elements.add(el));
     }
 
-    public String serialize(){
+    public void serialize(){
+        root = new JSONObject();
         String ret = "";
         JSONArray elementArr = new JSONArray();
         elements.stream().forEach(el -> {
-            JSONObject elementObj = new JSONObject();
-            if(el instanceof TwoPointStratElement) {
-                TwoPointStratElement element = (TwoPointStratElement)el;
-                elementObj.put("x1", element.x1);
-                elementObj.put("y1", element.y1);
-                elementObj.put("x2", element.x2);
-                elementObj.put("y2", element.y2);
-            }
-            if(el instanceof WatchHere){
-                elementObj.put("type", "WatchHere");
-            }
-            else if(el instanceof Line){
-                elementObj.put("type", "Line");
-            }
-            else if(el instanceof CharacterAbility){
-                elementObj.put("type", "CharacterAbility");
-                elementObj.put("ability", ((CharacterAbility) el).getAbility());
-                //if additional points ever get added, that'll happen here
-            }
-            elementArr.put(elementObj);
+            elementArr.put(el.toJSON());
         });
-
-        return elementArr.toString();
+        root.put("elements", elementArr);
     }
 
-    public ArrayList<StratElement> deSerialize(){
-        //TODO implement this method
-        return null;
+    public void deserialize(JSONObject root){
+        elements = new ArrayList<StratElement>();
+        JSONArray elementArr = root.getJSONArray("elements");
+        for(int i = 0; i < elementArr.length(); i++){
+            JSONObject eljson = elementArr.getJSONObject(i);
+            String type = eljson.getString("type");
+            switch(type){
+                case "Line":
+                    elements.add(new Line(eljson));
+                    break;
+                case "CharacterAbility":
+                    elements.add(new CharacterAbility(eljson));
+                    break;
+                case "WatchHere":
+                    elements.add(new WatchHere(eljson));
+                    break;
+            }
+        }
     }
 
-    public void importJSON(String filepath){
-        //TODO implement this method
-    }
-
+    /*
+    GETTERS AND SETTERS
+     */
 
     public ArrayList<StratElement> getElements() {
         return elements;
@@ -63,13 +80,5 @@ public class Strategy {
 
     public void setElements(ArrayList<StratElement> elements) {
         this.elements = elements;
-    }
-
-    public String getJsonString() {
-        return jsonString;
-    }
-
-    public void setJsonString(String jsonString) {
-        this.jsonString = jsonString;
     }
 }
