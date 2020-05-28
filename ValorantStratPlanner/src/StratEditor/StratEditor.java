@@ -60,6 +60,7 @@ public class StratEditor {
     private TwoPointStratElement curElement;
     private ArrayList<Button> toolButtons;
     private double mapImageSize;
+    private final Color mapBackgroundColor = Color.web("#141C2F");
 
     /**
      * To be called when this scene is initialized to setup scene objects at runtime
@@ -494,6 +495,8 @@ public class StratEditor {
     public void updateCanvas(){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//        gc.setStroke(mapBackgroundColor);
+//        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.drawImage(mapImage, 0, 0, mapImageSize, mapImageSize);
         if(curElement != null){
             curElement.draw(gc);

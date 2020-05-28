@@ -14,6 +14,8 @@ public class CharacterImageStore extends ImageStore{
      */
     public CharacterImageStore(String imageFolderPath){
         this.imageFolderPath = imageFolderPath;
+        prefHeight = 60;
+        prefWidth = 60;
     }
 
     /**
