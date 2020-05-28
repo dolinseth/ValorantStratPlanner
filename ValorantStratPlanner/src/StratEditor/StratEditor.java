@@ -159,6 +159,12 @@ public class StratEditor {
         watchHere.setOnAction(e -> watchHereButtonHandler());
         toolButtons.add(watchHere);
 
+        //create measuring tool button
+        Button measuringTape = new Button("Measure");
+        formatToolButton(measuringTape);
+        measuringTape.setOnAction(e -> measuringTapeButtonHandler());
+        toolButtons.add(measuringTape);
+
         //add all buttons to the tool selector panel
         int numColumns = toolSelector.getColumnCount();
         for(int i = 0; i < toolButtons.size(); i++){
@@ -222,6 +228,10 @@ public class StratEditor {
      */
     private void lineButtonHandler(){
         twoPointDraggableElementHandler(new Line(), this::lineButtonHandler);
+    }
+
+    private void measuringTapeButtonHandler(){
+        twoPointDraggableElementHandler(new MeasuringTape(), this::measuringTapeButtonHandler);
     }
 
 
