@@ -4,8 +4,10 @@ import DataLayer.AbilityImageStore;
 import DataLayer.DataController;
 import MenuScreen.MenuScreen;
 import StratEditor.StratEditor;
+import StrategySaveLoadScreen.StrategySaveLoadScreen;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -16,6 +18,8 @@ public class AppController {
     private Scene stratEditorScene;
     private MenuScreen menuScreen;
     private Scene menuScreenScene;
+    private StrategySaveLoadScreen strategySaveLoadScreen;
+    private Scene strategySaveLoadScreenScene;
     private DataController data;
 
     /**
@@ -64,6 +68,19 @@ public class AppController {
         maximizeWindow();
         stage.setScene(stratEditorScene);
         stratEditor.updateCanvas();
+    }
+
+    /**
+     * helper method to open the save/load strategy screen
+     */
+    public void openSaveLoadScreen(StrategySaveLoadScreen.State state){
+        strategySaveLoadScreen.stage = new Stage();
+        strategySaveLoadScreen.stage.initModality(Modality.APPLICATION_MODAL);
+        strategySaveLoadScreen.stage.setWidth(600);
+        strategySaveLoadScreen.stage.setHeight(310);
+        strategySaveLoadScreen.setup(state);
+        strategySaveLoadScreen.stage.setScene(strategySaveLoadScreenScene);
+        strategySaveLoadScreen.stage.show();
     }
 
     /**
@@ -116,5 +133,21 @@ public class AppController {
 
     public void setMenuScreenScene(Scene menuScreenScene) {
         this.menuScreenScene = menuScreenScene;
+    }
+
+    public StrategySaveLoadScreen getStrategySaveLoadScreen() {
+        return strategySaveLoadScreen;
+    }
+
+    public void setStrategySaveLoadScreen(StrategySaveLoadScreen strategySaveLoadScreen) {
+        this.strategySaveLoadScreen = strategySaveLoadScreen;
+    }
+
+    public Scene getStrategySaveLoadScreenScene() {
+        return strategySaveLoadScreenScene;
+    }
+
+    public void setStrategySaveLoadScreenScene(Scene strategySaveLoadScreenScene) {
+        this.strategySaveLoadScreenScene = strategySaveLoadScreenScene;
     }
 }

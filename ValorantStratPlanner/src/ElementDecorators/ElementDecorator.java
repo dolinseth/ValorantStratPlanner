@@ -35,6 +35,7 @@ public abstract class ElementDecorator extends TwoPointStratElement {
                 break;
         }
         alpha = root.getDouble("alpha");
+        color = Color.web(root.getString("color"));
         setCoordsFromJSON(root);
     }
 
@@ -43,21 +44,22 @@ public abstract class ElementDecorator extends TwoPointStratElement {
         root.put("alpha", alpha);
         switch(type){
             case END_POINT:
-                root.put("type", "end_point");
+                root.put("eldtype", "end_point");
                 break;
             case START_POINT:
-                root.put("type", "start_point");
+                root.put("eldtype", "start_point");
                 break;
             case START_EXTENDER:
-                root.put("type", "start_extender");
+                root.put("eldtype", "start_extender");
                 break;
             case END_EXTENDER:
-                root.put("type", "end_extender");
+                root.put("eldtype", "end_extender");
                 break;
             case START_TO_END:
-                root.put("type", "start_to_end");
+                root.put("eldtype", "start_to_end");
                 break;
         }
+        root.put("color", color);
     }
 
     /**

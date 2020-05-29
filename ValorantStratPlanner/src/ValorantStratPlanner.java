@@ -2,6 +2,7 @@ import DataLayer.DataController;
 import Main.AppController;
 import MenuScreen.MenuScreen;
 import StratEditor.StratEditor;
+import StrategySaveLoadScreen.StrategySaveLoadScreen;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -32,16 +33,21 @@ public class ValorantStratPlanner extends Application {
         //load FXML
         Parent stratEditorRoot = null;
         Parent menuScreenRoot = null;
+        Parent saveLoadRoot = null;
         FXMLLoader stratEditorLoader = new FXMLLoader(this.getClass().getResource("fxml/StratEditor.fxml"));
         FXMLLoader menuScreenLoader = new FXMLLoader(this.getClass().getResource("fxml/MenuScreen.fxml"));
+        FXMLLoader saveLoadLoader = new FXMLLoader(this.getClass().getResource("fxml/StrategySaveLoadScreen.fxml"));
         StratEditor stratEditor = null;
         MenuScreen menuScreen = null;
+        StrategySaveLoadScreen saveLoadScreen = null;
 
         try{
             stratEditorRoot = stratEditorLoader.load();
             stratEditor = stratEditorLoader.getController();
             menuScreenRoot = menuScreenLoader.load();
             menuScreen = menuScreenLoader.getController();
+            saveLoadRoot = saveLoadLoader.load();
+            saveLoadScreen = saveLoadLoader.getController();
         } catch (IOException e){
             System.out.println(e.getMessage());
             System.out.println("Failed to load fxml");
@@ -51,6 +57,7 @@ public class ValorantStratPlanner extends Application {
         //create scenes
         Scene stratEditorScene = new Scene(stratEditorRoot);
         Scene menuScreenScene = new Scene(menuScreenRoot);
+        Scene saveLoadScene = new Scene(saveLoadRoot);
 
         //set the window title
         stage.setTitle("Valorant Strat Planner v0.1");
@@ -58,6 +65,7 @@ public class ValorantStratPlanner extends Application {
         //give screen controllers a reference to the app controller
         stratEditor.setAppController(appController);
         menuScreen.setAppController(appController);
+        saveLoadScreen.setAppController(appController);
 
         //give appController references to scenes and such
         appController.setStratEditor(stratEditor);
@@ -65,6 +73,8 @@ public class ValorantStratPlanner extends Application {
         appController.setStage(stage);
         appController.setMenuScreen(menuScreen);
         appController.setMenuScreenScene(menuScreenScene);
+        appController.setStrategySaveLoadScreen(saveLoadScreen);
+        appController.setStrategySaveLoadScreenScene(saveLoadScene);
 
         //initialize data controller
         DataController data = new DataController();

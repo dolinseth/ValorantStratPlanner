@@ -89,6 +89,7 @@ public class CharacterAbility extends TwoPointStratElement{
      */
     public void importFromJSON(JSONObject root){
         setPropertiesFromJSON(root);
+        color = Color.web(root.getString("color"));
     }
 
     /*

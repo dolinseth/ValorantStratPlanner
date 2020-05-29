@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StrategySaveLoadScreen.StrategySaveLoadScreen">
+   <children>
+      <ChoiceBox fx:id="stratSelector" layoutX="227.0" layoutY="86.0" prefHeight="26.0" prefWidth="146.0" />
+      <Button fx:id="openButton" layoutX="196.0" layoutY="243.0" mnemonicParsing="false" onAction="#openButtonHandler" prefHeight="25.0" prefWidth="63.0" text="Open" />
+      <Button fx:id="cancelButton" layoutX="342.0" layoutY="243.0" mnemonicParsing="false" onAction="#cancelButtonHandler" prefHeight="26.0" prefWidth="63.0" text="Exit" />
+      <TextField fx:id="stratNameField" layoutX="226.0" layoutY="87.0" onAction="#openButtonHandler" />
+      <Button fx:id="deleteButton" layoutX="269.0" layoutY="243.0" mnemonicParsing="false" onAction="#deleteButtonHandler" prefHeight="26.0" prefWidth="63.0" text="Delete" />
+   </children>
+</Pane>

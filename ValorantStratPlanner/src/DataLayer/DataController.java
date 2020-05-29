@@ -1,11 +1,16 @@
 package DataLayer;
 
+import StratElements.Strategy;
 import javafx.scene.image.Image;
+import org.json.JSONObject;
+
+import java.util.List;
 
 public class DataController {
     private AbilityImageStore abilityImages;
     private CharacterImageStore characterImages;
     private MapImageStore mapImages;
+    private JSONManager jsonManager;
 
     //enumerated type containing every possible character ability
     public enum Ability {
@@ -41,6 +46,7 @@ public class DataController {
         characterImages.loadImages();
         mapImages = new MapImageStore("MapImages");
         mapImages.loadImages();
+        jsonManager = new JSONManager("res/SavedStrats");
     }
 
     /**
@@ -230,5 +236,35 @@ public class DataController {
      */
     public Image getMapImage(String mapName){
         return mapImages.getMapImage(mapName);
+    }
+
+    /**
+     * gets the list of all saved strategies with their canonical names rather than file names
+     * @return - a list containing the names of strategies saved in the SavedStrats folder
+     */
+    public List<String> getStrategies(){
+        return jsonManager.getFileList();
+    }
+
+    /**
+     * gets the Strategy object containing the strategy with the given name
+     * @param name - the canonical name of the strategy (not including file extension)
+     * @return - the Strategy object representing the strat, or null if a strat with that name is not found
+     */
+    public Strategy getStrat(String name){
+        JSONObject root = jsonManager.getStrat(name);
+        if(root == null){
+            return null;
+        }
+        return new Strategy(root);
+    }
+
+    /**
+     * saves the given strategy to the SavedStrats folder with the given name
+     * @param strategy - the Strategy to save
+     * @param name - the name to use to save the strategy
+     */
+    public void saveStrat(Strategy strategy, String name){
+        jsonManager.saveStrat(strategy, name);
     }
 }

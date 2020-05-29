@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class AbilityIcon extends ElementDecorator {
     private String ability;
-    private final double size = 30;
+    public static final double size = 30;
 
     /**
      * default constructor

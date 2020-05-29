@@ -5,6 +5,7 @@ import ElementDecorators.Circle;
 import ElementDecorators.ElementDecorator;
 import ElementDecorators.Rectangle;
 import StratElements.*;
+import StrategySaveLoadScreen.StrategySaveLoadScreen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -70,9 +71,9 @@ public class StratEditor {
         updateCanvas();
 
         //comment these lines to get the debug sliders back
-//        debugSlider1.setVisible(false);
-//        debugSlider2.setVisible(false);
-//        debugSlider3.setVisible(false);
+        debugSlider1.setVisible(false);
+        debugSlider2.setVisible(false);
+        debugSlider3.setVisible(false);
     }
 
     /**
@@ -230,10 +231,127 @@ public class StratEditor {
         twoPointDraggableElementHandler(new Line(), this::lineButtonHandler);
     }
 
+    /**
+     * handler for the measuring tape tool
+     */
     private void measuringTapeButtonHandler(){
         twoPointDraggableElementHandler(new MeasuringTape(), this::measuringTapeButtonHandler);
     }
 
+    /**
+     * generic handler for a strat element that consists of two points and updates as the mouse is dragged
+     * @param el - the element to draw/update
+     * @param handler - the handler to call to initialize the element
+     */
+    private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
+        TwoPointElementBuilder<TwoPointStratElement> eb = new TwoPointElementBuilder<>();
+        canvas.setOnMousePressed(e -> {
+            eb.startClick(e);
+            curElement = el;
+            canvas.setOnMouseReleased(e2 -> {
+                eb.endClick(e2);
+                eb.formatElement(el);
+                elements.add(el);
+                curElement = null;
+                updateCanvas();
+                canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
+                handler.handle();
+            });
+            canvas.setOnMouseDragged(e3 -> {
+                eb.endClick(e3);
+                eb.formatElement(el);
+                updateCanvas();
+//                el.draw(canvas.getGraphicsContext2D());
+            });
+        });
+    }
+
+    /**
+     * helper method that formats all the tool buttons to be identical
+     * @param b - the button to format
+     */
+    private void formatToolButton(Button b){
+        b.setPrefSize(1000, 1000);
+        b.wrapTextProperty().setValue(true);
+        b.setTextAlignment(TextAlignment.CENTER);
+    }
+
+    /**
+     * helper method for drawing, called when the canvas needs to be redrawn
+     * i.e. in the event of a new element being added/removed
+     */
+    public void updateCanvas(){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.drawImage(mapImage, 0, 0, mapImageSize, mapImageSize);
+        if(curElement != null){
+            curElement.draw(gc);
+        }
+        elements.stream().forEach(e ->{
+            e.draw(gc);
+        });
+    }
+
+    //FXML defined button handlers
+    @FXML
+    private void saveStrat(){
+        appController.openSaveLoadScreen(StrategySaveLoadScreen.State.SAVE);
+//        Strategy thisStrat = new Strategy(elements);
+//        thisStrat.serialize();
+//        appController.getData().saveStrat(thisStrat, "TestStrategy");
+//        System.out.println("saved strategy");
+//        System.out.println(thisStrat.getRoot().toString(2));
+    }
+
+    @FXML
+    private void loadStrat(){
+        appController.openSaveLoadScreen(StrategySaveLoadScreen.State.LOAD);
+//        Strategy newStrat = appController.getData().getStrat("TestStrategy");
+//        elements = newStrat.getElements();
+//        System.out.println("loaded strategy");
+//        updateCanvas();
+    }
+
+    @FXML
+    private void clearStrat(){
+        elements.clear();
+        updateCanvas();
+    }
+
+    @FXML
+    private void undo(){
+        if(elements.size() != 0) {
+            elements.remove(elements.size() - 1);
+            updateCanvas();
+        }
+    }
+
+    @FXML
+    private void goToMainMenu(){
+        clearStrat();
+        appController.setSceneToMenu();
+    }
+
+    /*
+    GETTERS AND SETTERS
+     */
+
+    public AppController getAppController() {
+        return appController;
+    }
+
+    public void setAppController(AppController appController) {
+        this.appController = appController;
+    }
+
+    public Strategy getCurrentStrategy(){
+        return new Strategy(elements);
+    }
+
+    public void setCurrentStrategy(Strategy strategy){
+        elements = strategy.getElements();
+        updateCanvas();
+    }
 
     /**
      * button handlers for character abilities
@@ -458,106 +576,5 @@ public class StratEditor {
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SHOCK_BOLT);
         ab.addDecorator(new Circle(20, Color.BLUE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::shockBoltButtonHandler);
-    }
-
-    /**
-     * generic handler for a strat element that consists of two points and updates as the mouse is dragged
-     * @param el - the element to draw/update
-     * @param handler - the handler to call to initialize the element
-     */
-    private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
-        TwoPointElementBuilder<TwoPointStratElement> eb = new TwoPointElementBuilder<>();
-        canvas.setOnMousePressed(e -> {
-            eb.startClick(e);
-            curElement = el;
-            canvas.setOnMouseReleased(e2 -> {
-                eb.endClick(e2);
-                eb.formatElement(el);
-                elements.add(el);
-                curElement = null;
-                updateCanvas();
-                canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
-                handler.handle();
-            });
-            canvas.setOnMouseDragged(e3 -> {
-                eb.endClick(e3);
-                eb.formatElement(el);
-                updateCanvas();
-                el.draw(canvas.getGraphicsContext2D());
-            });
-        });
-    }
-
-    /**
-     * helper method that formats all the tool buttons to be identical
-     * @param b - the button to format
-     */
-    private void formatToolButton(Button b){
-        b.setPrefSize(1000, 1000);
-        b.wrapTextProperty().setValue(true);
-        b.setTextAlignment(TextAlignment.CENTER);
-    }
-
-    /**
-     * helper method for drawing, called when the canvas needs to be redrawn
-     * i.e. in the event of a new element being added/removed
-     */
-    public void updateCanvas(){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//        gc.setStroke(mapBackgroundColor);
-//        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        gc.drawImage(mapImage, 0, 0, mapImageSize, mapImageSize);
-        if(curElement != null){
-            curElement.draw(gc);
-        }
-        elements.stream().forEach(e ->{
-            e.draw(gc);
-        });
-    }
-
-    //FXML defined button handlers
-    @FXML
-    private void saveStrat(){
-        Strategy thisStrat = new Strategy(elements);
-        thisStrat.serialize();
-        System.out.println(thisStrat.getRoot().toString(2));
-    }
-
-    @FXML
-    private void loadStrat(){
-
-    }
-
-    @FXML
-    private void clearStrat(){
-        elements.clear();
-        updateCanvas();
-    }
-
-    @FXML
-    private void undo(){
-        if(elements.size() != 0) {
-            elements.remove(elements.size() - 1);
-            updateCanvas();
-        }
-    }
-
-    @FXML
-    private void goToMainMenu(){
-        clearStrat();
-        appController.setSceneToMenu();
-    }
-
-    /*
-    GETTERS AND SETTERS
-     */
-
-    public AppController getAppController() {
-        return appController;
-    }
-
-    public void setAppController(AppController appController) {
-        this.appController = appController;
     }
 }

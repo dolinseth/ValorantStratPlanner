@@ -120,8 +120,9 @@ public abstract class TwoPointStratElement extends StratElement{
     }
 
     protected Point getStartOffsetByRadius(double radius){
-        double lineStartX = x1 + (radius / 2) * Math.cos(Math.atan2(y2 - y1, x2 - x1));
-        double lineStartY = y1 + (radius / 2) * Math.sin(Math.atan2(y2 - y1, x2 - x1));
+        double angle = Math.atan2(y2 - y1, x2 - x1);
+        double lineStartX = x1 + (radius / 2) * Math.cos(angle);
+        double lineStartY = y1 + (radius / 2) * Math.sin(angle);
         return new Point(lineStartX, lineStartY);
     }
 
