@@ -3,6 +3,7 @@ package StratElements;
 import DataLayer.DataController;
 import ElementDecorators.AbilityIcon;
 import ElementDecorators.ElementDecorator;
+import Records.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
@@ -62,7 +63,8 @@ public class CharacterAbility extends TwoPointStratElement{
     public void draw(GraphicsContext gc){
         decorators.stream().forEach(ElementDecorator::setCoordsFromParent);
         gc.setStroke(color);
-        gc.strokeLine(x1, y1, x2, y2);
+        Point offsetStart = getStartOffsetByRadius(AbilityIcon.size);
+        gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
         decorators.stream().forEach(s -> s.draw(gc));
     }
 

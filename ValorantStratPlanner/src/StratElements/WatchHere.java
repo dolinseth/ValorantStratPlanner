@@ -1,6 +1,7 @@
 package StratElements;
 
 import ElementDecorators.ElementDecorator;
+import Records.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
@@ -30,7 +31,8 @@ public class WatchHere extends TwoPointStratElement {
     public void draw(GraphicsContext gc){
         gc.setStroke(color);
         gc.strokeOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
-        gc.strokeLine(x1, y1, x2, y2);
+        Point offsetStart = getStartOffsetByRadius(radius);
+        gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
         decorators.forEach(ElementDecorator::setCoordsFromParent);
         decorators.forEach(d -> d.draw(gc));
     }

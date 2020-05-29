@@ -4,6 +4,7 @@ import ElementDecorators.AbilityIcon;
 import ElementDecorators.Circle;
 import ElementDecorators.ElementDecorator;
 import ElementDecorators.Rectangle;
+import Records.Point;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public abstract class TwoPointStratElement extends StratElement{
     protected double x1, y1, x2, y2;
-    protected ArrayList<ElementDecorator> decorators;
+    protected ArrayList<ElementDecorator> decorators = new ArrayList<ElementDecorator>();
 
     /**
      * adds a new decorator to this ability
@@ -116,6 +117,12 @@ public abstract class TwoPointStratElement extends StratElement{
                 addDecorator(eld);
             }
         }
+    }
+
+    protected Point getStartOffsetByRadius(double radius){
+        double lineStartX = x1 + (radius / 2) * Math.cos(Math.atan2(y2 - y1, x2 - x1));
+        double lineStartY = y1 + (radius / 2) * Math.sin(Math.atan2(y2 - y1, x2 - x1));
+        return new Point(lineStartX, lineStartY);
     }
 
     /**
