@@ -37,6 +37,7 @@ public class Circle extends ElementDecorator {
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
         insertProperties(root);
+        root.put("type", "Circle");
         root.put("radius", radius);
         return root;
     }

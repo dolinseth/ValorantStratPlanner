@@ -25,6 +25,14 @@ public class Strategy {
     }
 
     /**
+     * alternate constructor that builds the object from a list of elements
+     * @param elements - the list of elements to build this strategy from
+     */
+    public Strategy(ArrayList<StratElement> elements){
+        this.elements = elements;
+    }
+
+    /**
      * adds an element to the internal element list
      * @param el - the element to add
      */
@@ -70,6 +78,8 @@ public class Strategy {
         }
     }
 
+
+
     /*
     GETTERS AND SETTERS
      */
@@ -80,5 +90,9 @@ public class Strategy {
 
     public void setElements(ArrayList<StratElement> elements) {
         this.elements = elements;
+    }
+
+    public JSONObject getRoot(){
+        return root;
     }
 }

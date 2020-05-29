@@ -39,6 +39,7 @@ public class Rectangle extends ElementDecorator {
         JSONObject root = new JSONObject();
         insertProperties(root);
         root.put("width", width);
+        root.put("type", "Rectangle");
         return root;
     }
 

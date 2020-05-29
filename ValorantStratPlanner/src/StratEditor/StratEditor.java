@@ -519,7 +519,9 @@ public class StratEditor {
     //FXML defined button handlers
     @FXML
     private void saveStrat(){
-
+        Strategy thisStrat = new Strategy(elements);
+        thisStrat.serialize();
+        System.out.println(thisStrat.getRoot().toString(2));
     }
 
     @FXML

@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class CharacterAbility extends TwoPointStratElement{
-    private AbilityIcon icon;
     private Color color;
     private String ability;
     public static final double visionBlockRadius = 47;
@@ -22,10 +21,12 @@ public class CharacterAbility extends TwoPointStratElement{
      * @param ability - the name of the ability
      */
     public CharacterAbility(Color color, String ability){
-        icon = new AbilityIcon(ability, ElementDecorator.Type.START_POINT);
-        icon.setParent(this);
-        this.color = color;
         decorators = new ArrayList<>();
+        AbilityIcon icon = new AbilityIcon(ability, ElementDecorator.Type.START_POINT);
+        icon.setParent(this);
+        decorators.add(icon);
+        this.ability = ability.toLowerCase();
+        this.color = color;
     }
 
     /**
@@ -60,8 +61,6 @@ public class CharacterAbility extends TwoPointStratElement{
      */
     public void draw(GraphicsContext gc){
         decorators.stream().forEach(ElementDecorator::setCoordsFromParent);
-        icon.setCoords(x1, y1);
-        icon.draw(gc);
         gc.setStroke(color);
         gc.strokeLine(x1, y1, x2, y2);
         decorators.stream().forEach(s -> s.draw(gc));

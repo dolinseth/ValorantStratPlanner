@@ -38,6 +38,7 @@ public class AbilityIcon extends ElementDecorator {
         JSONObject root = new JSONObject();
         insertProperties(root);
         root.put("ability", ability);
+        root.put("type", "AbilityIcon");
         return root;
     }
 
