@@ -26,7 +26,8 @@ public class MeasuringTape extends Line{
     public void draw(GraphicsContext gc){
         gc.setStroke(color);
         gc.strokeLine(x1, y1, x2, y2);
-        gc.strokeText("Distance: " + getLength() + "\nTime to run: " + (getLength() / pixelsRunPerSecond) + "\nTime to walk: " + (getLength() / pixelsWalkedPerSecond), x2 + 10, y2 - 10);
+        String label = String.format("Distance: %,.2f\nTime to run: %,.2f\nTime to walk: %,.2f", getLength(), getLength() / pixelsRunPerSecond, getLength() / pixelsWalkedPerSecond);
+        gc.strokeText(label, x2 + 10, y2 - 10);
     }
 
     @Override
