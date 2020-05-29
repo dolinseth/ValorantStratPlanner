@@ -4,6 +4,7 @@ import Main.AppController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -21,6 +22,8 @@ public class StrategySaveLoadScreen {
     private TextField stratNameField;
     @FXML
     private Button deleteButton;
+    @FXML
+    private Label stratNameFieldLabel;
 
     //non-FXML fields
     public enum State {SAVE, LOAD};
@@ -34,11 +37,15 @@ public class StrategySaveLoadScreen {
             stratSelector.setVisible(false);
             stratNameField.setVisible(true);
             deleteButton.setVisible(false);
+            stratNameFieldLabel.setVisible(true);
+            openButton.setText("Save");
         }
         else if(state == State.LOAD){
             stratSelector.setVisible(true);
             stratNameField.setVisible(false);
             deleteButton.setVisible(true);
+            stratNameFieldLabel.setVisible(false);
+            openButton.setText("Load");
         }
         List<String> strategies = appController.getData().getStrategies();
         stratSelector.getItems().clear();

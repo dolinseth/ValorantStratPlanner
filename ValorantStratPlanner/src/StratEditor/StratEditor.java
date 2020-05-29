@@ -1,6 +1,7 @@
 package StratEditor;
 
 import DataLayer.DataController;
+import ElementDecorators.ArrowHead;
 import ElementDecorators.Circle;
 import ElementDecorators.ElementDecorator;
 import ElementDecorators.Rectangle;
@@ -221,7 +222,9 @@ public class StratEditor {
      * Handler for the indicator to watch a certain locatian
      */
     private void watchHereButtonHandler(){
-        twoPointDraggableElementHandler(new WatchHere(), this::watchHereButtonHandler);
+        WatchHere wh = new WatchHere();
+        wh.addDecorator(new ArrowHead());
+        twoPointDraggableElementHandler(wh, this::watchHereButtonHandler);
     }
 
     /**

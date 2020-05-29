@@ -5,9 +5,16 @@ import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
 public class ArrowHead extends ElementDecorator {
-    private double x1, y1, x2, y2;
-    private Color color;
     private final double lineLength = 10;
+    private final double theta = Math.PI/6;
+
+    /**
+     * default constructor, does nothing
+     */
+    public ArrowHead(){
+        this.color = Color.YELLOW;
+        type = Type.START_TO_END;
+    }
 
     /**
      * default constructor
@@ -61,9 +68,9 @@ public class ArrowHead extends ElementDecorator {
      * @param gc - the GraphicsContext in which to draw the arrowhead
      */
     public void draw(GraphicsContext gc){
-        double initAngle = Math.atan2((y2 - y1), (x2 - x1));
+        double initAngle = Math.atan2((y1 - y2), (x1 - x2));
         gc.setStroke(color);
-        gc.strokeLine(x2, y2, x2 + Math.cos(initAngle - Math.PI/12)* lineLength, y2 + Math.sin(initAngle - Math.PI/12)* lineLength);
-        gc.strokeLine(x2, y2, x2 + Math.cos(initAngle + Math.PI/12)* lineLength, y2 + Math.sin(initAngle + Math.PI/12)* lineLength);
+        gc.strokeLine(x2, y2, x2 + Math.cos(initAngle - theta)* lineLength, y2 + Math.sin(initAngle - theta)* lineLength);
+        gc.strokeLine(x2, y2, x2 + Math.cos(initAngle + theta)* lineLength, y2 + Math.sin(initAngle + theta)* lineLength);
     }
 }
