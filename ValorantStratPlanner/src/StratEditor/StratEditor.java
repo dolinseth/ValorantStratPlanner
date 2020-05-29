@@ -70,9 +70,9 @@ public class StratEditor {
         updateCanvas();
 
         //comment these lines to get the debug sliders back
-        debugSlider1.setVisible(false);
-        debugSlider2.setVisible(false);
-        debugSlider3.setVisible(false);
+//        debugSlider1.setVisible(false);
+//        debugSlider2.setVisible(false);
+//        debugSlider3.setVisible(false);
     }
 
     /**
@@ -90,7 +90,7 @@ public class StratEditor {
                 mapImageSize = 770;
                 break;
             case HAVEN:
-                mapImageSize = 830;
+                mapImageSize = 794;
                 break;
         }
     }
@@ -184,11 +184,11 @@ public class StratEditor {
         formatDebugSlider(debugSlider1);
         formatDebugSlider(debugSlider2);
         formatDebugSlider(debugSlider3);
-//        debugSlider1.valueProperty().addListener((observable, newVal, oldVal) -> {
-//            mapImageSize = newVal.doubleValue();
-//            System.out.println("New map image size = " + mapImageSize);
-//            updateCanvas();
-//        });
+        debugSlider1.valueProperty().addListener((observable, newVal, oldVal) -> {
+            mapImageSize = newVal.doubleValue();
+            System.out.println("New map image size = " + mapImageSize);
+            updateCanvas();
+        });
     }
 
     /**
