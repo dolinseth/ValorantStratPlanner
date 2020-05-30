@@ -168,7 +168,7 @@ public class StratEditor {
         toolButtons.add(measuringTape);
 
         //add all buttons to the tool selector panel
-        int numColumns = toolSelector.getColumnCount();
+        int numColumns = 5;
         for(int i = 0; i < toolButtons.size(); i++){
             toolSelector.add(toolButtons.get(i), i % (numColumns - 1) + 1, i / (numColumns - 1));
         }

@@ -1,12 +1,14 @@
 package DataLayer;
 
 import StratElements.Strategy;
+import StratElements.WatchHere;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class JSONManager {
     private String folderPath;
@@ -31,14 +33,14 @@ public class JSONManager {
                 return name.endsWith(fileSuffix);
             }
         });
-        ArrayList<String> stratNames = new ArrayList<String>();
+        List<String> stratNames = new ArrayList<String>();
         for(int i = 0; i < matches.length; i++){
             stratNames.add(matches[i].getName());
         }
         //strip off the end of the filename to make them look nicer
-        stratNames.stream().map(s -> {
+        stratNames = stratNames.stream().map(s -> {
             return s.replace(fileSuffix, "");
-        });
+        }).collect(Collectors.toList());
 
         return stratNames;
     }

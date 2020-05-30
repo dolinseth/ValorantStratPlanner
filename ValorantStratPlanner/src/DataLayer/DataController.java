@@ -11,6 +11,7 @@ public class DataController {
     private CharacterImageStore characterImages;
     private MapImageStore mapImages;
     private JSONManager jsonManager;
+    private ToolImageStore toolImages;
 
     //enumerated type containing every possible character ability
     public enum Ability {
@@ -47,6 +48,8 @@ public class DataController {
         mapImages = new MapImageStore("MapImages");
         mapImages.loadImages();
         jsonManager = new JSONManager("res/SavedStrats");
+        toolImages = new ToolImageStore("ToolImages");
+        toolImages.loadImages();
     }
 
     /**
@@ -266,5 +269,14 @@ public class DataController {
      */
     public void saveStrat(Strategy strategy, String name){
         jsonManager.saveStrat(strategy, name);
+    }
+
+    /**
+     * gets the image for the tool with the given name
+     * @param toolName - the name of the tool
+     * @return - the Image of the given tool
+     */
+    public Image getToolImage(String toolName){
+        return toolImages.getToolImage(toolName);
     }
 }
