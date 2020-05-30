@@ -222,9 +222,12 @@ public class StratEditor {
      * Handler for the indicator to watch a certain locatian
      */
     private void watchHereButtonHandler(){
-        WatchHere wh = new WatchHere();
-        wh.addDecorator(new ArrowHead());
-        twoPointDraggableElementHandler(wh, this::watchHereButtonHandler);
+        TwoPointTool tool = new TwoPointTool("WatchHere");
+        tool.addDecorator(new ArrowHead());
+        twoPointDraggableElementHandler(tool, this::watchHereButtonHandler);
+//        WatchHere wh = new WatchHere();
+//        wh.addDecorator(new ArrowHead());
+//        twoPointDraggableElementHandler(wh, this::watchHereButtonHandler);
     }
 
     /**
@@ -299,20 +302,11 @@ public class StratEditor {
     @FXML
     private void saveStrat(){
         appController.openSaveLoadScreen(StrategySaveLoadScreen.State.SAVE);
-//        Strategy thisStrat = new Strategy(elements);
-//        thisStrat.serialize();
-//        appController.getData().saveStrat(thisStrat, "TestStrategy");
-//        System.out.println("saved strategy");
-//        System.out.println(thisStrat.getRoot().toString(2));
     }
 
     @FXML
     private void loadStrat(){
         appController.openSaveLoadScreen(StrategySaveLoadScreen.State.LOAD);
-//        Strategy newStrat = appController.getData().getStrat("TestStrategy");
-//        elements = newStrat.getElements();
-//        System.out.println("loaded strategy");
-//        updateCanvas();
     }
 
     @FXML
@@ -482,7 +476,7 @@ public class StratEditor {
     private void afterShockButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.AFTERSHOCK);
         //arc class could be good here too, but for now just a red rectangle
-        ab.addDecorator(new Rectangle(10, Color.RED, 0.3, ElementDecorator.Type.END_POINT));
+    ab.addDecorator(new Rectangle(10, Color.RED, 0.3, ElementDecorator.Type.START_TO_END));
         twoPointDraggableElementHandler(ab, this::afterShockButtonHandler);
     }
 

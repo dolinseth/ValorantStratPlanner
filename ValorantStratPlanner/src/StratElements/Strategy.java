@@ -71,8 +71,8 @@ public class Strategy {
                 case "CharacterAbility":
                     elements.add(new CharacterAbility(eljson));
                     break;
-                case "WatchHere":
-                    elements.add(new WatchHere(eljson));
+                case "tool":
+                    elements.add(new TwoPointTool(eljson));
                     break;
             }
         }

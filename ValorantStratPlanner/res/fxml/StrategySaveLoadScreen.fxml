@@ -14,5 +14,6 @@
       <Button fx:id="cancelButton" layoutX="342.0" layoutY="243.0" mnemonicParsing="false" onAction="#cancelButtonHandler" prefHeight="26.0" prefWidth="63.0" text="Exit" />
       <TextField fx:id="stratNameField" layoutX="226.0" layoutY="87.0" onAction="#openButtonHandler" />
       <Button fx:id="deleteButton" layoutX="269.0" layoutY="243.0" mnemonicParsing="false" onAction="#deleteButtonHandler" prefHeight="26.0" prefWidth="63.0" text="Delete" />
+      <Label fx:id="stratNameFieldLabel" layoutX="183.0" layoutY="87.0" prefHeight="25.0" prefWidth="45.0" text="Name:" />
    </children>
 </Pane>

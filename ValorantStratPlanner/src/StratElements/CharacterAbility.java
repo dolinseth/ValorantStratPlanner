@@ -23,7 +23,7 @@ public class CharacterAbility extends TwoPointStratElement{
      */
     public CharacterAbility(Color color, String ability){
         decorators = new ArrayList<>();
-        AbilityIcon icon = new AbilityIcon(ability, ElementDecorator.Type.START_POINT);
+        AbilityIcon icon = new AbilityIcon(ability);
         icon.setParent(this);
         decorators.add(icon);
         this.ability = ability.toLowerCase();
@@ -61,11 +61,10 @@ public class CharacterAbility extends TwoPointStratElement{
      * @param gc - the GraphicsContext in which to draw the character ability
      */
     public void draw(GraphicsContext gc){
-        decorators.stream().forEach(ElementDecorator::setCoordsFromParent);
+        drawDecorators(gc);
         gc.setStroke(color);
         Point offsetStart = getStartOffsetByRadius(AbilityIcon.size);
         gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
-        decorators.stream().forEach(s -> s.draw(gc));
     }
 
     /**
@@ -90,6 +89,7 @@ public class CharacterAbility extends TwoPointStratElement{
     public void importFromJSON(JSONObject root){
         setPropertiesFromJSON(root);
         color = Color.web(root.getString("color"));
+        ability = root.getString("ability");
     }
 
     /*

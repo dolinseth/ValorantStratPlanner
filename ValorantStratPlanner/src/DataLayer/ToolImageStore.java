@@ -22,7 +22,7 @@ public class ToolImageStore extends ImageStore{
      */
     public void loadImages(){
         if(images.size() == 0){
-            ArrayList<String> toolNames = new ArrayList<String>(Arrays.asList("WatchHere", "Tape Measure"));
+            ArrayList<String> toolNames = new ArrayList<String>(Arrays.asList("WatchHere"));
             loadImageSet(toolNames, ".png");
         }
     }
@@ -34,6 +34,12 @@ public class ToolImageStore extends ImageStore{
      */
     public Image getToolImage(String toolName){
         loadImages();
+        if(images == null){
+            System.out.println("shit");
+        }
+        if(toolName == null){
+            System.out.println("double shit");
+        }
         return images.getOrDefault(toolName.toLowerCase(), null);
     }
 }

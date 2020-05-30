@@ -5,20 +5,25 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
-public class AbilityIcon extends ElementDecorator {
-    private String ability;
-    public static final double size = 30;
-
+public class AbilityIcon extends Icon{
     /**
      * default constructor
      * @param ability - string containing the name of the ability
      * @param type - the ElementDecorator.Type of this decorator
      */
     public AbilityIcon(String ability, Type type) {
-        this.ability = ability;
+        this.name = ability;
         this.type = type;
         color = Color.YELLOW;
         alpha = 1.0;
+    }
+
+    /**
+     * alternate constructor that defaults to ElementDecorator.Type.START_POINT
+     * @param ability - the name of the ability
+     */
+    public AbilityIcon(String ability){
+        this(ability, Type.START_POINT);
     }
 
     /**
@@ -37,7 +42,7 @@ public class AbilityIcon extends ElementDecorator {
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
         insertProperties(root);
-        root.put("ability", ability);
+        root.put("ability", name);
         root.put("type", "AbilityIcon");
         return root;
     }
@@ -49,17 +54,14 @@ public class AbilityIcon extends ElementDecorator {
      */
     public void importFromJSON(JSONObject root){
         setPropertiesFromJSON(root);
-        ability = root.getString("ability");
+        name = root.getString("ability");
     }
 
     /**
-     * implementation of the draw method defined in the abstract class ElementDecorator
-     * draws the icon using the given GraphicsContext
-     * @param gc - the GraphicsContext in which to draw the icon
+     * implementation of fetchImage defined in Icon class
+     * used to retrieve the image the first time
      */
-    public void draw(GraphicsContext gc){
-        gc.drawImage(AppController.getInstance().getData().getAbilityImage(ability), x1 - size/2, y1 - size/2, size, size);
-        gc.setStroke(color);
-        gc.strokeOval(x1 - size / 2, y1 - size / 2, size, size);
+    public void fetchImage(){
+        iconImage = AppController.getInstance().getData().getAbilityImage(name);
     }
 }

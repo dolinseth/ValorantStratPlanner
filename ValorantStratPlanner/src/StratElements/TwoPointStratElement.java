@@ -1,10 +1,8 @@
 package StratElements;
 
-import ElementDecorators.AbilityIcon;
-import ElementDecorators.Circle;
-import ElementDecorators.ElementDecorator;
-import ElementDecorators.Rectangle;
+import ElementDecorators.*;
 import Records.Point;
+import javafx.scene.canvas.GraphicsContext;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +19,17 @@ public abstract class TwoPointStratElement extends StratElement{
     public void addDecorator(ElementDecorator elementDecorator){
         elementDecorator.setParent(this);
         decorators.add(elementDecorator);
+    }
+
+    /**
+     * helper method to update decorator positions and draw them
+     * @param gc - the GraphicsContext to draw the decorators in
+     */
+    protected void drawDecorators(GraphicsContext gc){
+        decorators.forEach(d -> {
+            d.setCoordsFromParent();
+            d.draw(gc);
+        });
     }
 
     /**
@@ -110,6 +119,9 @@ public abstract class TwoPointStratElement extends StratElement{
                     break;
                 case "Rectangle":
                     eld = new Rectangle(decorator);
+                    break;
+                case "ArrowHead":
+                    eld = new ArrowHead(decorator);
                     break;
             }
             if(eld != null) {

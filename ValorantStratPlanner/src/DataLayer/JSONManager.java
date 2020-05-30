@@ -1,7 +1,6 @@
 package DataLayer;
 
 import StratElements.Strategy;
-import StratElements.WatchHere;
 import org.json.JSONObject;
 
 import java.io.*;
