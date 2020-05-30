@@ -131,6 +131,13 @@ public abstract class TwoPointStratElement extends StratElement{
         }
     }
 
+    /**
+     * helper method for drawing tools that include both a start circle and a line
+     * returns a point that is offset to be at the edge of a circle with the given radius
+     * from the start point (x1, y1)
+     * @param radius - the radius to use for the offset math
+     * @return - the point representing the offset coordinates
+     */
     protected Point getStartOffsetByRadius(double radius){
         double angle = Math.atan2(y2 - y1, x2 - x1);
         double lineStartX = x1 + (radius / 2) * Math.cos(angle);

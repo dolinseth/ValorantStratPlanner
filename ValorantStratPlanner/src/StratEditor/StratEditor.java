@@ -225,9 +225,6 @@ public class StratEditor {
         TwoPointTool tool = new TwoPointTool("WatchHere");
         tool.addDecorator(new ArrowHead());
         twoPointDraggableElementHandler(tool, this::watchHereButtonHandler);
-//        WatchHere wh = new WatchHere();
-//        wh.addDecorator(new ArrowHead());
-//        twoPointDraggableElementHandler(wh, this::watchHereButtonHandler);
     }
 
     /**

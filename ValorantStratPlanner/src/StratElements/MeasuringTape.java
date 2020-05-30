@@ -1,5 +1,7 @@
 package StratElements;
 
+import ElementDecorators.ToolIcon;
+import Records.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
@@ -13,7 +15,10 @@ public class MeasuringTape extends Line{
     /**
      * default constructor, does nothing
      */
-    public MeasuringTape(){}
+    public MeasuringTape(){
+        ToolIcon icon = new ToolIcon("Measure");
+        addDecorator(icon);
+    }
 
     /**
      * alternate constructor that builds the object from a JSONObject
@@ -25,9 +30,11 @@ public class MeasuringTape extends Line{
 
     public void draw(GraphicsContext gc){
         gc.setStroke(color);
-        gc.strokeLine(x1, y1, x2, y2);
+        Point offsetStart = getStartOffsetByRadius(ToolIcon.size);
+        gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
         String label = String.format("Distance: %,.2f\nTime to run: %,.2f\nTime to walk: %,.2f", getLength(), getLength() / pixelsRunPerSecond, getLength() / pixelsWalkedPerSecond);
         gc.strokeText(label, x2 + 10, y2 - 10);
+        drawDecorators(gc);
     }
 
     @Override
