@@ -257,13 +257,11 @@ public class StratEditor {
      * @param handler - the handler to call to initialize the element
      */
     private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
-        TwoPointElementBuilder<TwoPointStratElement> eb = new TwoPointElementBuilder<>();
         canvas.setOnMousePressed(e -> {
-            eb.startClick(e);
+            el.setStart(e.getX(), e.getY());
             curElement = el;
             canvas.setOnMouseReleased(e2 -> {
-                eb.endClick(e2);
-                eb.formatElement(el);
+                el.setEnd(e2.getX(), e2.getY());
                 elements.add(el);
                 curElement = null;
                 updateCanvas();
@@ -271,10 +269,8 @@ public class StratEditor {
                 handler.handle();
             });
             canvas.setOnMouseDragged(e3 -> {
-                eb.endClick(e3);
-                eb.formatElement(el);
+                el.setEnd(e3.getX(), e3.getY());
                 updateCanvas();
-//                el.draw(canvas.getGraphicsContext2D());
             });
         });
     }
