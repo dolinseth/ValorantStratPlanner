@@ -151,21 +151,26 @@ public class StratEditor {
 
         //create line drawing button
         Button line = new Button("Line");
-        formatToolButton(line);
         line.setOnAction(e -> lineButtonHandler());
         toolButtons.add(line);
 
-        //create watch here indicator
+        //create watch here button
         Button watchHere = new Button("Watch");
-        formatToolButton(watchHere);
         watchHere.setOnAction(e -> watchHereButtonHandler());
         toolButtons.add(watchHere);
 
         //create measuring tool button
         Button measuringTape = new Button("Measure");
-        formatToolButton(measuringTape);
         measuringTape.setOnAction(e -> measuringTapeButtonHandler());
         toolButtons.add(measuringTape);
+
+        //create go here button
+        Button goHere = new Button("Go Here");
+        goHere.setOnAction(e -> goHereButtonHandler());
+        toolButtons.add(goHere);
+
+        //format the buttons
+        toolButtons.forEach(b -> formatToolButton(b));
 
         //add all buttons to the tool selector panel
         int numColumns = 5;
@@ -209,7 +214,6 @@ public class StratEditor {
      */
     private void makeAbilityButton(DataController.Ability ability, EventHandler<ActionEvent> eventHandler){
         Button ret = new Button(appController.getData().getAbilityName(ability));
-        formatToolButton(ret);
         ret.setOnAction(eventHandler);
         toolButtons.add(ret);
     }
@@ -239,6 +243,15 @@ public class StratEditor {
      */
     private void measuringTapeButtonHandler(){
         twoPointDraggableElementHandler(new MeasuringTape(), this::measuringTapeButtonHandler);
+    }
+
+    /**
+     * handler for the indicator to go to a certain location
+     */
+    private void goHereButtonHandler(){
+        TwoPointTool tool = new TwoPointTool("GoHere");
+        tool.addDecorator(new ArrowHead());
+        twoPointDraggableElementHandler(tool, this::goHereButtonHandler);
     }
 
     /**

@@ -22,7 +22,7 @@ public class ToolImageStore extends ImageStore{
      */
     public void loadImages(){
         if(images.size() == 0){
-            ArrayList<String> toolNames = new ArrayList<String>(Arrays.asList("WatchHere", "Measure"));
+            ArrayList<String> toolNames = new ArrayList<String>(Arrays.asList("WatchHere", "Measure", "GoHere"));
             loadImageSet(toolNames, ".png");
         }
     }
