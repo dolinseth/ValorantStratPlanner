@@ -1,10 +1,7 @@
 package StratEditor;
 
 import DataLayer.DataController;
-import ElementDecorators.ArrowHead;
-import ElementDecorators.Circle;
-import ElementDecorators.ElementDecorator;
-import ElementDecorators.Rectangle;
+import ElementDecorators.*;
 import StratElements.*;
 import StrategySaveLoadScreen.StrategySaveLoadScreen;
 import javafx.event.ActionEvent;
@@ -63,6 +60,9 @@ public class StratEditor {
     private ArrayList<Button> toolButtons;
     private double mapImageSize;
     private final Color mapBackgroundColor = Color.web("#141C2F");
+    public final double pixelsRunPerSecond = 41.505;
+    public final double pixelsWalkedPerSecond = 24.615;
+
 
     /**
      * To be called when this scene is initialized to setup scene objects at runtime
@@ -149,11 +149,6 @@ public class StratEditor {
         makeAbilityButton(DataController.Ability.SHOCK_BOLT, e -> shockBoltButtonHandler());
 
 
-        //create line drawing button
-        Button line = new Button("Line");
-        line.setOnAction(e -> lineButtonHandler());
-        toolButtons.add(line);
-
         //create watch here button
         Button watchHere = new Button("Watch");
         watchHere.setOnAction(e -> watchHereButtonHandler());
@@ -232,17 +227,19 @@ public class StratEditor {
     }
 
     /**
-     * Handler for the line drawing tool
-     */
-    private void lineButtonHandler(){
-        twoPointDraggableElementHandler(new Line(), this::lineButtonHandler);
-    }
-
-    /**
      * handler for the measuring tape tool
      */
     private void measuringTapeButtonHandler(){
-        twoPointDraggableElementHandler(new MeasuringTape(), this::measuringTapeButtonHandler);
+        TwoPointTool tool = new TwoPointTool("Measure");
+        TextBox tb = new TextBox("Distance: %,.2f px\nTime to run: %,.2f s\nTime to walk: %,.2f s", ElementDecorator.Type.END_POINT);
+        tb.setUpdater(() -> {
+            double length = tb.getParent().getLength();
+            tb.updateText(length, length / pixelsRunPerSecond, length / pixelsWalkedPerSecond);
+        });
+        tool.addDecorator(tb);
+        twoPointDraggableElementHandler(tool, this::measuringTapeButtonHandler);
+
+//        twoPointDraggableElementHandler(new MeasuringTape(), this::measuringTapeButtonHandler);
     }
 
     /**

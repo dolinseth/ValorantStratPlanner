@@ -27,7 +27,7 @@ public abstract class TwoPointStratElement extends StratElement{
      */
     protected void drawDecorators(GraphicsContext gc){
         decorators.forEach(d -> {
-            d.setCoordsFromParent();
+            d.updateElement();
             d.draw(gc);
         });
     }
@@ -123,6 +123,8 @@ public abstract class TwoPointStratElement extends StratElement{
                 case "ArrowHead":
                     eld = new ArrowHead(decorator);
                     break;
+                case "TextBox":
+                    eld = new TextBox(decorator);
             }
             if(eld != null) {
                 eld.setParent(this);
@@ -161,6 +163,16 @@ public abstract class TwoPointStratElement extends StratElement{
     protected void insertProperties(JSONObject root){
         insertCoords(root);
         insertDecorators(root);
+    }
+
+    /**
+     * gets the length of the element measured as cartesian distance between (x1,y1) and (x2,y2)
+     * @return - double representing the length
+     */
+    public double getLength(){
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        return Math.sqrt(dx*dx + dy*dy);
     }
 
     /*

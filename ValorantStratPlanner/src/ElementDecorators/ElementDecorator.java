@@ -10,6 +10,7 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     TwoPointStratElement parent;
     protected double alpha;
     protected Color color;
+    protected DecoratorUpdater updater;
 
     /**
      * helper method for deserialization, sets the ElementDecorator.Type property based on JSONObject
@@ -100,7 +101,7 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     /**
      * sets the coordinates based on the parent object and the type
      */
-    public void setCoordsFromParent(){
+    public void updateElement(){
         if(type == Type.END_POINT || type == Type.END_EXTENDER){
             x1 = parent.getX2();
             y1 = parent.getY2();
@@ -115,6 +116,9 @@ public abstract class ElementDecorator extends TwoPointStratElement {
             x2 = parent.getX2();
             y2 = parent.getY2();
         }
+        if(updater != null){
+            updater.update();
+        }
     }
 
     /*
@@ -127,5 +131,9 @@ public abstract class ElementDecorator extends TwoPointStratElement {
 
     public TwoPointStratElement getParent(){
         return parent;
+    }
+
+    public void setUpdater(DecoratorUpdater updater) {
+        this.updater = updater;
     }
 }

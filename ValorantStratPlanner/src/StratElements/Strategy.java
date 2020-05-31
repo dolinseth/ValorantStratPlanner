@@ -65,9 +65,6 @@ public class Strategy {
             JSONObject eljson = elementArr.getJSONObject(i);
             String type = eljson.getString("type");
             switch(type){
-                case "Line":
-                    elements.add(new Line(eljson));
-                    break;
                 case "CharacterAbility":
                     elements.add(new CharacterAbility(eljson));
                     break;
