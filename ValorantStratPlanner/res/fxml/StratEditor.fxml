@@ -55,20 +55,14 @@
          </rowConstraints>
       </GridPane>
    </left>
-   <right>
-      <FlowPane prefHeight="869.0" prefWidth="249.0" BorderPane.alignment="CENTER">
-         <children>
-            <Slider fx:id="debugSlider1" prefHeight="45.0" prefWidth="184.0" />
-            <Slider fx:id="debugSlider2" prefHeight="45.0" prefWidth="184.0" />
-            <Slider fx:id="debugSlider3" prefHeight="45.0" prefWidth="184.0" />
-         </children>
-      </FlowPane>
-   </right>
    <center>
-      <Canvas fx:id="canvas" height="900.0" width="950.0" BorderPane.alignment="CENTER">
+      <Canvas fx:id="canvas" height="950.0" width="950.0" BorderPane.alignment="CENTER">
          <cursor>
             <Cursor fx:constant="CROSSHAIR" />
          </cursor>
       </Canvas>
    </center>
+   <right>
+      <Pane fx:id="descriptionPane" prefHeight="869.0" prefWidth="247.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>

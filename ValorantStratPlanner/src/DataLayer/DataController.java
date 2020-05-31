@@ -10,7 +10,8 @@ public class DataController {
     private AbilityImageStore abilityImages;
     private CharacterImageStore characterImages;
     private MapImageStore mapImages;
-    private JSONManager jsonManager;
+    private JSONManager stratJSONManager;
+    private ConfigFileManager configFileManager;
     private ToolImageStore toolImages;
 
     //enumerated type containing every possible character ability
@@ -47,9 +48,11 @@ public class DataController {
         characterImages.loadImages();
         mapImages = new MapImageStore("MapImages");
         mapImages.loadImages();
-        jsonManager = new JSONManager("res/SavedStrats");
+        stratJSONManager = new JSONManager("res/SavedStrats");
         toolImages = new ToolImageStore("ToolImages");
         toolImages.loadImages();
+        configFileManager = new ConfigFileManager("res/cfg");
+        configFileManager.loadProperties("ToolTips");
     }
 
     /**
@@ -246,7 +249,7 @@ public class DataController {
      * @return - a list containing the names of strategies saved in the SavedStrats folder
      */
     public List<String> getStrategies(){
-        return jsonManager.getFileList();
+        return stratJSONManager.getFileList();
     }
 
     /**
@@ -255,7 +258,7 @@ public class DataController {
      * @return - the Strategy object representing the strat, or null if a strat with that name is not found
      */
     public Strategy getStrat(String name){
-        JSONObject root = jsonManager.getStrat(name);
+        JSONObject root = stratJSONManager.getStrat(name);
         if(root == null){
             return null;
         }
@@ -268,7 +271,7 @@ public class DataController {
      * @param name - the name to use to save the strategy
      */
     public void saveStrat(Strategy strategy, String name){
-        jsonManager.saveStrat(strategy, name);
+        stratJSONManager.saveStrat(strategy, name);
     }
 
     /**
@@ -278,5 +281,14 @@ public class DataController {
      */
     public Image getToolImage(String toolName){
         return toolImages.getToolImage(toolName);
+    }
+
+    /**
+     * gets the tool tip for the given tool
+     * @param toolName - the name of the tool to get the tip for
+     * @return - String containing the tooltip for that tool
+     */
+    public String getToolTip(String toolName){
+        return configFileManager.getProperty(toolName + " tooltip");
     }
 }

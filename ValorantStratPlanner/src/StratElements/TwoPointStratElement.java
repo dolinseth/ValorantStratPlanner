@@ -125,6 +125,10 @@ public abstract class TwoPointStratElement extends StratElement{
                     break;
                 case "TextBox":
                     eld = new TextBox(decorator);
+                    break;
+                case "ToolIcon":
+                    eld = new ToolIcon(decorator);
+                    break;
             }
             if(eld != null) {
                 eld.setParent(this);

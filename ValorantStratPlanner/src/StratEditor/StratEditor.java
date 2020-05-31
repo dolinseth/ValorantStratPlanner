@@ -11,6 +11,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import Main.AppController;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 import static StratElements.CharacterAbility.areaDenialRadius;
 import static StratElements.CharacterAbility.visionBlockRadius;
@@ -45,11 +48,13 @@ public class StratEditor {
     @FXML
     private Button mainMenuButton;
     @FXML
-    private Slider debugSlider1;
-    @FXML
-    private Slider debugSlider2;
-    @FXML
-    private Slider debugSlider3;
+    private Pane descriptionPane;
+//    @FXML
+//    private Slider debugSlider1;
+//    @FXML
+//    private Slider debugSlider2;
+//    @FXML
+//    private Slider debugSlider3;
 
     //non-FXML fields
     private AppController appController;
@@ -63,7 +68,6 @@ public class StratEditor {
     public final double pixelsRunPerSecond = 41.505;
     public final double pixelsWalkedPerSecond = 24.615;
 
-
     /**
      * To be called when this scene is initialized to setup scene objects at runtime
      */
@@ -71,10 +75,14 @@ public class StratEditor {
         createToolSelectorButtons();
         updateCanvas();
 
+        //set up description pane
+//        TextField toolName = new TextField("TOOL_NAME");
+//        descriptionPane.getChildren();
+
         //comment these lines to get the debug sliders back
-        debugSlider1.setVisible(false);
-        debugSlider2.setVisible(false);
-        debugSlider3.setVisible(false);
+//        debugSlider1.setVisible(false);
+//        debugSlider2.setVisible(false);
+//        debugSlider3.setVisible(false);
     }
 
     /**
@@ -148,21 +156,10 @@ public class StratEditor {
         makeAbilityButton(DataController.Ability.OWL_DRONE, e -> owlDroneButtonHandler());
         makeAbilityButton(DataController.Ability.SHOCK_BOLT, e -> shockBoltButtonHandler());
 
-
-        //create watch here button
-        Button watchHere = new Button("Watch");
-        watchHere.setOnAction(e -> watchHereButtonHandler());
-        toolButtons.add(watchHere);
-
-        //create measuring tool button
-        Button measuringTape = new Button("Measure");
-        measuringTape.setOnAction(e -> measuringTapeButtonHandler());
-        toolButtons.add(measuringTape);
-
-        //create go here button
-        Button goHere = new Button("Go Here");
-        goHere.setOnAction(e -> goHereButtonHandler());
-        toolButtons.add(goHere);
+        //create tool buttons
+        makeToolButton("Watch", e -> watchHereButtonHandler());
+        makeToolButton("Measure", e -> measuringTapeButtonHandler());
+        makeToolButton("Go Here", e -> goHereButtonHandler());
 
         //format the buttons
         toolButtons.forEach(b -> formatToolButton(b));
@@ -183,14 +180,14 @@ public class StratEditor {
         }
 
         //set up the debug sliders and their handlers
-        formatDebugSlider(debugSlider1);
-        formatDebugSlider(debugSlider2);
-        formatDebugSlider(debugSlider3);
-        debugSlider1.valueProperty().addListener((observable, newVal, oldVal) -> {
-            mapImageSize = newVal.doubleValue();
-            System.out.println("New map image size = " + mapImageSize);
-            updateCanvas();
-        });
+//        formatDebugSlider(debugSlider1);
+//        formatDebugSlider(debugSlider2);
+//        formatDebugSlider(debugSlider3);
+//        debugSlider1.valueProperty().addListener((observable, newVal, oldVal) -> {
+//            mapImageSize = newVal.doubleValue();
+//            System.out.println("New map image size = " + mapImageSize);
+//            updateCanvas();
+//        });
     }
 
     /**
@@ -211,6 +208,30 @@ public class StratEditor {
         Button ret = new Button(appController.getData().getAbilityName(ability));
         ret.setOnAction(eventHandler);
         toolButtons.add(ret);
+    }
+
+    /**
+     * helper method for creating a generic tool button with the given label and event handler
+     * @param label - the label of the button
+     * @param eventHandler - the handler to call when the button is pressed
+     */
+    private void makeToolButton(String label, EventHandler<ActionEvent> eventHandler){
+        Button ret = new Button(label);
+        ret.setOnAction(eventHandler);
+        toolButtons.add(ret);
+    }
+
+    /**
+     * helper method that formats all the tool buttons to be identical
+     * @param b - the button to format
+     */
+    private void formatToolButton(Button b){
+        b.setPrefSize(1000, 1000);
+        b.wrapTextProperty().setValue(true);
+        b.setTextAlignment(TextAlignment.CENTER);
+        Tooltip tt = new Tooltip(appController.getData().getToolTip(b.getText()));
+        tt.setShowDelay(new Duration(0.25));
+        b.setTooltip(tt);
     }
 
     /*
@@ -238,8 +259,6 @@ public class StratEditor {
         });
         tool.addDecorator(tb);
         twoPointDraggableElementHandler(tool, this::measuringTapeButtonHandler);
-
-//        twoPointDraggableElementHandler(new MeasuringTape(), this::measuringTapeButtonHandler);
     }
 
     /**
@@ -273,16 +292,6 @@ public class StratEditor {
                 updateCanvas();
             });
         });
-    }
-
-    /**
-     * helper method that formats all the tool buttons to be identical
-     * @param b - the button to format
-     */
-    private void formatToolButton(Button b){
-        b.setPrefSize(1000, 1000);
-        b.wrapTextProperty().setValue(true);
-        b.setTextAlignment(TextAlignment.CENTER);
     }
 
     /**

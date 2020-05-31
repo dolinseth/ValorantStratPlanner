@@ -9,16 +9,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class JSONManager {
-    private String folderPath;
-    private final String fileSuffix = ".json";
-
+public class JSONManager extends TextFileManager{
     /**
      * default constructor
      * @param folderPath - the path to the folder that contains the saved strats
      */
     public JSONManager(String folderPath){
         this.folderPath = folderPath;
+        fileSuffix = ".json";
     }
 
     /**
@@ -50,19 +48,7 @@ public class JSONManager {
      * @return - the JSONObject built from the chosen file
      */
     public JSONObject getStrat(String stratName){
-        try {
-            Scanner scan = new Scanner(new File(getFilePath(stratName)));
-            StringBuilder sb = new StringBuilder();
-            while(scan.hasNext()){
-                sb.append(scan.nextLine());
-            }
-
-            return new JSONObject(sb.toString());
-        } catch(FileNotFoundException e){
-            System.out.println("Unable to load saved strategy with name " + stratName);
-            e.printStackTrace();
-            return null;
-        }
+        return new JSONObject(getFileContents(stratName));
     }
 
     /**
@@ -71,23 +57,7 @@ public class JSONManager {
      * @param name - the name to give to the file containing the saved strategy
      */
     public void saveStrat(Strategy strat, String name){
-        try{
-            FileWriter fw = new FileWriter(getFilePath(name));
-            strat.serialize();
-            fw.write(strat.getRoot().toString(2));
-            fw.close();
-        } catch(IOException e){
-            System.out.println("Unable to save strategy with name " + name);
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * helper method that returns a sanitized file paths to avoid doubling up on path separators or file extensions
-     * @param stratName - the name of the strategy to generate the path for
-     * @return - the sanitized file path
-     */
-    private String getFilePath(String stratName){
-        return folderPath + (folderPath.endsWith("/") ? "" : "/") + stratName + (stratName.endsWith(fileSuffix) ? "" : fileSuffix);
+        strat.serialize();
+        saveFile(name, strat.getRoot().toString(2));
     }
 }
