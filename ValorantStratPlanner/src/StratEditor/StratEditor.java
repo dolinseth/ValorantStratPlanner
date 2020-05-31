@@ -47,14 +47,6 @@ public class StratEditor {
     private Button undoButton;
     @FXML
     private Button mainMenuButton;
-    @FXML
-    private Pane descriptionPane;
-//    @FXML
-//    private Slider debugSlider1;
-//    @FXML
-//    private Slider debugSlider2;
-//    @FXML
-//    private Slider debugSlider3;
 
     //non-FXML fields
     private AppController appController;
@@ -74,15 +66,6 @@ public class StratEditor {
     public void setup(){
         createToolSelectorButtons();
         updateCanvas();
-
-        //set up description pane
-//        TextField toolName = new TextField("TOOL_NAME");
-//        descriptionPane.getChildren();
-
-        //comment these lines to get the debug sliders back
-//        debugSlider1.setVisible(false);
-//        debugSlider2.setVisible(false);
-//        debugSlider3.setVisible(false);
     }
 
     /**
@@ -178,25 +161,6 @@ public class StratEditor {
             GridPane.setColumnIndex(iconHolder, 0);
             GridPane.setRowIndex(iconHolder, i);
         }
-
-        //set up the debug sliders and their handlers
-//        formatDebugSlider(debugSlider1);
-//        formatDebugSlider(debugSlider2);
-//        formatDebugSlider(debugSlider3);
-//        debugSlider1.valueProperty().addListener((observable, newVal, oldVal) -> {
-//            mapImageSize = newVal.doubleValue();
-//            System.out.println("New map image size = " + mapImageSize);
-//            updateCanvas();
-//        });
-    }
-
-    /**
-     * helper method for formatting debug sliders
-     * @param s - the slider to format
-     */
-    private void formatDebugSlider(Slider s){
-        s.setMin(0);
-        s.setMax(1000);
     }
 
     /**

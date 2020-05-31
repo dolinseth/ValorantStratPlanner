@@ -61,10 +61,10 @@ public class CharacterAbility extends TwoPointStratElement{
      * @param gc - the GraphicsContext in which to draw the character ability
      */
     public void draw(GraphicsContext gc){
-        drawDecorators(gc);
         gc.setStroke(color);
         Point offsetStart = getStartOffsetByRadius(AbilityIcon.size);
         gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
+        drawDecorators(gc);
     }
 
     /**
