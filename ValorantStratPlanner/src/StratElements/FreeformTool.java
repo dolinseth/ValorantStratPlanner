@@ -108,6 +108,21 @@ public class FreeformTool extends TwoPointStratElement{
             Point b = points.get(i + 1);
             gc.strokeLine(a.x, a.y, b.x, b.y);
         }
+        drawDecorators(gc);
+    }
+
+    @Override
+    public double getLength(){
+        double ret = 0;
+        for(int i = 0; i < points.size() - 1; i++){
+            Point a = points.get(i);
+            Point b = points.get(i + 1);
+            double dx = b.x - a.x;
+            double dy = b.y - a.y;
+            ret += Math.sqrt(dx*dx + dy*dy);
+        }
+
+        return ret;
     }
 
     /**

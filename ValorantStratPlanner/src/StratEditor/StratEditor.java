@@ -144,6 +144,7 @@ public class StratEditor {
         makeToolButton("Measure", e -> measuringTapeButtonHandler());
         makeToolButton("Go Here", e -> goHereButtonHandler());
         makeToolButton("Draw", e -> drawButtonHandler());
+        makeToolButton("Free Measure", e -> freeformMeasureButtonHandler());
 
         //format the buttons
         toolButtons.forEach(b -> formatToolButton(b));
@@ -243,6 +244,17 @@ public class StratEditor {
         freeformElementHandler(tool, this::drawButtonHandler);
     }
 
+    private void freeformMeasureButtonHandler(){
+        FreeformTool tool = new FreeformTool(("Free Measure"));
+        TextBox tb = new TextBox("Distance: %,.2f px\nTime to run: %,.2f s\nTime to walk: %,.2f s", ElementDecorator.Type.END_POINT);
+        tb.setUpdater(() -> {
+            double length = tb.getParent().getLength();
+            tb.updateText(length, length / pixelsRunPerSecond, length / pixelsWalkedPerSecond);
+        });
+        tool.addDecorator(tb);
+        freeformElementHandler(tool, this::freeformMeasureButtonHandler);
+    }
+
     /**
      * generic handler for a freeform element
      * @param ft - the freeform element to handle
@@ -289,6 +301,20 @@ public class StratEditor {
                 updateCanvas();
             });
         });
+    }
+
+    /**
+     * helper method for rendering that saves the state of the canvas
+     */
+    private void saveCanvasState(){
+        canvas.getGraphicsContext2D().save();
+    }
+
+    /**
+     * helper method for rendering that restores a previously saved canvas state
+     */
+    private void restoreCanvasState(){
+        canvas.getGraphicsContext2D().restore();
     }
 
     /**

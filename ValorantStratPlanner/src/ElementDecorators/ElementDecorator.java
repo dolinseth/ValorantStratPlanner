@@ -1,5 +1,6 @@
 package ElementDecorators;
 
+import Records.Point;
 import StratElements.TwoPointStratElement;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
@@ -103,18 +104,30 @@ public abstract class ElementDecorator extends TwoPointStratElement {
      */
     public void updateElement(){
         if(type == Type.END_POINT || type == Type.END_EXTENDER){
-            x1 = parent.getX2();
-            y1 = parent.getY2();
+            Point p = parent.getEnd();
+            x1 = p.x;
+            y1 = p.y;
+//            x1 = parent.getX2();
+//            y1 = parent.getY2();
         }
         else if(type == Type.START_POINT || type == Type.START_EXTENDER){
-            x1 = parent.getX1();
-            y1 = parent.getY1();
+            Point p = parent.getStart();
+            x1 = p.x;
+            y1 = p.y;
+//            x1 = parent.getX1();
+//            y1 = parent.getY1();
         }
         else if(type == Type.START_TO_END){
-            x1 = parent.getX1();
-            y1 = parent.getY1();
-            x2 = parent.getX2();
-            y2 = parent.getY2();
+            Point p = parent.getStart();
+            x1 = p.x;
+            y1 = p.y;
+            Point p2 = parent.getEnd();
+            x2 = p2.x;
+            y2 = p2.y;
+//            x1 = parent.getX1();
+//            y1 = parent.getY1();
+//            x2 = parent.getX2();
+//            y2 = parent.getY2();
         }
         if(updater != null){
             updater.update();
