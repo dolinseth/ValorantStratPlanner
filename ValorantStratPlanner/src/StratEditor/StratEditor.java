@@ -143,6 +143,7 @@ public class StratEditor {
         makeToolButton("Watch", e -> watchHereButtonHandler());
         makeToolButton("Measure", e -> measuringTapeButtonHandler());
         makeToolButton("Go Here", e -> goHereButtonHandler());
+        makeToolButton("Draw", e -> drawButtonHandler());
 
         //format the buttons
         toolButtons.forEach(b -> formatToolButton(b));
@@ -232,6 +233,38 @@ public class StratEditor {
         TwoPointTool tool = new TwoPointTool("GoHere");
         tool.addDecorator(new ArrowHead());
         twoPointDraggableElementHandler(tool, this::goHereButtonHandler);
+    }
+
+    /**
+     * handler for the freeform draw tool
+     */
+    private void drawButtonHandler(){
+        FreeformTool tool = new FreeformTool("Draw");
+        freeformElementHandler(tool, this::drawButtonHandler);
+    }
+
+    /**
+     * generic handler for a freeform element
+     * @param ft - the freeform element to handle
+     * @param handler - the button handler to call to start a new freeform element at the end
+     */
+    private void freeformElementHandler(FreeformTool ft, ButtonHandler handler){
+        canvas.setOnMousePressed(e -> {
+            curElement = ft;
+            ft.addPoint(e.getX(), e.getY());
+            canvas.setOnMouseDragged(e2 -> {
+                ft.addPoint(e2.getX(), e2.getY());
+                updateCanvas();
+            });
+            canvas.setOnMouseReleased(e2 -> {
+                elements.add(ft);
+                curElement = null;
+                updateCanvas();
+                canvas.setOnMouseDragged(e3 -> { /* INTENTIONALLY NOTHING */});
+                canvas.setOnMousePressed(e3 -> { /* INTENTIONALLY NOTHING */ });
+                handler.handle();
+            });
+        });
     }
 
     /**

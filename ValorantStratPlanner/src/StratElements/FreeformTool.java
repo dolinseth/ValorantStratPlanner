@@ -33,6 +33,23 @@ public class FreeformTool extends TwoPointStratElement{
     }
 
     /**
+     * adds a point to the list of points that represents the path
+     * @param p - the Point to add
+     */
+    public void addPoint(Point p){
+        points.add(p);
+    }
+
+    /**
+     * adds a point to the list of points that represents the path
+     * @param x - the x coordinate of the new point
+     * @param y - the y coordinate of the new point
+     */
+    public void addPoint(double x, double y){
+        points.add(new Point(x, y));
+    }
+
+    /**
      * helper method for serialization, inserts the start and end coordinates into the given JSONObject
      * @param root - the JSONObject into which the coords should be inserted
      */
@@ -85,7 +102,12 @@ public class FreeformTool extends TwoPointStratElement{
      * @param gc - the GraphicsContext in which to draw the element
      */
     public void draw(GraphicsContext gc){
-
+        gc.setStroke(color);
+        for(int i = 0; i < points.size() - 1; i++){
+            Point a = points.get(i);
+            Point b = points.get(i + 1);
+            gc.strokeLine(a.x, a.y, b.x, b.y);
+        }
     }
 
     /**

@@ -16,6 +16,7 @@ public class Point {
 
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
+        root.put("type", "point");
         root.put("x", x);
         root.put("y", y);
         return root;
