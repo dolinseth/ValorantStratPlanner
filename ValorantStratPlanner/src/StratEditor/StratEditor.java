@@ -209,7 +209,7 @@ public class StratEditor {
         b.wrapTextProperty().setValue(true);
         b.setTextAlignment(TextAlignment.CENTER);
         Tooltip tt = new Tooltip(appController.getData().getToolTip(b.getText()));
-        tt.setShowDelay(new Duration(0.25));
+//        tt.setShowDelay(new Duration(0.25));
         b.setTooltip(tt);
     }
 
