@@ -62,7 +62,4 @@
          </cursor>
       </Canvas>
    </center>
-   <right>
-      <Pane fx:id="descriptionPane" prefHeight="869.0" prefWidth="247.0" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>
