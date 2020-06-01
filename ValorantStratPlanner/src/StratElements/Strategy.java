@@ -71,6 +71,9 @@ public class Strategy {
                 case "tool":
                     elements.add(new TwoPointTool(eljson));
                     break;
+                case "FreeformTool":
+                    elements.add(new FreeformTool(eljson));
+                    break;
             }
         }
     }

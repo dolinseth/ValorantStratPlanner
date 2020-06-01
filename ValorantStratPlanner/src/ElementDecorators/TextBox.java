@@ -1,6 +1,7 @@
 package ElementDecorators;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
 public class TextBox extends ElementDecorator{
@@ -17,6 +18,7 @@ public class TextBox extends ElementDecorator{
     public TextBox(String formatString, Type type){
         this.formatString = formatString;
         this.type = type;
+        color = Color.YELLOW;
     }
 
     /**

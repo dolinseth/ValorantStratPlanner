@@ -33,6 +33,14 @@ public class FreeformTool extends TwoPointStratElement{
     }
 
     /**
+     * alternate constructor that builds the object from a JSONObject
+     * @param root - the JSONObject to build this one from
+     */
+    public FreeformTool(JSONObject root){
+        importFromJSON(root);
+    }
+
+    /**
      * adds a point to the list of points that represents the path
      * @param p - the Point to add
      */
@@ -83,6 +91,7 @@ public class FreeformTool extends TwoPointStratElement{
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
         insertProperties(root);
+        root.put("type", "FreeformTool");
 
         return root;
     }
