@@ -179,6 +179,22 @@ public abstract class TwoPointStratElement extends StratElement{
         return Math.sqrt(dx*dx + dy*dy);
     }
 
+    /**
+     * get the coordinates of the beginning point of this tool
+     * @return - a Point representing the start coordinates of the tool
+     */
+    public Point getStart(){
+        return new Point(x1, y1);
+    }
+
+    /**
+     * get the coordinates of the ending point of this tool
+     * @return - a Point representing the end coordinates of the tool
+     */
+    public Point getEnd(){
+        return new Point(x2, y2);
+    }
+
     /*
     GETTERS AND SETTERS
      */
