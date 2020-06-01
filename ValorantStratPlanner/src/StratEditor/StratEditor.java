@@ -47,6 +47,8 @@ public class StratEditor {
     private Button undoButton;
     @FXML
     private Button mainMenuButton;
+    @FXML
+    private BorderPane mainPane;
 
     //non-FXML fields
     private AppController appController;
@@ -66,6 +68,17 @@ public class StratEditor {
     public void setup(){
         createToolSelectorButtons();
         updateCanvas();
+
+        //set background image
+        Image bgImage = new Image(getClass().getResource("/BackgroundImages/Blueprint-background.png").toString(), 1920, 1080, true, false);
+        BackgroundImage bg = new BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        if(bg == null){
+            System.out.println("bg is null");
+        }
+        else if (mainPane == null){
+            System.out.println("mainpane is null");
+        }
+        mainPane.setBackground(new Background(bg));
     }
 
     /**
