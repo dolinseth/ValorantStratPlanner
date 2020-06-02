@@ -3,14 +3,40 @@ package StratElements;
 import ElementDecorators.*;
 import Records.Point;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.xml.bind.Element;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class TwoPointStratElement extends StratElement{
     protected double x1, y1, x2, y2;
     protected ArrayList<ElementDecorator> decorators = new ArrayList<ElementDecorator>();
+    protected AdditionalPointHandler additionalPointHandler;
+
+    /**
+     * helper function that allows additionalPointHandler functions to decide
+     * to pass the additional point to all decorators
+     * @param e - the mouse event to pass
+     */
+    public void passAdditionalPointsToDecorators(MouseEvent e){
+        decorators.forEach(d -> handleAdditionalPoint(e));
+    }
+
+    /**
+     * helper function that allows additionalPointHandler functions to
+     * decide to selectively pass additional points to decorators by
+     * providing a prototype decorator and a comparator function
+     * and passing the points to any decorator d s.t. dc.compare(d, prototype) == true
+     * @param e - the MouseEvent to pass to the decorators
+     * @param prototype - the prototype decorator for comparison with
+     * @param dc - the comparator function
+     */
+    public void passAdditionalPointsToDecorators(MouseEvent e, ElementDecorator prototype, DecoratorComparator dc){
+        decorators.stream().filter(d -> dc.compare(prototype, d)).forEach(d -> handleAdditionalPoint(e));
+    }
 
     /**
      * adds a new decorator to this ability
@@ -19,6 +45,18 @@ public abstract class TwoPointStratElement extends StratElement{
     public void addDecorator(ElementDecorator elementDecorator){
         elementDecorator.setParent(this);
         decorators.add(elementDecorator);
+    }
+
+    /**
+     * helper method to get a reference to a certain decorator
+     * by presenting a prototype decorator
+     * and a function with which to compare them
+     * @param eld - the prototype decorator
+     * @param dc - the function with which to compare decorators
+     * @return - the first decorator in the list s.t. dc.compare(eld, returned_value) == true
+     */
+    public ElementDecorator getDecorator(ElementDecorator eld, DecoratorComparator dc){
+        return decorators.stream().filter(d -> dc.compare(eld, d)).findFirst().get();
     }
 
     /**
@@ -193,6 +231,16 @@ public abstract class TwoPointStratElement extends StratElement{
      */
     public Point getEnd(){
         return new Point(x2, y2);
+    }
+
+    public void setAdditionalPointHandler(AdditionalPointHandler aph){
+        additionalPointHandler = aph;
+    }
+
+    public void handleAdditionalPoint(MouseEvent e){
+        if(additionalPointHandler != null) {
+            additionalPointHandler.handle(e);
+        }
     }
 
     /*

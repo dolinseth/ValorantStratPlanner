@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -298,18 +299,24 @@ public class StratEditor {
      * @param handler - the handler to call to initialize the element
      */
     private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
-        canvas.setOnMousePressed(e -> {
+        canvas.setOnMouseClicked(e -> {
             el.setStart(e.getX(), e.getY());
             curElement = el;
-            canvas.setOnMouseReleased(e2 -> {
-                el.setEnd(e2.getX(), e2.getY());
-                elements.add(el);
-                curElement = null;
-                updateCanvas();
-                canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
-                handler.handle();
+            canvas.setOnMouseClicked(e2 -> {
+                if(e2.getButton().equals(MouseButton.PRIMARY)) {
+                    el.setEnd(e2.getX(), e2.getY());
+                    elements.add(el);
+                    curElement = null;
+                    updateCanvas();
+                    canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
+                    handler.handle();
+                }
+                else if(e2.getButton().equals(MouseButton.SECONDARY)){
+                    //whatever code is necessary to handle a right click
+                    //whenever that feature gets fully implemented
+                }
             });
-            canvas.setOnMouseDragged(e3 -> {
+            canvas.setOnMouseMoved(e3 -> {
                 el.setEnd(e3.getX(), e3.getY());
                 updateCanvas();
             });
@@ -448,6 +455,12 @@ public class StratEditor {
 
     private void spycamButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SPYCAM);
+        Circle testCircle = new Circle(20, Color.RED, 0.5, ElementDecorator.Type.END_POINT);
+        testCircle.setAdditionalPointHandler(e -> {
+            testCircle.setEnd(e.getX(), e.getY());
+        });
+        ab.setAdditionalPointHandler(ab::passAdditionalPointsToDecorators);
+        ab.addDecorator(testCircle);
         twoPointDraggableElementHandler(ab, this::spycamButtonHandler);
     }
 
