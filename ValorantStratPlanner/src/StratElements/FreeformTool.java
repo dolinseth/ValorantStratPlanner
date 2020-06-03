@@ -20,7 +20,7 @@ public class FreeformTool extends TwoPointStratElement{
      */
     public FreeformTool(Color color, String tool){
         this.tool = tool;
-        color = color;
+        this.color = color;
     }
 
     /**

@@ -25,6 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
+import javax.sound.sampled.LineEvent;
+
 import static StratElements.CharacterAbility.areaDenialRadius;
 import static StratElements.CharacterAbility.visionBlockRadius;
 
@@ -160,6 +162,11 @@ public class StratEditor {
         makeToolButton("Draw", e -> drawButtonHandler());
         makeToolButton("Free Measure", e -> freeformMeasureButtonHandler());
 
+
+        //a test button for messing around with new decorators, etc
+        //make sure to comment this out when building release versions
+        makeToolButton("Test button", e -> testButtonHandler());
+
         //format the buttons
         toolButtons.forEach(b -> formatToolButton(b));
 
@@ -177,6 +184,12 @@ public class StratEditor {
             GridPane.setColumnIndex(iconHolder, 0);
             GridPane.setRowIndex(iconHolder, i);
         }
+    }
+
+    private void testButtonHandler(){
+        TwoPointTool testTool = new TwoPointTool("test");
+//        testTool.addDecorator(new FilledArc(20, 50, Math.PI/4, Color.GREEN, 0.5, ElementDecorator.Type.START_TO_END));
+        twoPointDraggableElementHandler(testTool, this::testButtonHandler);
     }
 
     /**

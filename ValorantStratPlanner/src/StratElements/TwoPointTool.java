@@ -20,7 +20,7 @@ public class TwoPointTool extends TwoPointStratElement{
      */
     public TwoPointTool(Color color, String tool){
         this.tool = tool;
-        color = color;
+        this.color = color;
         setupIcon();
     }
 

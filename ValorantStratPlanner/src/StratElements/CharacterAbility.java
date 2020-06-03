@@ -26,7 +26,7 @@ public class CharacterAbility extends TwoPointStratElement{
         icon.setParent(this);
         decorators.add(icon);
         this.ability = ability.toLowerCase();
-        color = color;
+        this.color = color;
     }
 
     /**
