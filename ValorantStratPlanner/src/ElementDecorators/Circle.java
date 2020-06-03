@@ -16,7 +16,7 @@ public class Circle extends ElementDecorator {
      */
     public Circle(double radius, Color color, double alpha, Type type) {
         this.radius = radius;
-        this.color = color;
+        color = color;
         this.alpha = alpha;
         this.type = type;
     }

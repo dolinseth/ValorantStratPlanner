@@ -12,7 +12,7 @@ public class ArrowHead extends ElementDecorator {
      * default constructor, does nothing
      */
     public ArrowHead(){
-        this.color = Color.YELLOW;
+        color = Color.YELLOW;
         type = Type.START_TO_END;
     }
 
@@ -29,7 +29,7 @@ public class ArrowHead extends ElementDecorator {
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
-        this.color = color;
+        color = color;
         type = Type.START_TO_END;
     }
 

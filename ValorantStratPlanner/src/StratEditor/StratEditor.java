@@ -258,6 +258,9 @@ public class StratEditor {
         freeformElementHandler(tool, this::drawButtonHandler);
     }
 
+    /**
+     * handler for the freeform measuring tool
+     */
     private void freeformMeasureButtonHandler(){
         FreeformTool tool = new FreeformTool(("Free Measure"));
         TextBox tb = new TextBox("Distance: %,.2f px\nTime to run: %,.2f s\nTime to walk: %,.2f s", ElementDecorator.Type.END_POINT);
@@ -455,12 +458,6 @@ public class StratEditor {
 
     private void spycamButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SPYCAM);
-        Circle testCircle = new Circle(20, Color.RED, 0.5, ElementDecorator.Type.END_POINT);
-        testCircle.setAdditionalPointHandler(e -> {
-            testCircle.setEnd(e.getX(), e.getY());
-        });
-        ab.setAdditionalPointHandler(ab::passAdditionalPointsToDecorators);
-        ab.addDecorator(testCircle);
         twoPointDraggableElementHandler(ab, this::spycamButtonHandler);
     }
 

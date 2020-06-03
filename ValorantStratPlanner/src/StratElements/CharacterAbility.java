@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class CharacterAbility extends TwoPointStratElement{
-    private Color color;
     private String ability;
     public static final double visionBlockRadius = 47;
     public static final double areaDenialRadius = 47;
@@ -27,7 +26,7 @@ public class CharacterAbility extends TwoPointStratElement{
         icon.setParent(this);
         decorators.add(icon);
         this.ability = ability.toLowerCase();
-        this.color = color;
+        color = color;
     }
 
     /**
@@ -75,7 +74,6 @@ public class CharacterAbility extends TwoPointStratElement{
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
         root.put("type", "CharacterAbility");
-        root.put("color", color.toString());
         root.put("ability", ability);
         insertProperties(root);
         return root;
@@ -88,7 +86,6 @@ public class CharacterAbility extends TwoPointStratElement{
      */
     public void importFromJSON(JSONObject root){
         setPropertiesFromJSON(root);
-        color = Color.web(root.getString("color"));
         ability = root.getString("ability");
     }
 

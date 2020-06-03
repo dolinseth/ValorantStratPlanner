@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class TwoPointTool extends TwoPointStratElement{
-    private Color color;
     private String tool;
     private final double size = 30;
 
@@ -21,7 +20,7 @@ public class TwoPointTool extends TwoPointStratElement{
      */
     public TwoPointTool(Color color, String tool){
         this.tool = tool;
-        this.color = color;
+        color = color;
         setupIcon();
     }
 
@@ -59,7 +58,6 @@ public class TwoPointTool extends TwoPointStratElement{
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
         root.put("type", "tool");
-        root.put("color", color);
         root.put("tool", tool);
         insertProperties(root);
         return root;
@@ -72,7 +70,6 @@ public class TwoPointTool extends TwoPointStratElement{
      */
     public void importFromJSON(JSONObject root){
         setPropertiesFromJSON(root);
-        color = Color.web(root.getString("color"));
         tool = root.getString("tool");
     }
 

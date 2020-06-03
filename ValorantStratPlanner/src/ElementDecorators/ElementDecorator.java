@@ -10,13 +10,13 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     protected Type type;
     TwoPointStratElement parent;
     protected double alpha;
-    protected Color color;
     protected DecoratorUpdater updater;
 
     /**
      * helper method for deserialization, sets the ElementDecorator.Type property based on JSONObject
      * @param root - the JSONObject that describes the ElementDecorator.Type of this object
      */
+    @Override
     public void setPropertiesFromJSON(JSONObject root){
         String typeStr = root.getString("eldtype");
         switch(typeStr){
@@ -41,6 +41,7 @@ public abstract class ElementDecorator extends TwoPointStratElement {
         setCoordsFromJSON(root);
     }
 
+    @Override
     public void insertProperties(JSONObject root){
         insertCoords(root);
         root.put("alpha", alpha);
@@ -107,15 +108,11 @@ public abstract class ElementDecorator extends TwoPointStratElement {
             Point p = parent.getEnd();
             x1 = p.x;
             y1 = p.y;
-//            x1 = parent.getX2();
-//            y1 = parent.getY2();
         }
         else if(type == Type.START_POINT || type == Type.START_EXTENDER){
             Point p = parent.getStart();
             x1 = p.x;
             y1 = p.y;
-//            x1 = parent.getX1();
-//            y1 = parent.getY1();
         }
         else if(type == Type.START_TO_END){
             Point p = parent.getStart();
@@ -124,10 +121,6 @@ public abstract class ElementDecorator extends TwoPointStratElement {
             Point p2 = parent.getEnd();
             x2 = p2.x;
             y2 = p2.y;
-//            x1 = parent.getX1();
-//            y1 = parent.getY1();
-//            x2 = parent.getX2();
-//            y2 = parent.getY2();
         }
         if(updater != null){
             updater.update();

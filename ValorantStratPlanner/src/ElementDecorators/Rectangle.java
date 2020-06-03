@@ -17,7 +17,7 @@ public class Rectangle extends ElementDecorator {
      */
     public Rectangle(double width, Color color, double alpha, Type type){
         this.width = width;
-        this.color = color;
+        color = color;
         this.alpha = alpha;
         this.type = type;
     }

@@ -2,6 +2,7 @@ package ElementDecorators;
 
 import Main.AppController;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
 public class ToolIcon extends Icon{
@@ -13,6 +14,7 @@ public class ToolIcon extends Icon{
     public ToolIcon(String toolName, Type type){
         this.name = toolName;
         this.type = type;
+        color = Color.YELLOW;
     }
 
     /**

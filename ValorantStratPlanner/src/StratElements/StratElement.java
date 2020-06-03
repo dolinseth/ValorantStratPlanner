@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
 public abstract class StratElement {
+    protected Color color;
     /**
      * draws the StratElement in the given graphics context
      * to be implemented by any classes extending this one

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class FreeformTool extends TwoPointStratElement{
     protected ArrayList<Point> points = new ArrayList<Point>();
-    private Color color;
     private String tool;
 
     /**
@@ -21,7 +20,7 @@ public class FreeformTool extends TwoPointStratElement{
      */
     public FreeformTool(Color color, String tool){
         this.tool = tool;
-        this.color = color;
+        color = color;
     }
 
     /**

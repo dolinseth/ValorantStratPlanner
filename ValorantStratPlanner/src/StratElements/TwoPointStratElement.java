@@ -4,6 +4,7 @@ import ElementDecorators.*;
 import Records.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -196,6 +197,7 @@ public abstract class TwoPointStratElement extends StratElement{
     protected void setPropertiesFromJSON(JSONObject root){
         setCoordsFromJSON(root);
         setDecoratorsFromJSON(root);
+        color = Color.web(root.getString("color"));
     }
 
     /**
@@ -205,6 +207,7 @@ public abstract class TwoPointStratElement extends StratElement{
     protected void insertProperties(JSONObject root){
         insertCoords(root);
         insertDecorators(root);
+        root.put("color", color);
     }
 
     /**
