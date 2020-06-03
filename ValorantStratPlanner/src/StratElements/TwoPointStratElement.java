@@ -16,6 +16,7 @@ public abstract class TwoPointStratElement extends StratElement{
     protected double x1, y1, x2, y2;
     protected ArrayList<ElementDecorator> decorators = new ArrayList<ElementDecorator>();
     protected AdditionalPointHandler additionalPointHandler;
+    protected double maxLength = -1;
 
     /**
      * helper function that allows additionalPointHandler functions to decide
@@ -111,6 +112,11 @@ public abstract class TwoPointStratElement extends StratElement{
     public void setEnd(double x, double y){
         x2 = x;
         y2 = y;
+        if(maxLength != -1 && getLength() > maxLength){
+            Point end = getStartOffsetByRadius(maxLength*2);
+            x2 = end.x;
+            y2 = end.y;
+        }
     }
 
     /**
@@ -291,5 +297,13 @@ public abstract class TwoPointStratElement extends StratElement{
 
     public void setY2(double y2) {
         this.y2 = y2;
+    }
+
+    public double getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(double maxLength) {
+        this.maxLength = maxLength;
     }
 }
