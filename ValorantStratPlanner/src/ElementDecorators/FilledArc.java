@@ -83,8 +83,11 @@ public class FilledArc extends ElementDecorator{
             gc.beginPath();
             gc.appendSVGPath(path);
             gc.closePath();
+            double oldAlpha = gc.getGlobalAlpha();
+            gc.setGlobalAlpha(alpha);
             gc.setFill(color);
             gc.fill();
+            gc.setGlobalAlpha(oldAlpha);
         }
     }
 

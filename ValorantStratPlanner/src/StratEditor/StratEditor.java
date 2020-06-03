@@ -483,6 +483,7 @@ public class StratEditor {
 
     private void stimBeaconButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.STIM_BEACON);
+        ab.addDecorator(new Circle(areaDenialRadius, Color.ORANGE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::stimBeaconButtonHandler);
     }
 
@@ -515,6 +516,14 @@ public class StratEditor {
 
     private void spycamButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SPYCAM);
+        FilledArc camFOV = new FilledArc(0, 80, Math.PI/2, Color.LIGHTGRAY, 0.3, ElementDecorator.Type.END_EXTENDER);
+        camFOV.setVisible(false);
+        camFOV.setAdditionalPointHandler(e -> {
+            camFOV.setVisible(true);
+            camFOV.setEnd(e.getX(), e.getY());
+        });
+        ab.setAdditionalPointHandler(ab::passAdditionalPointsToDecorators);
+        ab.addDecorator(camFOV);
         twoPointDraggableElementHandler(ab, this::spycamButtonHandler);
     }
 
