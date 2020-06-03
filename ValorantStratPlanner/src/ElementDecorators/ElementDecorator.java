@@ -11,6 +11,7 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     TwoPointStratElement parent;
     protected double alpha;
     protected DecoratorUpdater updater;
+    protected boolean isVisible = true;
 
     /**
      * helper method for deserialization, sets the ElementDecorator.Type property based on JSONObject
@@ -130,6 +131,14 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     /*
     GETTERS AND SETTERS
      */
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
 
     public void setParent(TwoPointStratElement parent){
         this.parent = parent;

@@ -72,18 +72,20 @@ public class FilledArc extends ElementDecorator{
      * @param gc - the GraphicsContext in which to draw the circle
      */
     public void draw(GraphicsContext gc){
-        List<Point> arcPoints = getArcPoints();
-        Point inStart = arcPoints.get(0);
-        Point inEnd = arcPoints.get(1);
-        Point outEnd = arcPoints.get(2);
-        Point outStart = arcPoints.get(3);
-        String path = String.format("M%f,%f A%f %f 0 0 0 %f %f L%f %f A%f %f 0 0 1 %f %f L %f %f", inStart.x, inStart.y, innerRadius, innerRadius, inEnd.x, inEnd.y, outEnd.x, outEnd.y, outerRadius, outerRadius, outStart.x, outStart.y, inStart.x, inStart.y);
+        if(isVisible) {
+            List<Point> arcPoints = getArcPoints();
+            Point inStart = arcPoints.get(0);
+            Point inEnd = arcPoints.get(1);
+            Point outEnd = arcPoints.get(2);
+            Point outStart = arcPoints.get(3);
+            String path = String.format("M%f,%f A%f %f 0 0 0 %f %f L%f %f A%f %f 0 0 1 %f %f L %f %f", inStart.x, inStart.y, innerRadius, innerRadius, inEnd.x, inEnd.y, outEnd.x, outEnd.y, outerRadius, outerRadius, outStart.x, outStart.y, inStart.x, inStart.y);
 
-        gc.beginPath();
-        gc.appendSVGPath(path);
-        gc.closePath();
-        gc.setFill(color);
-        gc.fill();
+            gc.beginPath();
+            gc.appendSVGPath(path);
+            gc.closePath();
+            gc.setFill(color);
+            gc.fill();
+        }
     }
 
     /**

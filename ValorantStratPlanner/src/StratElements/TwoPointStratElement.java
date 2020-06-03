@@ -23,7 +23,7 @@ public abstract class TwoPointStratElement extends StratElement{
      * @param e - the mouse event to pass
      */
     public void passAdditionalPointsToDecorators(MouseEvent e){
-        decorators.forEach(d -> handleAdditionalPoint(e));
+        decorators.forEach(d -> d.handleAdditionalPoint(e));
     }
 
     /**
@@ -37,6 +37,14 @@ public abstract class TwoPointStratElement extends StratElement{
      */
     public void passAdditionalPointsToDecorators(MouseEvent e, ElementDecorator prototype, DecoratorComparator dc){
         decorators.stream().filter(d -> dc.compare(prototype, d)).forEach(d -> handleAdditionalPoint(e));
+    }
+
+    /**
+     * helper method for determining if this object needs additional points to be set
+     * @return - a boolean indicating whether or not this object accepts additional points
+     */
+    public boolean hasAdditionalPoints(){
+        return additionalPointHandler != null;
     }
 
     /**

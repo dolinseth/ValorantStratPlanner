@@ -188,7 +188,14 @@ public class StratEditor {
 
     private void testButtonHandler(){
         TwoPointTool testTool = new TwoPointTool("test");
-//        testTool.addDecorator(new FilledArc(20, 50, Math.PI/4, Color.GREEN, 0.5, ElementDecorator.Type.START_TO_END));
+        FilledArc fa = new FilledArc(20, 50, Math.PI/4, Color.GREEN, 0.5, ElementDecorator.Type.END_EXTENDER);
+        fa.setAdditionalPointHandler(e -> {
+            fa.setVisible(true);
+            fa.setEnd(e.getX(), e.getY());
+        });
+        fa.setVisible(false);
+        testTool.setAdditionalPointHandler(testTool::passAdditionalPointsToDecorators);
+        testTool.addDecorator(fa);
         twoPointDraggableElementHandler(testTool, this::testButtonHandler);
     }
 
@@ -319,17 +326,29 @@ public class StratEditor {
             el.setStart(e.getX(), e.getY());
             curElement = el;
             canvas.setOnMouseClicked(e2 -> {
-                if(e2.getButton().equals(MouseButton.PRIMARY)) {
-                    el.setEnd(e2.getX(), e2.getY());
+                el.setEnd(e2.getX(), e2.getY());
+                updateCanvas();
+
+                if(el.hasAdditionalPoints()) {
+                    canvas.setOnMouseMoved(e3 -> {
+                        el.handleAdditionalPoint(e3);
+                        updateCanvas();
+                    });
+                    canvas.setOnMouseClicked(e3 -> {
+                        el.handleAdditionalPoint(e3);
+                        elements.add(el);
+                        curElement = null;
+                        canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
+                        updateCanvas();
+                        handler.handle();
+                    });
+                }
+                else {
                     elements.add(el);
                     curElement = null;
-                    updateCanvas();
                     canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
+                    updateCanvas();
                     handler.handle();
-                }
-                else if(e2.getButton().equals(MouseButton.SECONDARY)){
-                    //whatever code is necessary to handle a right click
-                    //whenever that feature gets fully implemented
                 }
             });
             canvas.setOnMouseMoved(e3 -> {
@@ -337,6 +356,31 @@ public class StratEditor {
                 updateCanvas();
             });
         });
+
+
+
+//        canvas.setOnMouseClicked(e -> {
+//            el.setStart(e.getX(), e.getY());
+//            curElement = el;
+//            canvas.setOnMouseClicked(e2 -> {
+//                if(e2.getButton().equals(MouseButton.PRIMARY)) {
+//                    el.setEnd(e2.getX(), e2.getY());
+//                    elements.add(el);
+//                    curElement = null;
+//                    updateCanvas();
+//                    canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
+//                    handler.handle();
+//                }
+//                else if(e2.getButton().equals(MouseButton.SECONDARY)){
+//                    //whatever code is necessary to handle a right click
+//                    //whenever that feature gets fully implemented
+//                }
+//            });
+//            canvas.setOnMouseMoved(e3 -> {
+//                el.setEnd(e3.getX(), e3.getY());
+//                updateCanvas();
+//            });
+//        });
     }
 
     /**

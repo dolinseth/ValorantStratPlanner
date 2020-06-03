@@ -13,12 +13,14 @@ public abstract class Icon extends ElementDecorator{
      * @param gc - the GraphicsContext in which to draw the element
      */
     public void draw(GraphicsContext gc){
-        if(iconImage == null){
-            fetchImage();
+        if(isVisible) {
+            if (iconImage == null) {
+                fetchImage();
+            }
+            gc.drawImage(iconImage, x1 - size / 2, y1 - size / 2, size, size);
+            gc.setStroke(color);
+            gc.strokeOval(x1 - size / 2, y1 - size / 2, size, size);
         }
-        gc.drawImage(iconImage, x1 - size/2, y1 - size/2, size, size);
-        gc.setStroke(color);
-        gc.strokeOval(x1 - size/2, y1 - size/2, size, size);
     }
 
     /**

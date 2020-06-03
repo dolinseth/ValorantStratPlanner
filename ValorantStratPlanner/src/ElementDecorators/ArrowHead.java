@@ -68,9 +68,11 @@ public class ArrowHead extends ElementDecorator {
      * @param gc - the GraphicsContext in which to draw the arrowhead
      */
     public void draw(GraphicsContext gc){
-        double initAngle = Math.atan2((y1 - y2), (x1 - x2));
-        gc.setStroke(color);
-        gc.strokeLine(x2, y2, x2 + Math.cos(initAngle - theta)* lineLength, y2 + Math.sin(initAngle - theta)* lineLength);
-        gc.strokeLine(x2, y2, x2 + Math.cos(initAngle + theta)* lineLength, y2 + Math.sin(initAngle + theta)* lineLength);
+        if(isVisible) {
+            double initAngle = Math.atan2((y1 - y2), (x1 - x2));
+            gc.setStroke(color);
+            gc.strokeLine(x2, y2, x2 + Math.cos(initAngle - theta) * lineLength, y2 + Math.sin(initAngle - theta) * lineLength);
+            gc.strokeLine(x2, y2, x2 + Math.cos(initAngle + theta) * lineLength, y2 + Math.sin(initAngle + theta) * lineLength);
+        }
     }
 }

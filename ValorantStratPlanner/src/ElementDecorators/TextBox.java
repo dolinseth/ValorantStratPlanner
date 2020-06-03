@@ -42,8 +42,10 @@ public class TextBox extends ElementDecorator{
      * @param gc - the GraphicsContext in which to draw the element
      */
     public void draw(GraphicsContext gc){
-        gc.setStroke(color);
-        gc.strokeText(curText, x1 + xOffset, y1 + yOffset);
+        if(isVisible) {
+            gc.setStroke(color);
+            gc.strokeText(curText, x1 + xOffset, y1 + yOffset);
+        }
     }
 
     /**

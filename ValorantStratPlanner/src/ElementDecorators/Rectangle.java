@@ -59,10 +59,12 @@ public class Rectangle extends ElementDecorator {
      * @param gc - the GraphicsContext in which to draw the rectangle
      */
     public void draw(GraphicsContext gc){
-        double oldWidth = gc.getLineWidth();
-        gc.setLineWidth(width);
-        gc.setStroke(color);
-        gc.strokeLine(x1, y1, x2, y2);
-        gc.setLineWidth(oldWidth);
+        if(isVisible) {
+            double oldWidth = gc.getLineWidth();
+            gc.setLineWidth(width);
+            gc.setStroke(color);
+            gc.strokeLine(x1, y1, x2, y2);
+            gc.setLineWidth(oldWidth);
+        }
     }
 }
