@@ -14,6 +14,7 @@ public class CharacterAbility extends TwoPointStratElement{
     private String ability;
     public static final double visionBlockRadius = 47;
     public static final double areaDenialRadius = 47;
+    protected boolean showLine = true;
 
     /**
      * default constructor
@@ -61,8 +62,10 @@ public class CharacterAbility extends TwoPointStratElement{
      */
     public void draw(GraphicsContext gc){
         gc.setStroke(color);
-        Point offsetStart = getStartOffsetByRadius(AbilityIcon.size);
-        gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
+        if(showLine) {
+            Point offsetStart = getStartOffsetByRadius(AbilityIcon.size);
+            gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
+        }
         drawDecorators(gc);
     }
 
@@ -74,6 +77,7 @@ public class CharacterAbility extends TwoPointStratElement{
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
         root.put("type", "CharacterAbility");
+        root.put("showLine", showLine);
         root.put("ability", ability);
         insertProperties(root);
         return root;
@@ -86,6 +90,7 @@ public class CharacterAbility extends TwoPointStratElement{
      */
     public void importFromJSON(JSONObject root){
         setPropertiesFromJSON(root);
+        showLine = root.getBoolean("showLine");
         ability = root.getString("ability");
     }
 
@@ -95,5 +100,9 @@ public class CharacterAbility extends TwoPointStratElement{
 
     public String getAbility() {
         return ability;
+    }
+
+    public void setShowLine(boolean showLine){
+        this.showLine = showLine;
     }
 }

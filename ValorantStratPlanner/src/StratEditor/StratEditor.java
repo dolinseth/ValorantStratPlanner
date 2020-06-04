@@ -35,8 +35,6 @@ public class StratEditor {
     @FXML
     private GridPane toolSelector;
     @FXML
-    private Pane mapViewer;
-    @FXML
     private Canvas canvas;
     @FXML
     private GridPane menuButtons;
@@ -360,20 +358,6 @@ public class StratEditor {
     }
 
     /**
-     * helper method for rendering that saves the state of the canvas
-     */
-    private void saveCanvasState(){
-        canvas.getGraphicsContext2D().save();
-    }
-
-    /**
-     * helper method for rendering that restores a previously saved canvas state
-     */
-    private void restoreCanvasState(){
-        canvas.getGraphicsContext2D().restore();
-    }
-
-    /**
      * helper method for drawing, called when the canvas needs to be redrawn
      * i.e. in the event of a new element being added/removed
      */
@@ -563,7 +547,10 @@ public class StratEditor {
 
     private void faultLineButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.FAULT_LINE);
-        ab.addDecorator(new Rectangle(15, Color.BLUE, 0.3, ElementDecorator.Type.START_TO_END));
+        ab.setShowLine(false);
+        Rectangle aoe = new Rectangle(15, Color.BLUE, 0.3, ElementDecorator.Type.START_TO_END);
+        aoe.setMaxLength(200);
+        ab.addDecorator(aoe);
         twoPointDraggableElementHandler(ab, this::faultLineButtonHandler);
     }
 

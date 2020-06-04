@@ -120,6 +120,22 @@ public abstract class TwoPointStratElement extends StratElement{
     }
 
     /**
+     * alternate setStart that uses a point instead of explicit coordinates
+     * @param p - the point to set the start to
+     */
+    public void setStart(Point p){
+        setStart(p.x, p.y);
+    }
+
+    /**
+     * alternate setEnd that uses a point instead of explicit coordinates
+     * @param p - the point to set the end to
+     */
+    public void setEnd(Point p){
+        setEnd(p.x, p.y);
+    }
+
+    /**
      * helper method for serialization, inserts the start and end coordinates into the given JSONObject
      * @param root - the JSONObject into which the coords should be inserted
      */

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class TwoPointTool extends TwoPointStratElement{
     private String tool;
     private final double size = 30;
+    protected boolean showLine = true;
 
     /**
      * default constructor
@@ -59,6 +60,7 @@ public class TwoPointTool extends TwoPointStratElement{
         JSONObject root = new JSONObject();
         root.put("type", "tool");
         root.put("tool", tool);
+        root.put("showLine", showLine);
         insertProperties(root);
         return root;
     }
@@ -70,6 +72,7 @@ public class TwoPointTool extends TwoPointStratElement{
      */
     public void importFromJSON(JSONObject root){
         setPropertiesFromJSON(root);
+        showLine = root.getBoolean("showLine");
         tool = root.getString("tool");
     }
 
@@ -81,7 +84,17 @@ public class TwoPointTool extends TwoPointStratElement{
     public void draw(GraphicsContext gc){
         drawDecorators(gc);
         gc.setStroke(color);
-        Point offsetStart = getStartOffsetByRadius(size);
-        gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
+        if(showLine) {
+            Point offsetStart = getStartOffsetByRadius(size);
+            gc.strokeLine(offsetStart.x, offsetStart.y, x2, y2);
+        }
+    }
+
+    /*
+    GETTERS AND SETTERS
+     */
+
+    public void setShowLine(boolean showLine){
+        this.showLine = showLine;
     }
 }

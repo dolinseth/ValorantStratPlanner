@@ -69,7 +69,7 @@ public class FilledArc extends ElementDecorator{
     /**
      * implementation of the draw method defined in the abstract class ElementDecorator
      * draws the arc using the given GraphicsContext
-     * @param gc - the GraphicsContext in which to draw the circle
+     * @param gc - the GraphicsContext in which to draw the arc
      */
     public void draw(GraphicsContext gc){
         if(isVisible) {

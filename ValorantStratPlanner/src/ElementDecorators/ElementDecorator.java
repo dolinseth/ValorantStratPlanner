@@ -67,61 +67,18 @@ public abstract class ElementDecorator extends TwoPointStratElement {
     }
 
     /**
-     * sets the element decorators coordinates, one end is set to the given (x,y) pair
-     * other end is set based on the parent's coordinates and the type
-     * @param x - the x coordinate to set
-     * @param y - the y coordinate to set
-     */
-    public void setCoords(double x, double y){
-        if(type == Type.END_POINT){
-            x1 = parent.getX2();
-            y1 = parent.getY2();
-        }
-        else if(type == Type.START_POINT){
-            x1 = parent.getX1();
-            y1 = parent.getY1();
-        }
-        else if(type == Type.START_EXTENDER){
-            x1 = parent.getX1();
-            y1 = parent.getY1();
-            x2 = x;
-            y2 = y;
-        }
-        else if(type == Type.END_EXTENDER){
-            x1 = parent.getX2();
-            y1 = parent.getY2();
-            x2 = x;
-            y2 = y;
-        }
-        else if(type == Type.START_TO_END){
-            x1 = parent.getX1();
-            y1 = parent.getY1();
-            x2 = parent.getX2();
-            y2 = parent.getY2();
-        }
-    }
-
-    /**
      * sets the coordinates based on the parent object and the type
      */
     public void updateElement(){
         if(type == Type.END_POINT || type == Type.END_EXTENDER){
-            Point p = parent.getEnd();
-            x1 = p.x;
-            y1 = p.y;
+            setStart(parent.getEnd());
         }
         else if(type == Type.START_POINT || type == Type.START_EXTENDER){
-            Point p = parent.getStart();
-            x1 = p.x;
-            y1 = p.y;
+            setStart(parent.getStart());
         }
         else if(type == Type.START_TO_END){
-            Point p = parent.getStart();
-            x1 = p.x;
-            y1 = p.y;
-            Point p2 = parent.getEnd();
-            x2 = p2.x;
-            y2 = p2.y;
+            setStart(parent.getStart());
+            setEnd(parent.getEnd());
         }
         if(updater != null){
             updater.update();
