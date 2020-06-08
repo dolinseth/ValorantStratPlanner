@@ -58,7 +58,7 @@ public class TwoPointTool extends TwoPointStratElement{
      */
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
-        root.put("type", "tool");
+        root.put("type", "Tool");
         root.put("tool", tool);
         root.put("showLine", showLine);
         insertProperties(root);

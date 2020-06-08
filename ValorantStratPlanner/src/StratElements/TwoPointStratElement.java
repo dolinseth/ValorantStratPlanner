@@ -183,36 +183,8 @@ public abstract class TwoPointStratElement extends StratElement{
         JSONArray decoratorsJSON = root.getJSONArray("decorators");
         for(int i = 0; i < decoratorsJSON.length(); i++){
             JSONObject decorator = decoratorsJSON.getJSONObject(i);
-            String type = decorator.getString("type");
-            ElementDecorator eld = null;
-            switch (type){
-                case "AbilityIcon":
-                    eld = new AbilityIcon(decorator);
-                    break;
-                case "Circle":
-                    eld = new Circle(decorator);
-                    break;
-                case "Rectangle":
-                    eld = new Rectangle(decorator);
-                    break;
-                case "ArrowHead":
-                    eld = new ArrowHead(decorator);
-                    break;
-                case "TextBox":
-                    eld = new TextBox(decorator);
-                    break;
-                case "ToolIcon":
-                    eld = new ToolIcon(decorator);
-                    break;
-                case "FilledArc":
-                    eld = new FilledArc(decorator);
-                    break;
-                case "Line":
-                    eld = new Line(decorator);
-                    break;
-            }
+            ElementDecorator eld = ElementDecoratorFactory.getInstance().getDecoratorFromJSON(decorator);
             if(eld != null) {
-                eld.setParent(this);
                 addDecorator(eld);
             }
         }

@@ -63,18 +63,7 @@ public class Strategy {
         JSONArray elementArr = root.getJSONArray("elements");
         for(int i = 0; i < elementArr.length(); i++){
             JSONObject eljson = elementArr.getJSONObject(i);
-            String type = eljson.getString("type");
-            switch(type){
-                case "CharacterAbility":
-                    elements.add(new CharacterAbility(eljson));
-                    break;
-                case "tool":
-                    elements.add(new TwoPointTool(eljson));
-                    break;
-                case "FreeformTool":
-                    elements.add(new FreeformTool(eljson));
-                    break;
-            }
+            elements.add(StratElementFactory.getInstance().getStratElementFromJSON(eljson));
         }
     }
 
