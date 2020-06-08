@@ -556,14 +556,18 @@ public class StratEditor {
 
     private void rollingThunderButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.ROLLING_THUNDER);
-        //create and implement an arc/trapezoid class that can represent the area of effect of this ult
+        TieredTrapezoid aoe = new TieredTrapezoid(8, 54, 19, 5, 17, Color.RED, 0.3, ElementDecorator.Type.START_TO_END);
+        ab.addDecorator(aoe);
         twoPointDraggableElementHandler(ab, this::rollingThunderButtonHandler);
     }
 
     private void afterShockButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.AFTERSHOCK);
         //arc class could be good here too, but for now just a red rectangle
-    ab.addDecorator(new Rectangle(10, Color.RED, 0.3, ElementDecorator.Type.START_TO_END));
+        Rectangle aoe = new Rectangle(10, Color.RED, 0.3, ElementDecorator.Type.START_TO_END);
+        ab.setShowLine(false);
+        aoe.setMaxLength(50);
+        ab.addDecorator(aoe);
         twoPointDraggableElementHandler(ab, this::afterShockButtonHandler);
     }
 

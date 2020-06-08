@@ -1,5 +1,6 @@
 package ElementDecorators;
 
+import Records.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
@@ -51,6 +52,7 @@ public class TieredTrapezoid extends ElementDecorator {
         insertProperties(root);
         root.put("numTiers", numTiers);
         root.put("firstTierWidth", firstTierWidth);
+        root.put("tierLength", tierLength);
         root.put("deltaTierWidth", deltaTierWidth);
         root.put("startOffset", startOffset);
         return root;
@@ -65,6 +67,7 @@ public class TieredTrapezoid extends ElementDecorator {
         setPropertiesFromJSON(root);
         numTiers = root.getInt("numTiers");
         firstTierWidth = root.getDouble("firstTierWidth");
+        tierLength = root.getDouble("tierLength");
         deltaTierWidth = root.getDouble("deltaTierWidth");
         startOffset = root.getDouble("startOffset");
     }
@@ -75,6 +78,37 @@ public class TieredTrapezoid extends ElementDecorator {
      * @param gc - the GraphicsContext in which to draw the tiered trapezoid
      */
     public void draw(GraphicsContext gc){
-        // TODO implement this shit
+        double parallelAngle = Math.atan2(y2 - y1, x2 - x1);
+        double perpendicularAngle = Math.PI/2 + Math.atan2(y2 - y1, x2 - x1);
+        //calculate these only once per frame to improve performance
+        double cosPar = Math.cos(parallelAngle);
+        double sinPar = Math.sin(parallelAngle);
+        double cosPer = Math.cos(perpendicularAngle);
+        double sinPer = Math.sin(perpendicularAngle);
+
+        Point start = new Point(x1 + cosPar*startOffset, y1 + sinPar*startOffset);
+        StringBuilder sb = new StringBuilder(); // because it makes string concatenation waaaaay faster and this needs to happen 60 times a second
+                                                // for every one of these that is being drawn, as well as all the other stuff that's being drawn
+
+        //build the SVG path
+        sb.append(String.format("M%f %f l%f %f l%f %f", start.x, start.y, cosPer*(firstTierWidth / 2), sinPer*(firstTierWidth/2), cosPar*tierLength, sinPar*tierLength));
+        for(int i = 0; i < numTiers - 1; i++){
+            sb.append(String.format("l%f %f l%f %f", cosPer*(deltaTierWidth / 2), sinPer*(deltaTierWidth / 2), cosPar*tierLength, sinPar*tierLength));
+        }
+        sb.append(String.format("l%f %f", -cosPer*(firstTierWidth + deltaTierWidth*(numTiers - 1)), -sinPer*(firstTierWidth + deltaTierWidth*(numTiers - 1))));
+        for(int i = 0; i < numTiers - 1; i++){
+            sb.append(String.format("l%f %f l%f %f", -cosPar*tierLength, -sinPar*tierLength, cosPer*(deltaTierWidth / 2), sinPer*(deltaTierWidth / 2)));
+        }
+        sb.append(String.format("l%f %f", -cosPar*tierLength, -sinPar*tierLength));
+
+        //draw the path
+        gc.beginPath();
+        gc.appendSVGPath(sb.toString());
+        gc.closePath();
+        gc.setFill(color);
+        double oldAlpha = gc.getGlobalAlpha();
+        gc.setGlobalAlpha(alpha);
+        gc.fill();
+        gc.setGlobalAlpha(oldAlpha);
     }
 }

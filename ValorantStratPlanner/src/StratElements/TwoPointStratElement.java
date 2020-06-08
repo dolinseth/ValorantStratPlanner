@@ -269,10 +269,19 @@ public abstract class TwoPointStratElement extends StratElement{
         return new Point(x2, y2);
     }
 
+    /**
+     * Set the function to be used to handle additional points
+     * @param aph - a lambda body or anonymous class that implements the AdditionalPointHandler.handle() method
+     */
     public void setAdditionalPointHandler(AdditionalPointHandler aph){
         additionalPointHandler = aph;
     }
 
+    /**
+     * Pass the mouse event to the AdditionalPointHandler of this class, or do nothing
+     * if no AdditionalPointHandler has been set
+     * @param e - the mouse event to pass to the function
+     */
     public void handleAdditionalPoint(MouseEvent e){
         if(additionalPointHandler != null) {
             additionalPointHandler.handle(e);
