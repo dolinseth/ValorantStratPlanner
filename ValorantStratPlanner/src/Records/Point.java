@@ -26,4 +26,9 @@ public class Point {
         x = root.getDouble("x");
         y = root.getDouble("y");
     }
+
+    @Override
+    public String toString(){
+        return x + ", " + y;
+    }
 }

@@ -465,6 +465,7 @@ public class StratEditor {
 
     private void paintShellsButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.PAINT_SHELLS);
+        ab.addDecorator(new Circle(areaDenialRadius, Color.ORANGE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::paintShellsButtonHandler);
     }
 
@@ -475,7 +476,8 @@ public class StratEditor {
 
     private void boomBotButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.BOOM_BOT);
-        ab.addDecorator(new Rectangle(5, Color.LIGHTGRAY, 0.3, ElementDecorator.Type.START_TO_END));
+        ab.addDecorator(new Rectangle(10, Color.LIGHTGRAY, 0.3, ElementDecorator.Type.START_TO_END));
+        ab.setShowLine(false);
         twoPointDraggableElementHandler(ab, this::boomBotButtonHandler);
     }
 
@@ -504,6 +506,15 @@ public class StratEditor {
 
     private void tripWireButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.TRIPWIRE);
+        Line l = new Line(Color.WHITE, ElementDecorator.Type.END_EXTENDER);
+        l.setAdditionalPointHandler(e -> {
+            l.setEnd(e.getX(), e.getY());
+            l.setVisible(true);
+        });
+        l.setVisible(false);
+        l.setMaxLength(60);
+        ab.setAdditionalPointHandler(ab::passAdditionalPointsToDecorators);
+        ab.addDecorator(l);
         twoPointDraggableElementHandler(ab, this::tripWireButtonHandler);
     }
 
