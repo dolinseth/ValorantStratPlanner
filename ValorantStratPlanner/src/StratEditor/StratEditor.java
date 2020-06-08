@@ -182,7 +182,7 @@ public class StratEditor {
         }
 
         //add the character icons to the tool selector
-        String[] characterNames = {"Brimstone", "Raze", "Cypher", "Jett", "Omen", "Breach", "Viper", "Phoenix", "Sage", "Sova"};
+        String[] characterNames = {"Brimstone", "Raze", "Cypher", "Jett", "Omen", "Breach", "Viper", "Phoenix", "Sage", "Sova", "Reyna"};
         for(int i = 0; i < characterNames.length; i++){
             ImageView iconHolder = new ImageView(appController.getData().getCharacterIcon(characterNames[i]));
             toolSelector.getChildren().add(iconHolder);

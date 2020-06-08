@@ -24,7 +24,7 @@ public class CharacterImageStore extends ImageStore{
      */
     public void loadImages() {
         if(images.size() == 0) {
-            ArrayList<String> charNames = new ArrayList<>(Arrays.asList("Brimstone", "Raze", "Cypher", "Jett", "Omen", "Breach", "Viper", "Phoenix", "Sage", "Sova"));
+            ArrayList<String> charNames = new ArrayList<>(Arrays.asList("Brimstone", "Raze", "Cypher", "Jett", "Omen", "Breach", "Viper", "Phoenix", "Sage", "Sova", "Reyna"));
             loadImageSet(charNames, ".png");
         }
     }
