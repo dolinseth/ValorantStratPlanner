@@ -12,7 +12,7 @@ public class MapImageStore extends ImageStore {
      */
     public MapImageStore(String imageFolderPath){
         this.imageFolderPath = imageFolderPath;
-        prefWidth = 1000;
+        prefWidth = 800;
         prefHeight = 800;
     }
 
@@ -22,7 +22,7 @@ public class MapImageStore extends ImageStore {
      */
     public void loadImages(){
         if(images.size() == 0) {
-            ArrayList<String> mapNames = new ArrayList<>(Arrays.asList("Bind", "Split", "Haven"));
+            ArrayList<String> mapNames = new ArrayList<>(Arrays.asList("Bind", "Split", "Haven", "Ascent"));
             loadImageSet(mapNames, ".png");
         }
     }

@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 public class Circle extends ElementDecorator {
     private double radius;
+    private boolean fill = true;
 
     /**
      * default constructor
@@ -62,10 +63,24 @@ public class Circle extends ElementDecorator {
             if (x1 != 0 || y1 != 0) {
                 double oldAlpha = gc.getGlobalAlpha();
                 gc.setGlobalAlpha(alpha);
-                gc.setFill(color);
-                gc.fillOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
+                if(fill) {
+                    gc.setFill(color);
+                    gc.fillOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
+                }
+                else{
+                    gc.setStroke(color);
+                    gc.strokeOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
+                }
                 gc.setGlobalAlpha(oldAlpha);
             }
         }
+    }
+
+    /*
+     GETTERS AND SETTERS
+     */
+
+    public void setFill(boolean fill) {
+        this.fill = fill;
     }
 }

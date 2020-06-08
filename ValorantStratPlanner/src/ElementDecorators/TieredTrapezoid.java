@@ -79,7 +79,7 @@ public class TieredTrapezoid extends ElementDecorator {
      */
     public void draw(GraphicsContext gc){
         double parallelAngle = Math.atan2(y2 - y1, x2 - x1);
-        double perpendicularAngle = Math.PI/2 + Math.atan2(y2 - y1, x2 - x1);
+        double perpendicularAngle = Math.PI/2 + parallelAngle;
         //calculate these only once per frame to improve performance
         double cosPar = Math.cos(parallelAngle);
         double sinPar = Math.sin(parallelAngle);

@@ -60,11 +60,33 @@ public class Rectangle extends ElementDecorator {
      */
     public void draw(GraphicsContext gc){
         if(isVisible) {
-            double oldWidth = gc.getLineWidth();
-            gc.setLineWidth(width);
-            gc.setStroke(color);
-            gc.strokeLine(x1, y1, x2, y2);
-            gc.setLineWidth(oldWidth);
+            double parallelAngle = Math.atan2(y2 - y1, x2 - x1);
+            double perpendicularAngle = parallelAngle + Math.PI/2;
+            //calculate these only once per frame
+            double cosPar = Math.cos(parallelAngle);
+            double sinPar = Math.sin(parallelAngle);
+            double cosPer = Math.cos(perpendicularAngle);
+            double sinPer = Math.sin(perpendicularAngle);
+            double length = getLength();
+
+            //create the SVG string depending on type
+            String path = "";
+            if(type == Type.START_TO_END){
+                path = String.format("M%f %f l%f %f l%f %f l%f %f l%f %f", x1, y1, cosPer*(width / 2), sinPer*(width / 2), cosPar*length, sinPar*length, -cosPer*width, -sinPer*width, -cosPar*length, -sinPar*length);
+            }
+            else{
+                path = String.format("M%f %f m%f %f l%f %f l%f %f l%f %f l%f %f", x1, y1, -cosPar*(length / 2), -sinPar*(length / 2), cosPer*(width / 2), sinPer*(width / 2), cosPar*length, sinPar*length, -cosPer*width, -sinPer*width, -cosPar*length, -sinPar*length);
+            }
+
+            //draw the SVG path
+            gc.beginPath();
+            gc.appendSVGPath(path);
+            gc.closePath();
+            double oldAlpha = gc.getGlobalAlpha();
+            gc.setGlobalAlpha(alpha);
+            gc.setFill(color);
+            gc.fill();
+            gc.setGlobalAlpha(oldAlpha);
         }
     }
 }

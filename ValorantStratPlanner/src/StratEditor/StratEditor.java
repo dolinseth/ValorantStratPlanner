@@ -99,6 +99,9 @@ public class StratEditor {
             case HAVEN:
                 mapImageSize = 794;
                 break;
+            case ASCENT:
+                mapImageSize = 970;
+                break;
         }
     }
 
@@ -152,6 +155,10 @@ public class StratEditor {
         makeAbilityButton(DataController.Ability.HUNTERS_FURY, e -> huntersFuryButtonHandler());
         makeAbilityButton(DataController.Ability.OWL_DRONE, e -> owlDroneButtonHandler());
         makeAbilityButton(DataController.Ability.SHOCK_BOLT, e -> shockBoltButtonHandler());
+        makeAbilityButton(DataController.Ability.LEER, e -> leerButtonHandler());
+        makeAbilityButton(DataController.Ability.DEVOUR, e -> devourButtonHandler());
+        makeAbilityButton(DataController.Ability.DISMISS, e -> dismissButtonHandler());
+        makeAbilityButton(DataController.Ability.EMPRESS, e -> empressButtonHandler());
 
         //create tool buttons
         makeToolButton("Watch", e -> watchHereButtonHandler());
@@ -300,6 +307,7 @@ public class StratEditor {
         canvas.setOnMousePressed(e -> {
             curElement = ft;
             ft.addPoint(e.getX(), e.getY());
+            updateCanvas();
             canvas.setOnMouseDragged(e2 -> {
                 ft.addPoint(e2.getX(), e2.getY());
                 updateCanvas();
@@ -323,7 +331,9 @@ public class StratEditor {
     private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
         canvas.setOnMouseClicked(e -> {
             el.setStart(e.getX(), e.getY());
+            el.setEnd(e.getX(), e.getY());
             curElement = el;
+            updateCanvas();
             canvas.setOnMouseClicked(e2 -> {
                 el.setEnd(e2.getX(), e2.getY());
                 updateCanvas();
@@ -404,7 +414,7 @@ public class StratEditor {
         appController.setSceneToMenu();
     }
 
-    /*
+    /**
     GETTERS AND SETTERS
      */
 
@@ -567,6 +577,7 @@ public class StratEditor {
         Rectangle aoe = new Rectangle(10, Color.RED, 0.3, ElementDecorator.Type.START_TO_END);
         ab.setShowLine(false);
         aoe.setMaxLength(50);
+        aoe.setMinLength(50);
         ab.addDecorator(aoe);
         twoPointDraggableElementHandler(ab, this::afterShockButtonHandler);
     }
@@ -634,6 +645,16 @@ public class StratEditor {
 
     private void barrierOrbButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.BARRIER_ORB);
+        Rectangle rect = new Rectangle(70, Color.CYAN, 0.5, ElementDecorator.Type.END_EXTENDER);
+        rect.setAdditionalPointHandler(e -> {
+            rect.setEnd(e.getX(), e.getY());
+            rect.setVisible(true);
+        });
+        rect.setVisible(false);
+        rect.setMinLength(14);
+        rect.setMaxLength(14);
+        ab.setAdditionalPointHandler(ab::passAdditionalPointsToDecorators);
+        ab.addDecorator(rect);
         twoPointDraggableElementHandler(ab, this::barrierOrbButtonHandler);
     }
 
@@ -664,5 +685,29 @@ public class StratEditor {
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SHOCK_BOLT);
         ab.addDecorator(new Circle(20, Color.BLUE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::shockBoltButtonHandler);
+    }
+
+    private void leerButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.LEER);
+        ab.setMaxLength(74);
+        Circle circle = new Circle(390, Color.YELLOW, 1, ElementDecorator.Type.END_POINT);
+        circle.setFill(false);
+        ab.addDecorator(circle);
+        twoPointDraggableElementHandler(ab, this::leerButtonHandler);
+    }
+
+    private void devourButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.DEVOUR);
+        twoPointDraggableElementHandler(ab, this::devourButtonHandler);
+    }
+
+    private void dismissButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.DISMISS);
+        twoPointDraggableElementHandler(ab, this::dismissButtonHandler);
+    }
+
+    private void empressButtonHandler(){
+        CharacterAbility ab = new CharacterAbility(DataController.Ability.EMPRESS);
+        twoPointDraggableElementHandler(ab, this::empressButtonHandler);
     }
 }

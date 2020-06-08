@@ -25,17 +25,18 @@ public class DataController {
         TOXIC_SCREEN, VIPERS_PIT, SNAKE_BITE, POISON_CLOUD,
         HOT_HANDS, RUN_IT_BACK, BLAZE, CURVEBALL,
         HEALING_ORB, RESURRECTION, BARRIER_ORB, SLOW_ORB,
-        RECON_BOLT, HUNTERS_FURY, OWL_DRONE, SHOCK_BOLT
+        RECON_BOLT, HUNTERS_FURY, OWL_DRONE, SHOCK_BOLT,
+        DEVOUR, DISMISS, LEER, EMPRESS
     };
 
     //enumerated type containing every possible character
     public enum Character {
-        BRIMSTONE, RAZE, CYPHER, JETT, OMEN, BREACH, VIPER, PHOENIX, SAGE, SOVA
+        BRIMSTONE, RAZE, CYPHER, JETT, OMEN, BREACH, VIPER, PHOENIX, SAGE, SOVA, REYNA
     };
 
     //enumerated type containing every possible map
     public enum Map {
-        BIND, SPLIT, HAVEN
+        BIND, SPLIT, HAVEN, ASCENT
     };
 
     /**
@@ -220,6 +221,18 @@ public class DataController {
                 break;
             case SHOCK_BOLT:
                 label = "Shock Bolt";
+                break;
+            case LEER:
+                label = "Leer";
+                break;
+            case DEVOUR:
+                label = "Devour";
+                break;
+            case DISMISS:
+                label = "Dismiss";
+                break;
+            case EMPRESS:
+                label = "Empress";
                 break;
         }
 

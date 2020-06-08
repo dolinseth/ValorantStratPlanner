@@ -18,6 +18,8 @@ public class MenuScreen {
     @FXML
     private Button havenButton;
     @FXML
+    private Button ascentButton;
+    @FXML
     private Button quitButton;
 
     //non-FXML fields
@@ -39,6 +41,12 @@ public class MenuScreen {
     @FXML
     private void setMapToHaven(){
         appController.getStratEditor().setMapImage(DataController.Map.HAVEN);
+        appController.setSceneToStratEditor();
+    }
+
+    @FXML
+    private void setMapToAscent(){
+        appController.getStratEditor().setMapImage(DataController.Map.ASCENT);
         appController.setSceneToStratEditor();
     }
 

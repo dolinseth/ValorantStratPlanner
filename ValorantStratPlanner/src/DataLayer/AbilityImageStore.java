@@ -32,7 +32,8 @@ public class AbilityImageStore extends ImageStore{
                     "Toxic_Screen", "Vipers_Pit", "Snake_Bite", "Poison_Cloud",
                     "Hot_Hands", "Run_it_Back", "Blaze", "Curveball",
                     "Healing_Orb", "Resurrection", "Barrier_Orb", "Slow_Orb",
-                    "Recon_Bolt", "Hunters_Fury", "Owl_Drone", "Shock_Bolt"
+                    "Recon_Bolt", "Hunters_Fury", "Owl_Drone", "Shock_Bolt",
+                    "Leer", "Devour", "Dismiss", "Empress"
 
             ));
             loadImageSet(abilities, ".png");
