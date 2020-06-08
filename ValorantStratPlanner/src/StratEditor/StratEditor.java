@@ -547,7 +547,7 @@ public class StratEditor {
 
     private void darkCoverButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.DARK_COVER);
-        ab.addDecorator(new Circle(visionBlockRadius, Color.PURPLE, 0.3, ElementDecorator.Type.END_POINT));
+        ab.addDecorator(new Circle(visionBlockRadius + 15, Color.PURPLE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::darkCoverButtonHandler);
     }
 
@@ -558,6 +558,7 @@ public class StratEditor {
 
     private void shroudedStepButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SHROUDED_STEP);
+        //set max length, need screenshots though
         twoPointDraggableElementHandler(ab, this::shroudedStepButtonHandler);
     }
 
@@ -570,7 +571,7 @@ public class StratEditor {
         CharacterAbility ab = new CharacterAbility(DataController.Ability.FAULT_LINE);
         ab.setShowLine(false);
         Rectangle aoe = new Rectangle(15, Color.BLUE, 0.3, ElementDecorator.Type.START_TO_END);
-        aoe.setMaxLength(200);
+        aoe.setMaxLength(298);
         ab.addDecorator(aoe);
         twoPointDraggableElementHandler(ab, this::faultLineButtonHandler);
     }
@@ -587,8 +588,8 @@ public class StratEditor {
         //arc class could be good here too, but for now just a red rectangle
         Rectangle aoe = new Rectangle(10, Color.RED, 0.3, ElementDecorator.Type.START_TO_END);
         ab.setShowLine(false);
-        aoe.setMaxLength(50);
-        aoe.setMinLength(50);
+        aoe.setMaxLength(42);
+        aoe.setMinLength(42);
         ab.addDecorator(aoe);
         twoPointDraggableElementHandler(ab, this::afterShockButtonHandler);
     }
@@ -617,7 +618,7 @@ public class StratEditor {
 
     private void poisonCloudButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.POISON_CLOUD);
-        ab.addDecorator(new Circle(visionBlockRadius, Color.GREEN, 0.3, ElementDecorator.Type.END_POINT));
+        ab.addDecorator(new Circle(visionBlockRadius + 15, Color.GREEN, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::poisonCloudButtonHandler);
     }
 
@@ -634,7 +635,10 @@ public class StratEditor {
 
     private void blazeButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.BLAZE);
-        ab.addDecorator(new Rectangle(10, Color.ORANGERED, 0.3, ElementDecorator.Type.START_TO_END));
+        Rectangle rect = new Rectangle(10, Color.ORANGERED, 0.3, ElementDecorator.Type.START_TO_END);
+        rect.setMaxLength(125);
+        ab.addDecorator(rect);
+        ab.setShowLine(false);
         twoPointDraggableElementHandler(ab, this::blazeButtonHandler);
     }
 
@@ -677,13 +681,18 @@ public class StratEditor {
 
     private void reconBoltButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.RECON_BOLT);
-        //add a dashed circle or stroke circle to show scan area
+        Circle circle = new Circle(322, Color.YELLOW, 1, ElementDecorator.Type.END_POINT);
+        circle.setFill(false);
+        ab.addDecorator(circle);
         twoPointDraggableElementHandler(ab, this::reconBoltButtonHandler);
     }
 
     private void huntersFuryButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.HUNTERS_FURY);
-        //add decorator rectangles to show where it gets shot once those have been implemented
+        Rectangle rect = new Rectangle(20, Color.CYAN, 0.3, ElementDecorator.Type.START_TO_END);
+        rect.setMaxLength(393);
+        ab.addDecorator(rect);
+        ab.setShowLine(false);
         twoPointDraggableElementHandler(ab, this::huntersFuryButtonHandler);
     }
 
@@ -694,7 +703,7 @@ public class StratEditor {
 
     private void shockBoltButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SHOCK_BOLT);
-        ab.addDecorator(new Circle(20, Color.BLUE, 0.3, ElementDecorator.Type.END_POINT));
+        ab.addDecorator(new Circle(28, Color.CYAN, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::shockBoltButtonHandler);
     }
 
