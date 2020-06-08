@@ -45,6 +45,8 @@ public class TextBox extends ElementDecorator{
         if(isVisible) {
             gc.setStroke(color);
             gc.strokeText(curText, x1 + xOffset, y1 + yOffset);
+
+            drawDecorators(gc);
         }
     }
 

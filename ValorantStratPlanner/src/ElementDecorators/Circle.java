@@ -60,19 +60,18 @@ public class Circle extends ElementDecorator {
      */
     public void draw(GraphicsContext gc){
         if(isVisible) {
-            if (x1 != 0 || y1 != 0) {
-                double oldAlpha = gc.getGlobalAlpha();
-                gc.setGlobalAlpha(alpha);
-                if(fill) {
-                    gc.setFill(color);
-                    gc.fillOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
-                }
-                else{
-                    gc.setStroke(color);
-                    gc.strokeOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
-                }
-                gc.setGlobalAlpha(oldAlpha);
+            double oldAlpha = gc.getGlobalAlpha();
+            gc.setGlobalAlpha(alpha);
+            if(fill) {
+                gc.setFill(color);
+                gc.fillOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
             }
+            else{
+                gc.setStroke(color);
+                gc.strokeOval(x1 - radius / 2, y1 - radius / 2, radius, radius);
+            }
+            gc.setGlobalAlpha(oldAlpha);
+            drawDecorators(gc);
         }
     }
 

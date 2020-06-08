@@ -47,13 +47,15 @@ public class Line extends ElementDecorator{
 
     /**
      * implementation of the draw method defined in the abstract class ElementDecorator
-     * draws the circle using the given GraphicsContext
+     * draws the line using the given GraphicsContext
      * @param gc - the GraphicsContext in which to draw the line
      */
     public void draw(GraphicsContext gc){
         if(isVisible) {
             gc.setStroke(color);
             gc.strokeLine(x1, y1, x2, y2);
+
+            drawDecorators(gc);
         }
     }
 }

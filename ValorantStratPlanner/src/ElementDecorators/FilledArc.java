@@ -88,6 +88,8 @@ public class FilledArc extends ElementDecorator{
             gc.setFill(color);
             gc.fill();
             gc.setGlobalAlpha(oldAlpha);
+
+            drawDecorators(gc);
         }
     }
 

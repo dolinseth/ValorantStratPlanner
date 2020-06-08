@@ -73,6 +73,7 @@ public class ArrowHead extends ElementDecorator {
             gc.setStroke(color);
             gc.strokeLine(x2, y2, x2 + Math.cos(initAngle - theta) * lineLength, y2 + Math.sin(initAngle - theta) * lineLength);
             gc.strokeLine(x2, y2, x2 + Math.cos(initAngle + theta) * lineLength, y2 + Math.sin(initAngle + theta) * lineLength);
+            drawDecorators(gc);
         }
     }
 }

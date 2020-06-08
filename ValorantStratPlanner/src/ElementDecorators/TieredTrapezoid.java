@@ -110,5 +110,7 @@ public class TieredTrapezoid extends ElementDecorator {
         gc.setGlobalAlpha(alpha);
         gc.fill();
         gc.setGlobalAlpha(oldAlpha);
+
+        drawDecorators(gc);
     }
 }
