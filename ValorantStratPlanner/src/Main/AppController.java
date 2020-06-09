@@ -21,6 +21,7 @@ public class AppController {
     private StrategySaveLoadScreen strategySaveLoadScreen;
     private Scene strategySaveLoadScreenScene;
     private DataController data;
+    private String versionString = "v0.31";
 
     /**
      * default constructor, does nothing
@@ -149,5 +150,9 @@ public class AppController {
 
     public void setStrategySaveLoadScreenScene(Scene strategySaveLoadScreenScene) {
         this.strategySaveLoadScreenScene = strategySaveLoadScreenScene;
+    }
+
+    public String getVersionString(){
+        return versionString;
     }
 }

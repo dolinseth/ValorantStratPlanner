@@ -6,6 +6,7 @@ import StratEditor.StratEditor;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -21,9 +22,18 @@ public class MenuScreen {
     private Button ascentButton;
     @FXML
     private Button quitButton;
+    @FXML
+    private Label label;
 
     //non-FXML fields
     private AppController appController;
+
+    /**
+     * helper method to be called when this screen is initialized to setup various things
+     */
+    public void setup(){
+        label.setText(label.getText().replace("__VERSION__", appController.getVersionString()));
+    }
 
     //FXML defined button handlers
     @FXML
