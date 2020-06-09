@@ -268,6 +268,14 @@ public abstract class TwoPointStratElement extends StratElement{
         }
     }
 
+    /**
+     * set the visibility of all decorators on this object
+     * @param b - the new visibility to apply to all decorators
+     */
+    public void setDecoratorVisibility(boolean b){
+        decorators.forEach(d -> d.setVisible(b));
+    }
+
     /*
     GETTERS AND SETTERS
      */

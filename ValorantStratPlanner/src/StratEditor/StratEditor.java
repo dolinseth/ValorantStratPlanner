@@ -541,12 +541,24 @@ public class StratEditor {
 
     private void tripWireButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.TRIPWIRE);
+        //create the tripwire line indicator
         Line l = new Line(Color.WHITE, ElementDecorator.Type.END_EXTENDER);
         l.setAdditionalPointHandler(e -> {
             l.setEnd(e.getX(), e.getY());
             l.setVisible(true);
+            l.setDecoratorVisibility(true);
         });
         l.setVisible(false);
+        l.setDecoratorVisibility(false);
+
+        //add the circles at the ends of the tripwire line
+        Circle a = new Circle(15, Color.WHITE, 0.5, ElementDecorator.Type.START_POINT);
+        Circle b = new Circle(15, Color.WHITE, 0.5, ElementDecorator.Type.END_POINT);
+        a.setFill(false);
+        b.setFill(false);
+        l.addDecorator(a);
+        l.addDecorator(b);
+
         l.setMaxLength(60);
         ab.setAdditionalPointHandler(ab::passAdditionalPointsToDecorators);
         ab.addDecorator(l);
@@ -555,7 +567,7 @@ public class StratEditor {
 
     private void cyberCageButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.CYBER_CAGE);
-        ab.addDecorator(new Circle(visionBlockRadius, Color.WHITE, 0.3, ElementDecorator.Type.END_POINT));
+        ab.addDecorator(new Circle(44, Color.WHITE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::cyberCageButtonHandler);
     }
 
@@ -582,7 +594,7 @@ public class StratEditor {
 
     private void darkCoverButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.DARK_COVER);
-        ab.addDecorator(new Circle(visionBlockRadius + 15, Color.PURPLE, 0.3, ElementDecorator.Type.END_POINT));
+        ab.addDecorator(new Circle(51, Color.PURPLE, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::darkCoverButtonHandler);
     }
 
@@ -655,7 +667,7 @@ public class StratEditor {
 
     private void poisonCloudButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.POISON_CLOUD);
-        ab.addDecorator(new Circle(visionBlockRadius + 15, Color.GREEN, 0.3, ElementDecorator.Type.END_POINT));
+        ab.addDecorator(new Circle(56, Color.GREEN, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::poisonCloudButtonHandler);
     }
 
@@ -740,7 +752,7 @@ public class StratEditor {
 
     private void shockBoltButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.SHOCK_BOLT);
-        ab.addDecorator(new Circle(28, Color.CYAN, 0.3, ElementDecorator.Type.END_POINT));
+        ab.addDecorator(new Circle(15, Color.CYAN, 0.3, ElementDecorator.Type.END_POINT));
         twoPointDraggableElementHandler(ab, this::shockBoltButtonHandler);
     }
 
