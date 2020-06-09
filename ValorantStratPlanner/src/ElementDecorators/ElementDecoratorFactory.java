@@ -28,6 +28,9 @@ public class ElementDecoratorFactory {
      * @return - the decorator described by root
      */
     public ElementDecorator getDecoratorFromJSON(JSONObject root){
+        if(!root.has("type")){
+            System.out.println(root.toString(2));
+        }
         String type = root.getString("type");
         ElementDecorator eld = null;
         switch (type){
@@ -54,6 +57,12 @@ public class ElementDecoratorFactory {
                 break;
             case "Line":
                 eld = new Line(root);
+                break;
+            case "CharacterIcon":
+                eld = new CharacterIcon(root);
+                break;
+            case "TieredTrapezoid":
+                eld = new TieredTrapezoid(root);
                 break;
         }
         return eld;

@@ -33,12 +33,16 @@ public class StratElementFactory {
         switch(type){
             case "CharacterAbility":
                 ret = new CharacterAbility(root);
+                System.out.println("loaded character ability from JSON");
                 break;
             case "Tool":
                 ret = new TwoPointTool(root);
                 break;
             case "FreeformTool":
                 ret = new FreeformTool(root);
+                break;
+            case "CharacterTool":
+                ret = new CharacterTool(root);
                 break;
         }
 

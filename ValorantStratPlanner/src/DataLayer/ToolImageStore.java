@@ -34,12 +34,6 @@ public class ToolImageStore extends ImageStore{
      */
     public Image getToolImage(String toolName){
         loadImages();
-        if(images == null){
-            System.out.println("shit");
-        }
-        if(toolName == null){
-            System.out.println("double shit");
-        }
         return images.getOrDefault(toolName.toLowerCase(), null);
     }
 }

@@ -50,6 +50,7 @@ public class TieredTrapezoid extends ElementDecorator {
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
         insertProperties(root);
+        root.put("type", "TieredTrapezoid");
         root.put("numTiers", numTiers);
         root.put("firstTierWidth", firstTierWidth);
         root.put("tierLength", tierLength);

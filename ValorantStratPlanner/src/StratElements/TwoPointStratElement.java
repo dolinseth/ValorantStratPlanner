@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.xml.bind.Element;
 import java.util.ArrayList;
 import java.util.List;
 

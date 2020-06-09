@@ -35,7 +35,7 @@ public class CharacterAbility extends TwoPointStratElement{
      * @param root - the JSONObject to get properties from
      */
     public CharacterAbility(JSONObject root){
-        setPropertiesFromJSON(root);
+        importFromJSON(root);
     }
 
     /**

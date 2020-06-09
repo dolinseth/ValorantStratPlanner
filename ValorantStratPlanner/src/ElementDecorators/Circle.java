@@ -38,6 +38,7 @@ public class Circle extends ElementDecorator {
     public JSONObject toJSON(){
         JSONObject root = new JSONObject();
         insertProperties(root);
+        root.put("fill", fill);
         root.put("type", "Circle");
         root.put("radius", radius);
         return root;
@@ -50,6 +51,7 @@ public class Circle extends ElementDecorator {
      */
     public void importFromJSON(JSONObject root){
         setPropertiesFromJSON(root);
+        fill = root.getBoolean("fill");
         radius = root.getDouble("radius");
     }
 

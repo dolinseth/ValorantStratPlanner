@@ -1,7 +1,9 @@
 package StratElements;
 
+import DataLayer.DataController;
 import ElementDecorators.Icon;
 import ElementDecorators.ToolIcon;
+import Main.AppController;
 import Records.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -10,8 +12,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class TwoPointTool extends TwoPointStratElement{
-    private String tool;
-    private final double size = 30;
+    protected String tool;
+    protected final double size = 30;
     protected boolean showLine = true;
 
     /**
@@ -45,10 +47,9 @@ public class TwoPointTool extends TwoPointStratElement{
     /**
      * helper method to setup the icon decorator
      */
-    private void setupIcon(){
+    protected void setupIcon(){
         ToolIcon icon = new ToolIcon(tool);
-        icon.setParent(this);
-        decorators.add(icon);
+        addDecorator(icon);
     }
 
     /**
