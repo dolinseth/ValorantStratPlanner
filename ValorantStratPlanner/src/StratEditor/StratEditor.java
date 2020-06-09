@@ -57,6 +57,7 @@ public class StratEditor {
     private final Color mapBackgroundColor = Color.web("#141C2F");
     public final double pixelsRunPerSecond = 41.505;
     public final double pixelsWalkedPerSecond = 24.615;
+    public double scale = 1.0;
 
     /**
      * To be called when this scene is initialized to setup scene objects at runtime
@@ -64,16 +65,11 @@ public class StratEditor {
     public void setup(){
         createToolSelectorButtons();
         updateCanvas();
+        canvas.getGraphicsContext2D().scale(scale, scale);
 
         //set background image
         Image bgImage = new Image(getClass().getResource("/BackgroundImages/Blueprint-background.png").toString(), 1920, 1080, true, false);
         BackgroundImage bg = new BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-        if(bg == null){
-            System.out.println("bg is null");
-        }
-        else if (mainPane == null){
-            System.out.println("mainpane is null");
-        }
         mainPane.setBackground(new Background(bg));
     }
 
@@ -244,7 +240,7 @@ public class StratEditor {
      * @param eventHandler - the handler to call when the button is pressed
      */
     private void makeToolButton(String label, EventHandler<ActionEvent> eventHandler){
-        Image toolImage = appController.getData().getToolImage(label);
+        Image toolImage = appController.getData().getToolImage(label.replaceAll(" ", ""));
         if(toolImage != null) {
             ImageView toolIcon = new ImageView(toolImage);
             toolIcon.setFitWidth(30);
@@ -341,10 +337,10 @@ public class StratEditor {
     private void freeformElementHandler(FreeformTool ft, ButtonHandler handler){
         canvas.setOnMousePressed(e -> {
             curElement = ft;
-            ft.addPoint(e.getX(), e.getY());
+            ft.addPoint(e.getX()/scale, e.getY()/scale);
             updateCanvas();
             canvas.setOnMouseDragged(e2 -> {
-                ft.addPoint(e2.getX(), e2.getY());
+                ft.addPoint(e2.getX()/scale, e2.getY()/scale);
                 updateCanvas();
             });
             canvas.setOnMouseReleased(e2 -> {
@@ -365,12 +361,12 @@ public class StratEditor {
      */
     private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
         canvas.setOnMouseClicked(e -> {
-            el.setStart(e.getX(), e.getY());
-            el.setEnd(e.getX(), e.getY());
+            el.setStart(e.getX()/scale, e.getY()/scale);
+            el.setEnd(e.getX()/scale, e.getY()/scale);
             curElement = el;
             updateCanvas();
             canvas.setOnMouseClicked(e2 -> {
-                el.setEnd(e2.getX(), e2.getY());
+                el.setEnd(e2.getX()/scale, e2.getY()/scale);
                 updateCanvas();
 
                 if(el.hasAdditionalPoints()) {
@@ -396,7 +392,7 @@ public class StratEditor {
                 }
             });
             canvas.setOnMouseMoved(e3 -> {
-                el.setEnd(e3.getX(), e3.getY());
+                el.setEnd(e3.getX()/scale, e3.getY()/scale);
                 updateCanvas();
             });
         });
@@ -527,7 +523,7 @@ public class StratEditor {
         camFOV.setVisible(false);
         camFOV.setAdditionalPointHandler(e -> {
             camFOV.setVisible(true);
-            camFOV.setEnd(e.getX(), e.getY());
+            camFOV.setEnd(e.getX()/scale, e.getY()/scale);
         });
         ab.setAdditionalPointHandler(ab::passAdditionalPointsToDecorators);
         ab.addDecorator(camFOV);
@@ -544,7 +540,7 @@ public class StratEditor {
         //create the tripwire line indicator
         Line l = new Line(Color.WHITE, ElementDecorator.Type.END_EXTENDER);
         l.setAdditionalPointHandler(e -> {
-            l.setEnd(e.getX(), e.getY());
+            l.setEnd(e.getX()/scale, e.getY()/scale);
             l.setVisible(true);
             l.setDecoratorVisibility(true);
         });
@@ -711,7 +707,7 @@ public class StratEditor {
         CharacterAbility ab = new CharacterAbility(DataController.Ability.BARRIER_ORB);
         Rectangle rect = new Rectangle(70, Color.CYAN, 0.5, ElementDecorator.Type.END_EXTENDER);
         rect.setAdditionalPointHandler(e -> {
-            rect.setEnd(e.getX(), e.getY());
+            rect.setEnd(e.getX()/scale, e.getY()/scale);
             rect.setVisible(true);
         });
         rect.setVisible(false);
