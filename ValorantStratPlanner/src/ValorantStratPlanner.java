@@ -60,7 +60,7 @@ public class ValorantStratPlanner extends Application {
         Scene saveLoadScene = new Scene(saveLoadRoot);
 
         //set the window title
-        stage.setTitle("Valorant Strat Planner v0.3");
+        stage.setTitle("Valorant Strat Planner v0.31");
 
         //give screen controllers a reference to the app controller
         stratEditor.setAppController(appController);

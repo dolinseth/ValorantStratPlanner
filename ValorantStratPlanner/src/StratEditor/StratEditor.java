@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,6 +46,10 @@ public class StratEditor {
     private Button mainMenuButton;
     @FXML
     private BorderPane mainPane;
+    @FXML
+    private Slider zoomSlider;
+    @FXML
+    private javafx.scene.shape.Rectangle zoomControlBackground;
 
     //non-FXML fields
     private AppController appController;
@@ -71,6 +76,16 @@ public class StratEditor {
         Image bgImage = new Image(getClass().getResource("/BackgroundImages/Blueprint-background.png").toString(), 1920, 1080, true, false);
         BackgroundImage bg = new BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         mainPane.setBackground(new Background(bg));
+
+        //set scale function for zoom slider;
+        zoomSlider.valueProperty().addListener((source, oldVal, newVal) -> {
+            canvas.getGraphicsContext2D().scale(newVal.doubleValue() / oldVal.doubleValue(), newVal.doubleValue() / oldVal.doubleValue());
+            scale = newVal.doubleValue() / 100.0;
+            updateCanvas();
+        });
+        zoomControlBackground.setArcHeight(20);
+        zoomControlBackground.setArcWidth(20);
+
     }
 
     /**

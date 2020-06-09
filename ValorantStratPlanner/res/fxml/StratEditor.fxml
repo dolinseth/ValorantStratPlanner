@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StratEditor.StratEditor">
    <bottom>
@@ -50,14 +53,37 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </left>
    <center>
-      <Canvas fx:id="canvas" height="950.0" width="950.0" BorderPane.alignment="CENTER">
+      <Canvas fx:id="canvas" height="950.0" style="-fx-tick-label-fill: #000000;" width="950.0" BorderPane.alignment="CENTER">
          <cursor>
             <Cursor fx:constant="CROSSHAIR" />
          </cursor>
       </Canvas>
    </center>
+   <right>
+      <StackPane prefHeight="869.0" prefWidth="131.0" BorderPane.alignment="CENTER">
+         <children>
+            <Rectangle fx:id="zoomControlBackground" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="263.0" stroke="BLACK" strokeType="INSIDE" width="134.0" StackPane.alignment="TOP_CENTER" />
+            <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Zoom" textAlignment="CENTER" wrappingWidth="83.13671875" StackPane.alignment="TOP_LEFT">
+               <StackPane.margin>
+                  <Insets top="120.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Slider fx:id="zoomSlider" blockIncrement="5.0" max="150.0" maxHeight="-Infinity" maxWidth="-Infinity" min="25.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="4" orientation="VERTICAL" prefHeight="255.0" prefWidth="39.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="100.0" StackPane.alignment="TOP_RIGHT">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </Slider>
+         </children>
+      </StackPane>
+   </right>
 </BorderPane>
