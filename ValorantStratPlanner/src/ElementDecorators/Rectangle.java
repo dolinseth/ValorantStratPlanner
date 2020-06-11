@@ -71,7 +71,7 @@ public class Rectangle extends ElementDecorator {
 
             //create the SVG string depending on type
             String path = "";
-            if(type == Type.START_TO_END){
+            if(type == Type.START_TO_END || type == Type.END_EXTENDER || type == Type.START_EXTENDER){
                 path = String.format("M%f %f l%f %f l%f %f l%f %f l%f %f", x1, y1, cosPer*(width / 2), sinPer*(width / 2), cosPar*length, sinPar*length, -cosPer*width, -sinPer*width, -cosPar*length, -sinPar*length);
             }
             else{

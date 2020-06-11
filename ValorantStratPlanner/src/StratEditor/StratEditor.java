@@ -61,6 +61,7 @@ public class StratEditor {
     private final Color mapBackgroundColor = Color.web("#141C2F");
     public final double pixelsRunPerSecond = 41.505;
     public final double pixelsWalkedPerSecond = 24.615;
+    public final double pixelsPerInGameUnit = 0.10444;
     public double scale = 1.0;
 
     /**
@@ -308,10 +309,15 @@ public class StratEditor {
      * @param tool - the freeform measure or two point measure tool to add the decorators to
      */
     private void addMeasureTextDecorator(TwoPointStratElement tool){
-        TextBox tb = new TextBox(appController.getDebugModeEnabled() ? "Distance: %,.2f px\n" : "" + "Time to run: %,.2f s\nTime to walk: %,.2f s", ElementDecorator.Type.END_POINT);
+        TextBox tb = new TextBox((appController.getDebugModeEnabled() ? "Distance: %,.2f px\n" : "") + "Time to run: %,.2f s\nTime to walk: %,.2f s", ElementDecorator.Type.END_POINT);
         tb.setUpdater(() -> {
             double length = tb.getParent().getLength();
-            tb.updateText(length, length / pixelsRunPerSecond, length / pixelsWalkedPerSecond);
+            if(appController.getDebugModeEnabled()) {
+                tb.updateText(length, length / pixelsRunPerSecond, length / pixelsWalkedPerSecond);
+            }
+            else{
+                tb.updateText(length / pixelsRunPerSecond, length / pixelsWalkedPerSecond);
+            }
         });
         tool.addDecorator(tb);
     }
@@ -620,13 +626,17 @@ public class StratEditor {
 
     private void paranoiaButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.PARANOIA);
+        Rectangle aoe = new Rectangle(47, Color.PURPLE, 0.5, ElementDecorator.Type.START_TO_END);
+        aoe.setMaxLength(189);
+        aoe.setMinLength(189);
+        ab.addDecorator(aoe);
         twoPointDraggableElementHandler(ab, this::paranoiaButtonHandler);
     }
 
     private void faultLineButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.FAULT_LINE);
         ab.setShowLine(false);
-        Rectangle aoe = new Rectangle(15, Color.BLUE, 0.3, ElementDecorator.Type.START_TO_END);
+        Rectangle aoe = new Rectangle(30, Color.CYAN, 0.3, ElementDecorator.Type.START_TO_END);
         aoe.setMaxLength(298);
         ab.addDecorator(aoe);
         twoPointDraggableElementHandler(ab, this::faultLineButtonHandler);
@@ -643,8 +653,13 @@ public class StratEditor {
     private void afterShockButtonHandler(){
         CharacterAbility ab = new CharacterAbility(DataController.Ability.AFTERSHOCK);
         //arc class could be good here too, but for now just a red rectangle
-        Rectangle aoe = new Rectangle(10, Color.RED, 0.3, ElementDecorator.Type.START_TO_END);
-        ab.setShowLine(false);
+        Rectangle aoe = new Rectangle(38, Color.RED, 0.3, ElementDecorator.Type.END_EXTENDER);
+        aoe.setUpdater(() -> {
+            double dx = ab.getX2() - ab.getX1();
+            double dy = ab.getY2() - ab.getY1();
+            double theta = Math.atan2(dy, dx);
+            aoe.setEnd(aoe.getX1() + Math.cos(theta), aoe.getY1() + Math.sin(theta));
+        });
         aoe.setMaxLength(42);
         aoe.setMinLength(42);
         ab.addDecorator(aoe);
