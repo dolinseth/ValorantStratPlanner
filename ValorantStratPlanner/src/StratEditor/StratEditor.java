@@ -184,12 +184,12 @@ public class StratEditor {
         makeAbilityButton(DataController.Ability.EMPRESS, e -> empressButtonHandler());
 
         //create tool buttons
-        makeToolButton("Watch", e -> watchHereButtonHandler());
-        makeToolButton("Measure", e -> measuringTapeButtonHandler());
-        makeToolButton("Go Here", e -> goHereButtonHandler());
-        makeToolButton("Draw", e -> drawButtonHandler());
-        makeToolButton("Free Measure", e -> freeformMeasureButtonHandler());
         makeToolButton("Pan", e -> panButtonHandler());
+        makeToolButton("Watch", e -> watchHereButtonHandler());
+        makeToolButton("Go Here", e -> goHereButtonHandler());
+        makeToolButton("Measure", e -> measuringTapeButtonHandler());
+        makeToolButton("Free Measure", e -> freeformMeasureButtonHandler());
+        makeToolButton("Draw", e -> drawButtonHandler());
 
 
         //a test button for messing around with new decorators, etc
@@ -376,17 +376,6 @@ public class StratEditor {
     }
 
     /**
-     * helper method that sets all the canvas handlers to do nothing
-     */
-    private void clearCanvasHandlers(){
-        canvas.setOnMousePressed(e -> {});
-        canvas.setOnMouseDragged(e -> {});
-        canvas.setOnMouseMoved(e -> {});
-        canvas.setOnMouseReleased(e -> {});
-        canvas.setOnMouseClicked(e -> {});
-    }
-
-    /**
      * generic handler for a freeform element
      * @param ft - the freeform element to handle
      * @param handler - the button handler to call to start a new freeform element at the end
@@ -461,6 +450,17 @@ public class StratEditor {
                 });
             }
        });
+    }
+
+    /**
+     * helper method that sets all the canvas handlers to do nothing
+     */
+    private void clearCanvasHandlers(){
+        canvas.setOnMousePressed(e -> {});
+        canvas.setOnMouseDragged(e -> {});
+        canvas.setOnMouseMoved(e -> {});
+        canvas.setOnMouseReleased(e -> {});
+        canvas.setOnMouseClicked(e -> {});
     }
 
    /**
@@ -830,6 +830,7 @@ public class StratEditor {
         CharacterAbility ab = new CharacterAbility(DataController.Ability.HUNTERS_FURY);
         Rectangle rect = new Rectangle(20, Color.CYAN, 0.3, ElementDecorator.Type.START_TO_END);
         rect.setMaxLength(393);
+        rect.setMinLength(393);
         ab.addDecorator(rect);
         ab.setShowLine(false);
         twoPointDraggableElementHandler(ab, this::huntersFuryButtonHandler);
