@@ -2,6 +2,7 @@ package StratEditor;
 
 import DataLayer.DataController;
 import ElementDecorators.*;
+import Records.Point;
 import StratElements.*;
 import StrategySaveLoadScreen.StrategySaveLoadScreen;
 import javafx.event.ActionEvent;
@@ -10,17 +11,22 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 
 import AppController.AppController;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 import static StratElements.CharacterAbility.areaDenialRadius;
 import static StratElements.CharacterAbility.visionBlockRadius;
@@ -63,6 +69,8 @@ public class StratEditor {
     public final double pixelsWalkedPerSecond = 24.615;
     public final double pixelsPerInGameUnit = 0.10444;
     public double scale = 1.0;
+    private double canvasXOffset = 0;
+    private double canvasYOffset = 0;
 
     /**
      * To be called when this scene is initialized to setup scene objects at runtime
@@ -79,13 +87,11 @@ public class StratEditor {
 
         //set scale function for zoom slider;
         zoomSlider.valueProperty().addListener((source, oldVal, newVal) -> {
-            canvas.getGraphicsContext2D().scale(newVal.doubleValue() / oldVal.doubleValue(), newVal.doubleValue() / oldVal.doubleValue());
             scale = newVal.doubleValue() / 100.0;
             updateCanvas();
         });
         zoomControlBackground.setArcHeight(20);
         zoomControlBackground.setArcWidth(20);
-
     }
 
     /**
@@ -183,6 +189,7 @@ public class StratEditor {
         makeToolButton("Go Here", e -> goHereButtonHandler());
         makeToolButton("Draw", e -> drawButtonHandler());
         makeToolButton("Free Measure", e -> freeformMeasureButtonHandler());
+        makeToolButton("Pan", e -> panButtonHandler());
 
 
         //a test button for messing around with new decorators, etc
@@ -191,7 +198,7 @@ public class StratEditor {
         }
 
         //format the buttons
-        toolButtons.forEach(b -> formatToolButton(b));
+        toolButtons.forEach(this::formatToolButton);
 
         //add all buttons to the tool selector panel
         for(int i = 0; i < toolButtons.size(); i++){
@@ -276,7 +283,10 @@ public class StratEditor {
         b.wrapTextProperty().setValue(true);
         b.setTextAlignment(TextAlignment.CENTER);
         Tooltip tt = new Tooltip(appController.getData().getToolTip(b.getText()));
-//        tt.setShowDelay(new Duration(0.25));
+        tt.setShowDelay(new Duration(0.25));
+        tt.setWrapText(true);
+        tt.setPrefWidth(300);
+        tt.setStyle("-fx-font-size:15");
         b.setTooltip(tt);
         b.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(10), null)));
         b.setTextFill(Color.WHITE);
@@ -348,28 +358,61 @@ public class StratEditor {
         freeformElementHandler(tool, this::freeformMeasureButtonHandler);
     }
 
+    private void panButtonHandler(){
+        canvas.setOnMousePressed(e -> {
+            Point p = new Point(e.getX(), e.getY());
+            canvas.setOnMouseDragged(e2 -> {
+                canvasXOffset += e2.getX() - p.x;
+                canvasYOffset += e2.getY() - p.y;
+                p.x = e2.getX();
+                p.y = e2.getY();
+                updateCanvas();
+            });
+            canvas.setOnMouseReleased(e2 -> {
+                clearCanvasHandlers();
+                panButtonHandler();
+            });
+        });
+    }
+
+    /**
+     * helper method that sets all the canvas handlers to do nothing
+     */
+    private void clearCanvasHandlers(){
+        canvas.setOnMousePressed(e -> {});
+        canvas.setOnMouseDragged(e -> {});
+        canvas.setOnMouseMoved(e -> {});
+        canvas.setOnMouseReleased(e -> {});
+        canvas.setOnMouseClicked(e -> {});
+    }
+
     /**
      * generic handler for a freeform element
      * @param ft - the freeform element to handle
      * @param handler - the button handler to call to start a new freeform element at the end
      */
     private void freeformElementHandler(FreeformTool ft, ButtonHandler handler){
+        clearCanvasHandlers();
         canvas.setOnMousePressed(e -> {
-            curElement = ft;
-            ft.addPoint(e.getX()/scale, e.getY()/scale);
-            updateCanvas();
-            canvas.setOnMouseDragged(e2 -> {
-                ft.addPoint(e2.getX()/scale, e2.getY()/scale);
+            if(e.getButton() == MouseButton.PRIMARY) {
+                curElement = ft;
+                ft.addPoint(scaleX(e.getX()), scaleY(e.getY()));
                 updateCanvas();
-            });
-            canvas.setOnMouseReleased(e2 -> {
-                elements.add(ft);
-                curElement = null;
-                updateCanvas();
-                canvas.setOnMouseDragged(e3 -> { /* INTENTIONALLY NOTHING */});
-                canvas.setOnMousePressed(e3 -> { /* INTENTIONALLY NOTHING */ });
-                handler.handle();
-            });
+                canvas.setOnMouseDragged(e2 -> {
+                    if(e.getButton() == MouseButton.PRIMARY) {
+                        ft.addPoint(scaleX(e2.getX()), scaleY(e2.getY()));
+                        updateCanvas();
+                    }
+                });
+                canvas.setOnMouseReleased(e2 -> {
+                    elements.add(ft);
+                    curElement = null;
+                    updateCanvas();
+                    canvas.setOnMouseDragged(e3 -> { /* INTENTIONALLY NOTHING */});
+                    canvas.setOnMousePressed(e3 -> { /* INTENTIONALLY NOTHING */ });
+                    handler.handle();
+                });
+            }
         });
     }
 
@@ -379,42 +422,63 @@ public class StratEditor {
      * @param handler - the handler to call to initialize the element
      */
     private void twoPointDraggableElementHandler(TwoPointStratElement el, ButtonHandler handler){
+        clearCanvasHandlers();
         canvas.setOnMouseClicked(e -> {
-            el.setStart(e.getX()/scale, e.getY()/scale);
-            el.setEnd(e.getX()/scale, e.getY()/scale);
-            curElement = el;
-            updateCanvas();
-            canvas.setOnMouseClicked(e2 -> {
-                el.setEnd(e2.getX()/scale, e2.getY()/scale);
+            if(e.getButton() == MouseButton.PRIMARY){
+                el.setStart(scaleX(e.getX()), scaleY(e.getY()));
+                el.setEnd(scaleX(e.getX()), scaleY(e.getY()));
+                curElement = el;
                 updateCanvas();
+                canvas.setOnMouseClicked(e2 -> {
+                    el.setEnd(scaleX(e2.getX()), scaleY(e2.getY()));
+                    updateCanvas();
 
-                if(el.hasAdditionalPoints()) {
-                    canvas.setOnMouseMoved(e3 -> {
-                        el.handleAdditionalPoint(e3);
-                        updateCanvas();
-                    });
-                    canvas.setOnMouseClicked(e3 -> {
-                        el.handleAdditionalPoint(e3);
+                    if(el.hasAdditionalPoints()) {
+                        canvas.setOnMouseMoved(e3 -> {
+                            el.handleAdditionalPoint(e3);
+                            updateCanvas();
+                        });
+                        canvas.setOnMouseClicked(e3 -> {
+                            el.handleAdditionalPoint(e3);
+                            elements.add(el);
+                            curElement = null;
+                            canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
+                            updateCanvas();
+                            handler.handle();
+                        });
+                    }
+                    else {
                         elements.add(el);
                         curElement = null;
                         canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
                         updateCanvas();
                         handler.handle();
-                    });
-                }
-                else {
-                    elements.add(el);
-                    curElement = null;
-                    canvas.setOnMouseMoved(e4 -> { /* INTENTIONALLY NOTHING */});
+                    }
+                });
+                canvas.setOnMouseMoved(e3 -> {
+                    el.setEnd(scaleX(e3.getX()), scaleY(e3.getY()));
                     updateCanvas();
-                    handler.handle();
-                }
-            });
-            canvas.setOnMouseMoved(e3 -> {
-                el.setEnd(e3.getX()/scale, e3.getY()/scale);
-                updateCanvas();
-            });
-        });
+                });
+            }
+       });
+    }
+
+   /**
+     * helper method for rendering that scales x coordinates
+     * @param originalCoord - the original coordinate
+     * @return - the scaled coordinate
+     */
+    private double scaleX(double originalCoord){
+        return (originalCoord - canvasXOffset) / scale;
+    }
+
+    /**
+     * helper method for rendering that scales y coordinates
+     * @param originalCoord - the original coordinate
+     * @return - the scaled coordinate
+     */
+    private double scaleY(double originalCoord){
+        return (originalCoord - canvasYOffset) / scale;
     }
 
     /**
@@ -423,7 +487,9 @@ public class StratEditor {
      */
     public void updateCanvas(){
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setTransform(1, 0, 0, 1, 0, 0);
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setTransform(scale, 0, 0, scale, canvasXOffset, canvasYOffset);
         gc.drawImage(mapImage, 0, 0, mapImageSize, mapImageSize);
         if(curElement != null){
             curElement.draw(gc);
@@ -542,7 +608,7 @@ public class StratEditor {
         camFOV.setVisible(false);
         camFOV.setAdditionalPointHandler(e -> {
             camFOV.setVisible(true);
-            camFOV.setEnd(e.getX()/scale, e.getY()/scale);
+            camFOV.setEnd(scaleX(e.getX()), scaleY(e.getY()));
         });
         ab.setAdditionalPointHandler(ab::passAdditionalPointsToDecorators);
         ab.addDecorator(camFOV);
@@ -559,7 +625,7 @@ public class StratEditor {
         //create the tripwire line indicator
         Line l = new Line(Color.WHITE, ElementDecorator.Type.END_EXTENDER);
         l.setAdditionalPointHandler(e -> {
-            l.setEnd(e.getX()/scale, e.getY()/scale);
+            l.setEnd(scaleX(e.getX()), scaleY(e.getY()));
             l.setVisible(true);
             l.setDecoratorVisibility(true);
         });
@@ -735,7 +801,7 @@ public class StratEditor {
         CharacterAbility ab = new CharacterAbility(DataController.Ability.BARRIER_ORB);
         Rectangle rect = new Rectangle(70, Color.CYAN, 0.5, ElementDecorator.Type.END_EXTENDER);
         rect.setAdditionalPointHandler(e -> {
-            rect.setEnd(e.getX()/scale, e.getY()/scale);
+            rect.setEnd(scaleX(e.getX()), scaleY(e.getY()));
             rect.setVisible(true);
         });
         rect.setVisible(false);

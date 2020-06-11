@@ -69,20 +69,20 @@
    <right>
       <StackPane prefHeight="869.0" prefWidth="131.0" BorderPane.alignment="CENTER">
          <children>
-            <Rectangle fx:id="zoomControlBackground" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="263.0" stroke="BLACK" strokeType="INSIDE" width="134.0" StackPane.alignment="TOP_CENTER" />
-            <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Zoom" textAlignment="CENTER" wrappingWidth="83.13671875" StackPane.alignment="TOP_LEFT">
+            <Rectangle fx:id="zoomControlBackground" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="293.0" stroke="BLACK" strokeType="INSIDE" width="90.0" StackPane.alignment="TOP_RIGHT" />
+            <Slider fx:id="zoomSlider" blockIncrement="5.0" max="200.0" maxHeight="-Infinity" maxWidth="-Infinity" min="25.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="4" orientation="VERTICAL" prefHeight="255.0" prefWidth="39.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="100.0" StackPane.alignment="TOP_RIGHT">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </Slider>
+            <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Zoom" textAlignment="CENTER" wrappingWidth="91.13671875" StackPane.alignment="TOP_RIGHT">
                <StackPane.margin>
-                  <Insets top="120.0" />
+                  <Insets top="265.0" />
                </StackPane.margin>
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
-            <Slider fx:id="zoomSlider" blockIncrement="5.0" max="150.0" maxHeight="-Infinity" maxWidth="-Infinity" min="25.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="4" orientation="VERTICAL" prefHeight="255.0" prefWidth="39.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="100.0" StackPane.alignment="TOP_RIGHT">
-               <padding>
-                  <Insets right="20.0" />
-               </padding>
-            </Slider>
          </children>
       </StackPane>
    </right>

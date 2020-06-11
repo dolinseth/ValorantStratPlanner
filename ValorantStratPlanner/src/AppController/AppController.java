@@ -20,7 +20,7 @@ public class AppController {
     private StrategySaveLoadScreen strategySaveLoadScreen;
     private Scene strategySaveLoadScreenScene;
     private DataController data;
-    private String versionString = "v0.31";
+    private String versionString = "v0.32";
     private boolean debugModeEnabled = false;
 
     /**
