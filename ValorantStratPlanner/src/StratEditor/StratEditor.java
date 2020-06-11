@@ -186,8 +186,9 @@ public class StratEditor {
 
 
         //a test button for messing around with new decorators, etc
-        //make sure to comment this out when building release versions
-//        makeToolButton("Test button", e -> testButtonHandler());
+        if(appController.getDebugModeEnabled()) {
+            makeToolButton("Test button", e -> testButtonHandler());
+        }
 
         //format the buttons
         toolButtons.forEach(b -> formatToolButton(b));
@@ -221,17 +222,12 @@ public class StratEditor {
         twoPointDraggableElementHandler(tool, () -> characterButtonHandler(charName));
     }
 
+    /**
+     * button handler for the test button that is used for debugging
+     * modify as needed to test various features
+     */
     private void testButtonHandler(){
         TwoPointTool testTool = new TwoPointTool("test");
-        testTool.setMaxLength(100);
-//        FilledArc fa = new FilledArc(20, 50, Math.PI/4, Color.GREEN, 0.5, ElementDecorator.Type.END_EXTENDER);
-//        fa.setAdditionalPointHandler(e -> {
-//            fa.setVisible(true);
-//            fa.setEnd(e.getX(), e.getY());
-//        });
-//        fa.setVisible(false);
-//        testTool.setAdditionalPointHandler(testTool::passAdditionalPointsToDecorators);
-//        testTool.addDecorator(fa);
         twoPointDraggableElementHandler(testTool, this::testButtonHandler);
     }
 
@@ -304,13 +300,21 @@ public class StratEditor {
      */
     private void measuringTapeButtonHandler(){
         TwoPointTool tool = new TwoPointTool("Measure");
-        TextBox tb = new TextBox("Distance: %,.2f px\nTime to run: %,.2f s\nTime to walk: %,.2f s", ElementDecorator.Type.END_POINT);
+        addMeasureTextDecorator(tool);
+        twoPointDraggableElementHandler(tool, this::measuringTapeButtonHandler);
+    }
+
+    /**
+     * helper method to unify the measurement tool decoration between freeform and twopoint
+     * @param tool - the freeform measure or two point measure tool to add the decorators to
+     */
+    private void addMeasureTextDecorator(TwoPointStratElement tool){
+        TextBox tb = new TextBox(appController.getDebugModeEnabled() ? "Distance: %,.2f px\n" : "" + "Time to run: %,.2f s\nTime to walk: %,.2f s", ElementDecorator.Type.END_POINT);
         tb.setUpdater(() -> {
             double length = tb.getParent().getLength();
             tb.updateText(length, length / pixelsRunPerSecond, length / pixelsWalkedPerSecond);
         });
         tool.addDecorator(tb);
-        twoPointDraggableElementHandler(tool, this::measuringTapeButtonHandler);
     }
 
     /**
@@ -335,12 +339,7 @@ public class StratEditor {
      */
     private void freeformMeasureButtonHandler(){
         FreeformTool tool = new FreeformTool(("Free Measure"));
-        TextBox tb = new TextBox("Distance: %,.2f px\nTime to run: %,.2f s\nTime to walk: %,.2f s", ElementDecorator.Type.END_POINT);
-        tb.setUpdater(() -> {
-            double length = tb.getParent().getLength();
-            tb.updateText(length, length / pixelsRunPerSecond, length / pixelsWalkedPerSecond);
-        });
-        tool.addDecorator(tb);
+        addMeasureTextDecorator(tool);
         freeformElementHandler(tool, this::freeformMeasureButtonHandler);
     }
 

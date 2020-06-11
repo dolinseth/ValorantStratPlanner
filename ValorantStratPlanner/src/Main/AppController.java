@@ -22,6 +22,7 @@ public class AppController {
     private Scene strategySaveLoadScreenScene;
     private DataController data;
     private String versionString = "v0.31";
+    private boolean debugModeEnabled = false;
 
     /**
      * default constructor, does nothing
@@ -154,5 +155,13 @@ public class AppController {
 
     public String getVersionString(){
         return versionString;
+    }
+
+    public boolean getDebugModeEnabled(){
+        return debugModeEnabled;
+    }
+
+    public void setDebugModeEnabled(boolean debugModeEnabled){
+        this.debugModeEnabled = debugModeEnabled;
     }
 }

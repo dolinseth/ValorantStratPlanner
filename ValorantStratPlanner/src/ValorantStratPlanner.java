@@ -19,7 +19,23 @@ public class ValorantStratPlanner extends Application {
     private AppController appController;
 
     public static void main(String[] args){
+        parseArgs(args);
         launch(args);
+    }
+
+    /**
+     * helper method for parsing arguments, just to keep that logic in a separate place from the main function
+     * @param args - the args array passed to main()
+     */
+    private static void parseArgs(String[] args){
+        for(int i = 0; i < args.length; i++){
+            String s = args[i];
+            switch(s){
+                case "-debug":
+                    AppController.getInstance().setDebugModeEnabled(true);
+                    break;
+            }
+        }
     }
 
     /**
