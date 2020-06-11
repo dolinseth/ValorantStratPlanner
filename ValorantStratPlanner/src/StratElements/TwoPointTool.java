@@ -1,15 +1,10 @@
 package StratElements;
 
-import DataLayer.DataController;
-import ElementDecorators.Icon;
 import ElementDecorators.ToolIcon;
-import Main.AppController;
 import Records.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class TwoPointTool extends TwoPointStratElement{
     protected String tool;

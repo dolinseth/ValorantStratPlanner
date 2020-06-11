@@ -18,9 +18,8 @@ import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 
-import Main.AppController;
+import AppController.AppController;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 import static StratElements.CharacterAbility.areaDenialRadius;
@@ -290,7 +289,7 @@ public class StratEditor {
      * Handler for the indicator to watch a certain locatian
      */
     private void watchHereButtonHandler(){
-        TwoPointTool tool = new TwoPointTool("WatchHere");
+        TwoPointTool tool = new TwoPointTool("Watch");
         tool.addDecorator(new ArrowHead());
         twoPointDraggableElementHandler(tool, this::watchHereButtonHandler);
     }

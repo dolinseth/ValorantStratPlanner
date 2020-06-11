@@ -1,14 +1,10 @@
 package MenuScreen;
 
 import DataLayer.DataController;
-import Main.AppController;
-import StratEditor.StratEditor;
+import AppController.AppController;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 
 public class MenuScreen {
     //FXML defined buttons and panes

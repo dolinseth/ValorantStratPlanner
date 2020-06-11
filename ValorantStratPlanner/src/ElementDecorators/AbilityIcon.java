@@ -1,7 +1,6 @@
 package ElementDecorators;
 
-import Main.AppController;
-import javafx.scene.canvas.GraphicsContext;
+import AppController.AppController;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
 

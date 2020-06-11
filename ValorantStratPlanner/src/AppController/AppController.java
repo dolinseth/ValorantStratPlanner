@@ -1,6 +1,5 @@
-package Main;
+package AppController;
 
-import DataLayer.AbilityImageStore;
 import DataLayer.DataController;
 import MenuScreen.MenuScreen;
 import StratEditor.StratEditor;
